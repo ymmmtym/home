@@ -1,0 +1,47 @@
+---
+# - name: Create keystone database
+#   mysql_db:
+#     name: keystone
+#     state: present
+
+# MariaDB [(none)]> create database keystone; 
+# Query OK, 1 row affected (0.00 sec)
+# MariaDB [(none)]> grant all privileges on keystone.* to keystone@'localhost' identified by 'password'; 
+# Query OK, 0 rows affected (0.00 sec)
+# MariaDB [(none)]> grant all privileges on keystone.* to keystone@'%' identified by 'password'; 
+# Query OK, 0 rows affected (0.00 sec)
+# MariaDB [(none)]> flush privileges; 
+# Query OK, 0 rows affected (0.00 sec)
+
+- name: install keystone
+  apt:
+    name: "{{ item }}"
+    state: installed
+  with_items:
+    - keystone 
+    - python-openstackclientapache2
+    - libapache2-mod-wsgi-py3
+    - python-oauth2client
+
+- name: copy keystone.conf
+  templates:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+  with_items:
+    - { src: keystone.conf.j2, dest: /etc/keystone.conf }
+
+# - name: sync keystone db
+
+# root@dlp:~# su -s /bin/bash keystone -c "keystone-manage db_sync"
+
+# # キー初期化
+# root@dlp:~# keystone-manage fernet_setup --keystone-user keystone --keystone-group keystone 
+# root@dlp:~# keystone-manage credential_setup --keystone-user keystone --keystone-group keystone
+# # 自ホスト(コントローラーホスト)定義
+# root@dlp:~# export controller=10.0.0.30
+# # keystone ブートストラップ (adminpassword の箇所は任意の管理者パスワードを設定)
+# root@dlp:~# keystone-manage bootstrap --bootstrap-password adminpassword \
+# --bootstrap-admin-url http://$controller:5000/v3/ \
+# --bootstrap-internal-url http://$controller:5000/v3/ \
+# --bootstrap-public-url http://$controller:5000/v3/ \
+# --bootstrap-region-id RegionOne 
