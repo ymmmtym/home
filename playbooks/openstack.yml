@@ -1,6 +1,6 @@
 ---
 - name: Install Openstack
-  hosts: test
+  hosts: openstack
   become: true
   roles:
     - openstack

@@ -1,5 +1,0 @@
----
-- hosts: test
-  tasks:
-    - name: debug
-      setup: 
