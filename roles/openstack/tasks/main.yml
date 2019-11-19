@@ -1,5 +1,0 @@
----
-- import_tasks: install_required_services.yml
-- import_tasks: setting_services.yml
-- import_tasks: setting_keystone.yml
-
