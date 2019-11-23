@@ -1,0 +1,10 @@
+version: '3'
+services:
+    cloud_tools:
+        build: .
+        container_name: cloud_tools
+        hostname: cloud_tools
+        tty: true
+        ports:
+            - "8080:8080"
+            - "9005:9005"
