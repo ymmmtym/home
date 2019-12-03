@@ -1,27 +1,25 @@
-# ymmmtym-ansible
-## init
-create python3 env
-activate python3 env
-install library
+# ansible-dev
+
+## Requirements
+
+- python <= 3
+
+### Install python for Mac
+
+If your mac is not installed python3.X, execute follow procedure.
 
 ```
-virtualenv -p python3.7 .ansible
-source .ansible/bin/activate
-pip install -r requirements.txt
+/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+
+brew install python
+echo "export PATH=/usr/local/bin:$PATH" > ~/.bash_profile
+source ~/.bash_profile
 ```
 
-## activate
-activate python3 env
+## Usage
+
 ```
-source .ansible/bin/activate
+git clone git@github.com:ymmmtym/ansible-dev.git
+. .ansiblevenv/bin/activate
 ```
 
-## update
-update library
-```
-pip install ${library}
-pip freeze > requirements.txt
-```
-`pip freeze`:installされているlibとver.を表示する
-
-## operation
