@@ -72,7 +72,7 @@ options:
       - Enable booting from specified disk. C((ide|sata|scsi|virtio)\d+)
   clone:
     description:
-      - Name of VM to be cloned. If C(vmid) is setted, C(clone) can take arbitrary value but required for intiating the clone.
+      - Name of VM to be cloned. If C(vmid) is setted, C(clone) can take arbitrary value but required for initiating the clone.
   cores:
     description:
       - Specify number of cores per socket.
@@ -302,7 +302,7 @@ options:
   state:
     description:
       - Indicates desired state of the instance.
-      - If C(current), the current state of the VM will be fecthed. You can access it with C(results.status)
+      - If C(current), the current state of the VM will be fetched. You can access it with C(results.status)
     choices: ['present', 'started', 'absent', 'stopped', 'restarted','current']
     default: present
   storage:
@@ -604,7 +604,7 @@ def get_nextvmid(module, proxmox):
 
 
 def get_vmid(proxmox, name):
-    return [vm['vmid'] for vm in proxmox.cluster.resources.get(type='vm') if vm['name'] == name]
+    return [vm['vmid'] for vm in proxmox.cluster.resources.get(type='vm') if vm.get('name') == name]
 
 
 def get_vm(proxmox, vmid):

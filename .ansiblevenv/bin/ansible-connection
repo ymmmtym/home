@@ -1,4 +1,4 @@
-#!/Users/yukihisa/Documents/ymmmtym/ymmmtym-ansible/.ansiblevenv/bin/python3
+#!/Users/yukihisa/Documents/ymmmtym/ansible-dev/.ansiblevenv/bin/python3.7
 # Copyright: (c) 2017, Ansible Project
 # GNU General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 from __future__ import (absolute_import, division, print_function)
@@ -101,12 +101,9 @@ class ConnectionProcess(object):
                                                     ansible_playbook_pid=self._ansible_playbook_pid)
             self.connection.set_options(var_options=variables)
 
-            self.connection._connect()
-
             self.connection._socket_path = self.socket_path
             self.srv.register(self.connection)
             messages.extend([('vvvv', msg) for msg in sys.stdout.getvalue().splitlines()])
-            messages.append(('vvvv', 'connection to remote device started successfully'))
 
             self.sock = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
             self.sock.bind(self.socket_path)
@@ -123,7 +120,7 @@ class ConnectionProcess(object):
 
     def run(self):
         try:
-            while self.connection.connected:
+            while not self.connection._conn_closed:
                 signal.signal(signal.SIGALRM, self.connect_timeout)
                 signal.signal(signal.SIGTERM, self.handler)
                 signal.alarm(self.connection.get_option('persistent_connect_timeout'))
@@ -141,7 +138,12 @@ class ConnectionProcess(object):
                     if log_messages:
                         display.display("jsonrpc request: %s" % data, log_only=True)
 
+                    request = json.loads(to_text(data, errors='surrogate_or_strict'))
+                    if request.get('method') == "exec_command" and not self.connection.connected:
+                        self.connection._connect()
+
                     signal.alarm(self.connection.get_option('persistent_command_timeout'))
+
                     resp = self.srv.handle_request(data)
                     signal.alarm(0)
 

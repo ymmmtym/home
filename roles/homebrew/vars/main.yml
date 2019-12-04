@@ -1,0 +1,30 @@
+---
+# vars file for roles/homebrew
+
+brew_taps:
+  - homebrew/core
+  - homebrew/cask
+  - homebrew/cask-versions
+  - homebrew/cask-fonts
+
+brew_cask_apps:
+  - docker
+  - google-chrome
+  - google-japanese-ime
+  - visual-studio-code
+  - slack
+
+brew_packages:
+  - docker-compose
+  - docker-machine
+  - git
+  - git-lfs
+  - jq
+  - vim
+  - nmap
+  - openssl
+  - ssh-copy-id
+  - tree
+  - wget
+  - zsh
+  - zsh-syntax-highlighting

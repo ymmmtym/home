@@ -37,7 +37,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="/Users/yukihisa/Documents/ymmmtym/ymmmtym-ansible/.ansiblevenv"
+VIRTUAL_ENV="/Users/yukihisa/Documents/ymmmtym/ansible-dev/.ansiblevenv"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"
