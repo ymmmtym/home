@@ -18,8 +18,27 @@ source ~/.bash_profile
 
 ## Usage
 
+activate ansible env
+
 ```
 git clone git@github.com:ymmmtym/ansible-dev.git
+cd ansible-dev
 . .ansiblevenv/bin/activate
 ```
 
+### Setup mac for developer
+
+modify secret.yml for gitconfig
+
+```
+git_user_name=<Input your git user name>
+git_user_email=<Input your git user email>
+
+cat <<EOF > roles/commom/vars/secret.yml
+gitconfig_secret:
+  - { name: "user.name", value: "${git_user_name}"}
+  - { name: "user.email", value: "${git_user_email}"}
+EOF
+
+ansible-playbook setup_mac.yml
+```
