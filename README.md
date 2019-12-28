@@ -2,7 +2,7 @@
 
 ## Requirements
 
-- python <= 3
+- python >= 3
 
 ### Install python for Mac
 
