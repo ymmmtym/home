@@ -26,19 +26,28 @@ cd ansible-dev
 . .ansiblevenv/bin/activate
 ```
 
+Initialize env
+
+```
+python3 -m venv --clear .ansiblevenv/bin/activate
+```
+
 ### Setup mac for developer
 
 modify secret.yml for gitconfig
 
 ```
-git_user_name=<Input your git user name>
-git_user_email=<Input your git user email>
+git_user_name=<put your git user name>
+git_user_email=<put your git user email>
 
 cat <<EOF > roles/commom/vars/secret.yml
 gitconfig_secret:
   - { name: "user.name", value: "${git_user_name}"}
   - { name: "user.email", value: "${git_user_email}"}
 EOF
+
+ansible-vault encrypt roles/commom/vars/secret.yml
+echo '<put vault password>' > ~/.vault_password
 
 ansible-playbook setup_mac.yml
 ```
