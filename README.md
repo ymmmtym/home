@@ -29,7 +29,7 @@ cd ansible-dev
 Initialize env
 
 ```
-python3 -m venv --clear .ansiblevenv/bin/activate
+python3 -m venv --clear .ansiblevenv
 ```
 
 ### Setup mac for developer
