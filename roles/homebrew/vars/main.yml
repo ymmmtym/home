@@ -28,3 +28,4 @@ brew_packages:
   - wget
   - zsh
   - zsh-syntax-highlighting
+  - tmux
