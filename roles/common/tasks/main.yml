@@ -3,24 +3,18 @@
 - name: include vars
   include_vars:
     dir: vars
+  tags: always
 
 - name: copy files to home dir
   copy:
     src: '{{ item }}'
     dest: '~'
-  with_fileglob: "files/homedir/.*"
+  with_fileglob: "homedir/.*"
 
-- block:
-  - name: set gitconfig global secret
-    git_config:
-      name: '{{ item.name }}'
-      scope: global
-      value: '{{ item.value }}'
-    with_items: '{{ gitconfig_secret }}'
+- name: Include git task
+  include: git.yml
+  tags: git
 
-  - name: set gitconfig global
-    git_config:
-      name: '{{ item.name }}'
-      scope: global
-      value: '{{ item.value }}'
-    with_items: '{{ gitconfig }}'
+- name: Include vim task
+  include: vim.yml
+  tags: vim

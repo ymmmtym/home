@@ -1,0 +1,28 @@
+- name: Template .vimrc
+  template: 
+    src: '.vimrc.j2'
+    dest: '~/.vimrc'
+
+- name: Create dein directory
+  file:
+    path: '{{ dein.install_dir }}'
+    state: directory
+
+- name: Copy dein installer.sh
+  copy:
+    src: 'dein/{{ dein.install_script }}'
+    dest: '{{ dein.install_dir }}'
+
+- name: Install dein
+  shell: 'sh {{ dein.install_script }} .'
+  args:
+    creates: '{{ dein.install_dir }}/dein'
+    chdir: '{{ dein.install_dir }}'
+
+- name: Copy toml files
+  copy:
+    src: 'dein/{{ item }}'
+    dest: '{{ dein.rc_dir }}'
+  with_items:
+    - '{{ dein.toml }}'
+    - '{{ dein.lazy_toml }}'
