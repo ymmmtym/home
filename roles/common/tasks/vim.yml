@@ -5,8 +5,11 @@
 
 - name: Create dein directory
   file:
-    path: '{{ dein.install_dir }}'
+    path: '{{ item }}'
     state: directory
+  with_items:
+    - '{{ dein.install_dir }}'
+    - '{{ dein.rc_dir }}'
 
 - name: Copy dein installer.sh
   copy:
@@ -22,7 +25,7 @@
 - name: Copy toml files
   copy:
     src: 'dein/{{ item }}'
-    dest: '{{ dein.rc_dir }}'
+    dest: '{{ dein.rc_dir }}/{{ item }}'
   with_items:
     - '{{ dein.toml }}'
     - '{{ dein.lazy_toml }}'
