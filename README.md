@@ -1,11 +1,8 @@
 # ansible-dev
-
 ## Requirements
-
 - python >= 3
 
-### Install python for Mac
-
+### Install python3 for Mac
 If your mac is not installed python3.X, execute follow procedure.
 
 ```
@@ -17,7 +14,6 @@ source ~/.bash_profile
 ```
 
 ## Usage
-
 activate ansible env
 
 ```
@@ -30,9 +26,9 @@ Initialize env
 
 ```
 python3 -m venv --clear .ansiblevenv
+. .ansiblevenv/bin/activate
+pip install -r requirements.txt
 ```
-
-### Setup mac for developer
 
 modify secret.yml for gitconfig
 
@@ -48,6 +44,17 @@ EOF
 
 ansible-vault encrypt roles/commom/vars/secret.yml
 echo '<put vault password>' > ~/.vault_password
+```
 
-ansible-playbook setup_mac.yml
+### Setup any hosts
+Setup mac
+
+```
+ansible-playbook setup_local_mac.yml
+```
+
+Common Setup any linux hosts
+
+```
+ansible-playbook common.yml
 ```
