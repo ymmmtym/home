@@ -1,4 +1,4 @@
-# ansible-dev
+# ansible-mgmt
 
 [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/ymmmtym/ansible-dev)
 
@@ -22,12 +22,6 @@ activate ansible env
 ```
 git clone git@github.com:ymmmtym/ansible-dev.git
 cd ansible-dev
-. .ansiblevenv/bin/activate
-```
-
-Initialize env
-
-```
 python3 -m venv --clear .ansiblevenv
 . .ansiblevenv/bin/activate
 pip install -r requirements.txt
