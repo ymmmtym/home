@@ -1,0 +1,9 @@
+---
+- hosts: all
+  roles:
+    - role: homebrew
+      when: ansible_os_family == "Darwin"
+      tags: homebrew
+    - role: common
+      when: ansible_os_family != "Windows"
+      tags: common

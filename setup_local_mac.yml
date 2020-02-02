@@ -1,7 +1,0 @@
----
-- hosts: local
-  roles:
-    - role: homebrew
-      tags: homebrew
-    - role: common
-      tags: common
