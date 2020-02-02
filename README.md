@@ -1,6 +1,5 @@
 # ansible-mgmt
-
-[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/ymmmtym/ansible-dev)
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/ymmmtym/ansible-mgmt)
 
 ## Requirements
 - python >= 3
@@ -20,8 +19,8 @@ source ~/.bash_profile
 activate ansible env
 
 ```
-git clone git@github.com:ymmmtym/ansible-dev.git
-cd ansible-dev
+git clone git@github.com:ymmmtym/ansible-mgmt.git
+cd ansible-mgmt
 python3 -m venv --clear .ansiblevenv
 . .ansiblevenv/bin/activate
 pip install -r requirements.txt
@@ -44,14 +43,8 @@ echo '<put vault password>' > ~/.vault_password
 ```
 
 ### Setup any hosts
-Setup mac
+Setup all
 
 ```
-ansible-playbook setup_local_mac.yml
-```
-
-Common Setup any linux hosts
-
-```
-ansible-playbook common.yml
+ansible-playbook site.yml
 ```
