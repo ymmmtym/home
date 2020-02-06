@@ -32,6 +32,10 @@ alias tkt-all="tmux kill-server"
 alias d="docker"
 alias dc="docker-compose"
 
+# git
+source /usr/local/etc/bash_completion.d/git-prompt.sh &>/dev/null
+source /usr/local/etc/bash_completion.d/git-completion.bash &>/dev/null
+
 # prompt
 if [ $UID -eq 0 ]; then
     PS1="\[\033[31m\]\u@localhost\[\033[00m\]:\[\033[01m\]\w\[\033[00m\]\\$ "
