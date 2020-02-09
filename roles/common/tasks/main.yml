@@ -13,6 +13,6 @@
   include: git.yml
   tags: git
 
-- name: Include vim task
-  include: vim.yml
-  tags: vim
+- name: Include dein task
+  include: dein.yml
+  tags: dein
