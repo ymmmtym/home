@@ -1,15 +1,15 @@
 #! /bin/bash
 
-json=$(curl -u ymmmtym: -ks "https://api.github.com/users/ymmmtym/repos")
-count=$(($(echo $json | jq '. | length') - 1))
+export json=$(curl -u ymmmtym: -ks "https://api.github.com/users/ymmmtym/repos")
+export count=$(($(echo "${json}" | jq '. | length') - 1))
 
 echo "Follow repos are found"
-echo $json | jq .[].name
+echo "${json}" | jq '.[].name'
 
-for i in `seq 0 ${count}`
+for i in $(seq 0 ${count})
 do
-  ssh_url=$(echo $json | jq -r .[$i].ssh_url)
-  name=$(echo $json | jq -r .[$i].name)
+  ssh_url=$(echo "${json}" | jq -r .[${i}].ssh_url)
+  name=$(echo "${json}" | jq -r .[${i}].name)
   echo -n "clone ${name} ? (y/n): "
   read input
   if [ $input = "y" ]; then
