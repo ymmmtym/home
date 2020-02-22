@@ -21,6 +21,7 @@
   args:
     creates: '{{ dein.install_dir }}/dein'
     chdir: '{{ dein.install_dir }}'
+  when: not ansible_check_mode
 
 - name: Copy toml files
   copy:
@@ -29,3 +30,4 @@
   with_items:
     - '{{ dein.toml }}'
     - '{{ dein.lazy_toml }}'
+  when: not ansible_check_mode
