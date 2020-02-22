@@ -10,7 +10,6 @@ brew_taps:
 brew_cask_apps:
   - docker
   - google-chrome
-  - google-japanese-ime
   - visual-studio-code
   - slack
 
@@ -26,6 +25,4 @@ brew_packages:
   - ssh-copy-id
   - tree
   - wget
-  - zsh
-  - zsh-syntax-highlighting
   - tmux
