@@ -1,0 +1,11 @@
+packages:
+  - docker
+  - docker-compose
+  - git
+  - jq
+  - vim
+  - nmap
+  - openssl
+  - tree
+  - wget
+  - tmux

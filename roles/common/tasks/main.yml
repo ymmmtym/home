@@ -5,6 +5,16 @@
     dir: vars
   tags: always
 
+- name: Include Redhat task
+  include: redhat.yml
+  tags: redhat
+  when: ansible_os_family == "RedHat"
+
+- name: Include Debian task
+  include: debian.yml
+  tags: debian
+  when: ansible_os_family == "Debian"
+
 - name: Include dotfiles task
   include: dotfiles.yml
   tags: dotfiles
