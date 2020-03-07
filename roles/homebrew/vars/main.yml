@@ -26,3 +26,4 @@ brew_packages:
   - tree
   - wget
   - tmux
+  - iproute2mac
