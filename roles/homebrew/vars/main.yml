@@ -27,3 +27,4 @@ brew_packages:
   - wget
   - tmux
   - iproute2mac
+  - fish
