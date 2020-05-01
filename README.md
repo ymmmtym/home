@@ -35,6 +35,7 @@ git_user_email=<put your git user email>
 
 eval "cat <<< \"$(cat gitconfig_secret.template.yml)\"" >> roles/dev/vars/secret.yml
 
+# if you need to encrypt secret
 ansible-vault encrypt roles/dev/vars/secret.yml
 echo '<put vault password>' > .vault_password
 ```
