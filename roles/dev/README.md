@@ -1,7 +1,7 @@
-Role Name
+dev
 =========
 
-A brief description of the role goes here.
+This role is for develop devices.
 
 Requirements
 ------------

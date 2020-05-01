@@ -4,6 +4,9 @@
     - role: homebrew
       when: ansible_os_family == "Darwin"
       tags: homebrew
-    - role: common
+
+- hosts: dev
+  roles:
+    - role: dev
       when: ansible_os_family != "Windows"
-      tags: common
+      tags: dev
