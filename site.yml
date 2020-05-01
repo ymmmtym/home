@@ -15,3 +15,8 @@
   roles:
     - role: web_server
       tags: web_server
+
+- hosts: growi
+  roles:
+    - role: growi
+      tags: growi

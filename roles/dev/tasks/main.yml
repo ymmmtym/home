@@ -5,14 +5,14 @@
     dir: vars
   tags: always
 
-- name: Include Redhat task
-  include: redhat.yml
-  tags: redhat
+- name: Include Redhat packages task
+  include: packages_redhat.yml
+  tags: [ packages, redhat ]
   when: ansible_os_family == "RedHat"
 
-- name: Include Debian task
-  include: debian.yml
-  tags: debian
+- name: Include Debian packages task
+  include: packages_debian.yml
+  tags: [ packages, debian ]
   when: ansible_os_family == "Debian"
 
 - name: Include dotfiles task
