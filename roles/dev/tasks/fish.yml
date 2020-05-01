@@ -1,0 +1,13 @@
+- name: copy config file
+  copy:
+    src: 'fish/config.fish'
+    dest: '~/.config/fish/'
+
+- name: register fish path
+  shell: 'which fish'
+  register: fish_path
+  check_mode: no
+
+- name: apply fish to login shell
+  shell: 'chsh -s {{ fish_path.stdout }}'
+  when: ansible_user_shell != fish_path.stdout

@@ -7,9 +7,13 @@ alias ll 'ls -l'
 alias lla 'ls -al'
 alias ls 'ls -FG'
 
-# alias tmux
+# tmux alias
 alias tat 'tmux a -t'
 alias tkt 'tmux kill-session -t'
 alias tkt-all 'tmux kill-server'
 alias tl 'tmux ls'
 alias tnt 'tmux new -t'
+
+# docker alias
+alias d 'docker'
+alias dc 'docker-compose'
