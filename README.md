@@ -33,14 +33,10 @@ modify secret.yml for gitconfig
 git_user_name=<put your git user name>
 git_user_email=<put your git user email>
 
-cat <<EOF > roles/commom/vars/secret.yml
-gitconfig_secret:
-  - { name: "user.name", value: "${git_user_name}"}
-  - { name: "user.email", value: "${git_user_email}"}
-EOF
+eval "cat <<< \"$(cat gitconfig_secret.template.yml)\"" >> roles/dev/vars/secret.yml
 
-ansible-vault encrypt roles/commom/vars/secret.yml
-echo '<put vault password>' > ~/.vault_password
+ansible-vault encrypt roles/dev/vars/secret.yml
+echo '<put vault password>' > .vault_password
 ```
 
 ### Setup any hosts
