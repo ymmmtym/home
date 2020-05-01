@@ -1,0 +1,5 @@
+---
+# defaults file for roles/web_server
+packages:
+    - docker
+    - docker-compose

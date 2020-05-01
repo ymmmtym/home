@@ -10,3 +10,8 @@
     - role: dev
       when: ansible_os_family != "Windows"
       tags: dev
+
+- hosts: web_server
+  roles:
+    - role: web_server
+      tags: web_server
