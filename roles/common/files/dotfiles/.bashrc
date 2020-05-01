@@ -38,8 +38,9 @@ source /usr/local/etc/bash_completion.d/git-completion.bash &>/dev/null
 
 # prompt
 if [ $UID -eq 0 ]; then
-    PS1="\[\033[31m\]\u@localhost\[\033[00m\]:\[\033[01m\]\w\[\033[00m\]\\$ "
+    # prompt of root user
+    PS1="\[\033[31m\]\u@\h\[\033[00m\]:\[\033[01m\]\w\[\033[00m\]\\$ "
 else
-    PS1="\[\033[36m\]\u@localhost\[\033[00m\]:\[\033[01m\]\w\[\033[00m\]\\$ "
+    PS1="\[\033[36m\]\u@\h\[\033[00m\]:\[\033[01m\]\w\[\033[00m\]\\$ "
 fi
 
