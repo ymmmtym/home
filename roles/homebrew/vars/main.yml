@@ -30,3 +30,6 @@ brew_packages:
   - tmux
   - iproute2mac
   - fish
+  - rbenv
+  - ruby-build
+  - rbenv-gemset
