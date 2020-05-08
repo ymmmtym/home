@@ -18,6 +18,8 @@ brew_packages:
   - docker-machine
   - git
   - git-lfs
+  - github/gh/gh
+  - hub
   - jq
   - vim
   - nmap
