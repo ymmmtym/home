@@ -1,5 +1,6 @@
 ---
 # defaults file for roles/web_server
 packages:
-    - docker
-    - docker-compose
+    - git
+docker_compose:
+    version: 1.25.5
