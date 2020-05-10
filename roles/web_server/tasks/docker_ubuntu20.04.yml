@@ -1,0 +1,33 @@
+- name: Remove installed docker
+  apt:
+    name: '{{ item }}'
+    state: absent
+  become: yes
+  loop:
+    - docker
+    - docker-engine
+    - docker.io
+    - containerd
+    - runc
+
+- name: Install docker packages
+  apt:
+    name: '{{ item }}'
+  become: yes
+  loop:
+    - docker.io
+    - docker-compose
+
+- name: Add user to docker group
+  user:
+    name: "{{ ansible_env.USER }}"
+    groups: docker
+    append: yes
+  become: yes
+
+- name: Ensure docker service is enabled
+  systemd:
+    name: docker
+    state: started
+    enabled: yes
+  become: yes

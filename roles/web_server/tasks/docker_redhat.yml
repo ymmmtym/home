@@ -1,0 +1,55 @@
+- name: Remove installed docker
+  yum:
+    name: '{{ item }}'
+    state: absent
+  become: yes
+  loop:
+    - docker
+    - docker-common
+    - container-selinux
+    - docker-selinux
+    - docker-engine
+    
+- name: Install packages
+  yum:
+    name: '{{ item }}'
+    state: present
+  become: yes
+  loop:
+    - yum-utils
+    - device-mapper-persistent-data  
+    - lvm2 
+
+- name: Add docker yum repositry
+  shell: yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+  become: yes
+
+- name: Install newest docker
+  yum:
+    name: '{{ item }}'
+  become: yes
+  loop:
+    - docker-ce
+    - docker-ce-cli
+    - containerd.io
+
+- name: Add user to docker group
+  user:
+    name: "{{ ansible_env.USER }}"
+    groups: docker
+    append: yes
+  become: yes
+
+- name: Ensure docker service is enabled
+  systemd:
+    name: docker
+    state: started
+    enabled: yes
+  become: yes
+  
+- name: Install docker-compose
+  get_url:
+    url: "https://github.com/docker/compose/releases/download/{{ docker_compose.version }}/docker-compose-{{ ansible_system }}-{{ ansible_architecture }}"
+    dest: /usr/local/bin/docker-compose
+    mode: +x
+  become: yes
