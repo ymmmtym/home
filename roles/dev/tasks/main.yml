@@ -1,10 +1,5 @@
 ---
 # tasks file for roles
-- name: include vars
-  include_vars:
-    dir: vars
-  tags: always
-
 - name: Include Redhat packages task
   include: packages_redhat.yml
   tags: [ packages, redhat ]

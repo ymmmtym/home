@@ -29,17 +29,6 @@ pip install -r requirements.txt
 
 modify secret.yml for gitconfig
 
-```shell
-git_user_name=<put your git user name>
-git_user_email=<put your git user email>
-
-eval "cat <<< \"$(cat gitconfig_secret.template.yml)\"" >> roles/dev/vars/secret.yml
-
-# if you need to encrypt secret
-ansible-vault encrypt roles/dev/vars/secret.yml
-echo '<put vault password>' > .vault_password
-```
-
 ### Setup any hosts
 Setup all
 
