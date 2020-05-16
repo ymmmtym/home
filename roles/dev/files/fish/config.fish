@@ -17,3 +17,7 @@ alias tnt 'tmux new -t'
 # docker alias
 alias d 'docker'
 alias dc 'docker-compose'
+
+# rbenv
+set -x PATH $HOME/.rbenv/bin $PATH
+status --is-interactive; and source (rbenv init -|psub)
