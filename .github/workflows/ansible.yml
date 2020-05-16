@@ -12,14 +12,3 @@ jobs:
       uses: ansible/ansible-lint-action@master
       with:
         targets: "site.yml"
-  
-  homebrew:
-    runs-on: macos-latest
-    steps:
-    - uses: actions/checkout@v2
-
-    - name: Install packages
-      run: pip3 install -r requirements.txt
-
-    - name: Homebrew role
-      run: sudo ansible-playbook site.yml -l localhost -t homebrew
