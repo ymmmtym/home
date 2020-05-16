@@ -1,14 +1,26 @@
 ---
 # tasks file for roles/growi
-- name: clone growi repository
+- name: Clone growi repository
   git:
-    repo: 'https://github.com/ymmmtym/growi-docker-compose.git'
+    repo: 'https://github.com/weseek/growi-docker-compose.git'
     dest: growi
     clone: yes
     update: yes
-  
-#   - name: copy override yml
-#     shell: cp examples/https-portal/docker-compose.override.yml .
+
+- name: Enable access from other hosts
+  replace:
+    path: docker-compose.yml
+    regexp: '127.0.0.1:3000:3000'
+    replace: '3000:3000'
+
+- name: Copy override yml for https-portal
+  shell: cp examples/https-portal/docker-compose.override.yml .
+
+- name: Modify environment of my domain
+  replace:
+    path: docker-compose.override.yml
+    regexp: 'example.com'
+    replace: '{{ mydomain }}'
 
 - name: docker compose up
   docker_compose:
