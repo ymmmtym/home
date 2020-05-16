@@ -7,6 +7,5 @@ fi
 
 # User specific environment and startup programs
 
-PATH=$PATH:$HOME/.local/bin:$HOME/bin
-
-export PATH
+eval "$(rbenv init -)"
+export PATH="$PATH:$HOME/.local/bin:$HOME/bin:$HOME/.rbenv/shims"

@@ -12,6 +12,11 @@ packages:
     - wget
     - tmux
 
+rbenv:
+    - { repo: 'https://github.com/sstephenson/rbenv.git', dest: '~/.rbenv'}
+    - { repo: 'https://github.com/sstephenson/ruby-build.git', dest: '~/.rbenv/plugins/'}
+    - { repo: 'https://github.com/jf/rbenv-gemset.git', dest: '~/.rbenv/plugins/'}
+
 gitconfig:
     - { name: "user.name", value: "ymmmtym"}
     - { name: "user.email", value: "26668352+ymmmtym@users.noreply.github.com"}
