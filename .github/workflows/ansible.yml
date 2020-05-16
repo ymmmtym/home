@@ -1,13 +1,8 @@
-name: Ansible Lint
-on:
-  push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
+name: Ansible
+on: [push, pull_request]
 
 jobs:
-  build:
-
+  ansible_lint:
     runs-on: ubuntu-latest
 
     steps:
