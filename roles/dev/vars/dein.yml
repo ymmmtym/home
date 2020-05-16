@@ -1,6 +1,0 @@
-dein:
-  install_script: 'dein_installer.sh'
-  install_dir: '~/.vim/bundles'
-  rc_dir: '~/.vim/rc'
-  toml: 'dein.toml'
-  lazy_toml: 'dein_lazy.toml'
