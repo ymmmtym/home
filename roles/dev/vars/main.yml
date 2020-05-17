@@ -1,8 +1,6 @@
 ---
 # vars file for roles/dev
 packages:
-    - docker
-    - docker-compose
     - git
     - jq
     - vim
