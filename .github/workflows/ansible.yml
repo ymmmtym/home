@@ -2,7 +2,7 @@ name: Ansible
 on: [push, pull_request]
 
 jobs:
-  ansible_lint:
+  ansible-lint:
     runs-on: ubuntu-latest
 
     steps:
@@ -12,3 +12,65 @@ jobs:
       uses: ansible/ansible-lint-action@master
       with:
         targets: "site.yml"
+
+  ansible-playbook:
+    name: ansible playbook on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      max-parallel: 2
+      matrix:
+        os: [macOS-latest, ubuntu-latest]
+    env:
+      PYTHON_VERSION: 3.7
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: spctl
+        run: sudo /usr/sbin/spctl --master-disable
+        if: runner.os == 'macOS'
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Install requirements
+        run: |
+          pip install -U pip
+          pip install -r requirements.txt
+
+      - name: Run ansible playbook to "dev" inventory hosts
+        run: ansible-playbook site.yml -l dev -vvv
+
+  ansible-playbook-container:
+    name: ansible playbook on ${{ matrix.container }} container
+    runs-on: ubuntu-latest
+    container: 
+      image: ${{ matrix.container }}
+      env:
+        HOME: /root
+      options: -w /root
+    strategy:
+      fail-fast: false
+      max-parallel: 1
+      matrix:
+        container: ['centos:7']
+    env:
+      PYTHON_VERSION: 3.7
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Python
+        run: |
+          yum install -y python3-setuptools gcc python3-devel
+
+      - name: Install requirements
+        run: |
+          pip3 install -U pip
+          pip3 install -r requirements.txt
+
+      - name: Run ansible playbook to "dev" inventory hosts
+        run: ansible-playbook site.yml -l dev -vvv

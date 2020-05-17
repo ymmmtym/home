@@ -1,8 +1,6 @@
 ---
 # vars file for roles/dev
 packages:
-    - docker
-    - docker-compose
     - git
     - jq
     - vim
@@ -11,6 +9,7 @@ packages:
     - tree
     - wget
     - tmux
+    - fish
 
 rbenv:
     - { repo: 'https://github.com/sstephenson/rbenv.git', dest: '~/.rbenv'}
@@ -31,7 +30,7 @@ gitconfig:
 
 dein:
     install_script: 'dein_installer.sh'
-    install_dir: '~/.vim/bundles'
-    rc_dir: '~/.vim/rc'
+    install_dir: '{{ ansible_user_dir }}/.vim/bundles'
+    rc_dir: '{{ ansible_user_dir }}/.vim/rc'
     toml: 'dein.toml'
     lazy_toml: 'dein_lazy.toml'
