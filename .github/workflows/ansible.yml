@@ -53,7 +53,7 @@ jobs:
       fail-fast: false
       max-parallel: 1
       matrix:
-        container: ['centos:latest']
+        container: ['centos:7']
     env:
       PYTHON_VERSION: 3.7
 
@@ -63,7 +63,6 @@ jobs:
       - name: Set up Python
         run: |
           yum install -y python3-setuptools gcc python3-devel
-        if: matrix.container == 'centos:latest'
 
       - name: Install requirements
         run: |
