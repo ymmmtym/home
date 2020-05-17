@@ -49,6 +49,8 @@ jobs:
     runs-on: ubuntu-latest
     container: 
       image: ${{ matrix.container }}
+      env:
+        HOME: /root
       options: -w /root
     strategy:
       fail-fast: false
