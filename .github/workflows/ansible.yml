@@ -34,5 +34,5 @@ jobs:
           pip install -U pip
           pip install -r requirements.txt
 
-      - name: Run homebrew role
-        run: ansible-playbook site.yml -l localhost
+      - name: Run ansible playbook to "dev" inventory hosts
+        run: ansible-playbook site.yml -l dev

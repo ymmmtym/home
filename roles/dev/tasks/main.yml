@@ -19,10 +19,6 @@
   include: dotfiles.yml
   tags: dotfiles
 
-- name: Include fish task
-  include: fish.yml
-  tags: fish
-
 - name: Include git task
   include: git.yml
   tags: git
@@ -30,3 +26,7 @@
 - name: Include dein task
   include: dein.yml
   tags: dein
+
+- name: Include fish task
+  include: fish.yml
+  tags: fish
