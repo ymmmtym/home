@@ -2,7 +2,7 @@ name: Ansible
 on: [push, pull_request]
 
 jobs:
-  ansible_lint:
+  ansible-lint:
     runs-on: ubuntu-latest
 
     steps:
@@ -12,3 +12,27 @@ jobs:
       uses: ansible/ansible-lint-action@master
       with:
         targets: "site.yml"
+
+  build-macos:
+    runs-on: macOS-latest
+    env:
+      PYTHON_VERSION: 3.7
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: spctl
+        run: sudo /usr/sbin/spctl --master-disable
+
+      - name: Set up Python
+        uses: actions/setup-python@v1
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Install requirements
+        run: |
+          pip install -U pip
+          pip install -r requirements.txt
+
+      - name: Run homebrew role
+        run: ansible-playbook site.yml -l localhost
