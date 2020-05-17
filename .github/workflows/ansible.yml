@@ -14,8 +14,10 @@ jobs:
         targets: "site.yml"
 
   ansible-playbook:
+    name: ansible playbook on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     strategy:
+      fail-fast: false
       max-parallel: 2
       matrix:
         os: [macOS-latest, ubuntu-latest]
@@ -36,8 +38,9 @@ jobs:
 
       - name: Install requirements
         run: |
-          pip install -U pip
-          pip install -r requirements.txt
+          python -V
+          # pip install -U pip
+          # pip install -r requirements.txt
 
       - name: Run ansible playbook to "dev" inventory hosts
         run: ansible-playbook site.yml -l dev -vvv

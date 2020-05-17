@@ -10,7 +10,7 @@
     repo: "ppa:fish-shell/release-2"
   become: yes
 
-- name: Install Docker packages
+- name: Install fish package
   apt:
     name: "{{ item }}"
     state: present
