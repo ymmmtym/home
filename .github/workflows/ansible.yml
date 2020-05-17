@@ -14,8 +14,11 @@ jobs:
         targets: "site.yml"
 
   ansible-playbook:
-    runs-on: macOS-latest
-    # runs-on: [macOS-latest, ubuntu-latest]
+    runs-on: ${{ matrix.os }}
+    strategy:
+      max-parallel: 2
+      matrix:
+        os: [macOS-latest, ubuntu-latest]
     env:
       PYTHON_VERSION: 3.7
 
@@ -24,7 +27,7 @@ jobs:
 
       - name: spctl
         run: sudo /usr/sbin/spctl --master-disable
-        if: ${{ runner.os }} == "macOS"
+        if: runner.os == 'macOS'
 
       - name: Set up Python
         uses: actions/setup-python@v1
