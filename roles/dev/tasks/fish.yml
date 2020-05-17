@@ -12,8 +12,8 @@
 #   shell: 'chsh -s {{ fish_path.stdout }}'
 #   when: ansible_user_shell != fish_path.stdout
 
-- name: apply fish to user shell
-  user:
-    name: '{{ ansible_user }}'
-    shell: '{{ fish_path.stdout }}'
-  when: ansible_user_shell != fish_path.stdout
+# - name: apply fish to user shell
+#   user:
+#     name: '{{ ansible_user }}'
+#     shell: '{{ fish_path.stdout }}'
+#   when: ansible_user_shell != fish_path.stdout

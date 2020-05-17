@@ -13,8 +13,8 @@ jobs:
       with:
         targets: "site.yml"
 
-  build-macos:
-    runs-on: macOS-latest
+  ansible-playbook:
+    runs-on: [macOS-latest, ubuntu-latest]
     env:
       PYTHON_VERSION: 3.7
 
@@ -23,6 +23,7 @@ jobs:
 
       - name: spctl
         run: sudo /usr/sbin/spctl --master-disable
+        if: ${{ runner.os }} == "macOS"
 
       - name: Set up Python
         uses: actions/setup-python@v1
@@ -35,4 +36,4 @@ jobs:
           pip install -r requirements.txt
 
       - name: Run ansible playbook to "dev" inventory hosts
-        run: ansible-playbook site.yml -l dev
+        run: ansible-playbook site.yml -l dev -vvv
