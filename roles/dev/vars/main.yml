@@ -9,6 +9,7 @@ packages:
     - tree
     - wget
     - tmux
+    - fish
 
 rbenv:
     - { repo: 'https://github.com/sstephenson/rbenv.git', dest: '~/.rbenv'}

@@ -49,6 +49,7 @@ jobs:
     runs-on: ubuntu-latest
     container: 
       image: ${{ matrix.container }}
+      options: -w /root
     strategy:
       fail-fast: false
       max-parallel: 1

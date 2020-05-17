@@ -1,19 +1,11 @@
-- name: Install common packages
-  become: yes
-  apt: 
-    name: '{{ item }}'
-    state: present
-  with_items: ['{{ packages }}']
-
 - name: Add apt repository
   apt_repository:
     repo: "ppa:fish-shell/release-2"
   become: yes
 
-- name: Install fish package
-  apt:
-    name: "{{ item }}"
-    state: present
+- name: Install common packages
   become: yes
-  loop:
-    - fish
+  apt:
+    name: '{{ item }}'
+    state: present
+  with_items: ['{{ packages }}']

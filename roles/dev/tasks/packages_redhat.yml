@@ -1,20 +1,12 @@
-- name: Install common packages
-  become: yes
-  yum: 
-    name: '{{ item }}'
-    state: present
-  with_items: ['{{ packages }}']
-
 - name: Install epel-release
   yum:
     name: epel-release
     state: present
   become: yes
 
-- name: Install fish package
-  yum:
-    name: "{{ item }}"
-    state: present
+- name: Install common packages
   become: yes
-  loop:
-    - fish
+  yum:
+    name: '{{ item }}'
+    state: present
+  with_items: ['{{ packages }}']
