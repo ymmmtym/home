@@ -14,7 +14,8 @@ jobs:
         targets: "site.yml"
 
   ansible-playbook:
-    runs-on: [macOS-latest, ubuntu-latest]
+    runs-on: macOS-latest
+    # runs-on: [macOS-latest, ubuntu-latest]
     env:
       PYTHON_VERSION: 3.7
 
