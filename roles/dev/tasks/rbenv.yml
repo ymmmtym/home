@@ -4,5 +4,5 @@
     dest: '{{ item.dest }}'
     clone: yes
     update: yes
-    version: HEAD
+    version: '{{ item.version }}'
   loop: '{{ rbenv }}'

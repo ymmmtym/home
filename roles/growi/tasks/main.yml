@@ -6,7 +6,7 @@
     dest: growi
     clone: yes
     update: yes
-    version: HEAD
+    version: '{{ version }}'
 
 - name: Enable access from other hosts
   replace:

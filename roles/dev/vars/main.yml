@@ -12,9 +12,9 @@ packages:
     - fish
 
 rbenv:
-    - { repo: 'https://github.com/sstephenson/rbenv.git', dest: '~/.rbenv'}
-    - { repo: 'https://github.com/sstephenson/ruby-build.git', dest: '~/.rbenv/plugins/'}
-    - { repo: 'https://github.com/jf/rbenv-gemset.git', dest: '~/.rbenv/plugins/'}
+    - { repo: 'https://github.com/sstephenson/rbenv.git', dest: '~/.rbenv', version: 'v1.1.2'}
+    - { repo: 'https://github.com/sstephenson/ruby-build.git', dest: '~/.rbenv/plugins/', version: 'v20200401'}
+    - { repo: 'https://github.com/jf/rbenv-gemset.git', dest: '~/.rbenv/plugins/', version: 'v0.5.9'}
 
 gitconfig:
     - { name: "user.name", value: "ymmmtym"}
