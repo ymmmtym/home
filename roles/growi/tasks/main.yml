@@ -6,26 +6,21 @@
     dest: growi
     clone: yes
     update: yes
+    version: HEAD
 
 - name: Enable access from other hosts
   replace:
     path: docker-compose.yml
     regexp: '127.0.0.1:3000:3000'
     replace: '3000:3000'
+  notify:
+    - docker compose up
 
 - name: Modify environment of my domain
   replace:
     path: examples/https-portal/docker-compose.override.yml
     regexp: 'example.com'
     replace: '{{ mydomain }}'
-  register: modify
-
-- name: Copy override yml for https-portal
-  command: cp examples/https-portal/docker-compose.override.yml .
-  when: modify.changed
-
-- name: docker compose up
-  docker_compose:
-    project_src: growi
-    state: present
-  become: yes
+  notify:
+    - Copy override yml for https-portal
+    - docker compose up
