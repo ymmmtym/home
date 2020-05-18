@@ -54,7 +54,9 @@ jobs:
       image: ${{ matrix.container }}
       env:
         HOME: /root
-      options: -w /root
+      ports:
+        - 514:514
+      options: --workdir /root --privileged
     strategy:
       fail-fast: false
       max-parallel: 1
@@ -75,4 +77,4 @@ jobs:
           pip3 install -r requirements.txt
 
       - name: Run ansible playbook to "dev" inventory hosts
-        run: ansible-playbook site.yml -l dev -vvv
+        run: ansible-playbook site.yml -l dev --skip-tags docker -vvv

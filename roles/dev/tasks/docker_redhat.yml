@@ -37,7 +37,7 @@
 
 - name: Add user to docker group
   user:
-    name: "{{ ansible_env.USER }}"
+    name: "{{ ansible_user_id }}"
     groups: docker
     append: yes
   become: yes
@@ -48,6 +48,7 @@
     state: started
     enabled: yes
   become: yes
+  when: ansible_virtualization_type != "docker"
 
 - name: Install docker-compose
   get_url:

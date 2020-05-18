@@ -11,6 +11,9 @@ packages:
     - tmux
     - fish
 
+docker_compose:
+    version: 1.25.5
+
 rbenv:
     - { repo: 'https://github.com/sstephenson/rbenv.git', dest: '~/.rbenv', version: 'v1.1.2'}
     - { repo: 'https://github.com/sstephenson/ruby-build.git', dest: '~/.rbenv/plugins/', version: 'v20200401'}

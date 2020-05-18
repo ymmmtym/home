@@ -10,10 +10,29 @@
   tags: [ packages, debian ]
   when: ansible_os_family == "Debian"
 
+- name: Include Redhat Docker task
+  include: docker_redhat.yml
+  tags: [ docker, packages, redtat ]
+  when: ansible_os_family == "RedHat"
+
+- name: Include Debian Docker task
+  include: docker_debian.yml
+  tags: [ docker, packages, debian ]
+  when:
+    - ansible_os_family == "Debian"
+    - ansible_distribution_version | float < 20.04
+
+- name: Include Debian Docker task only Ubuntu20.04
+  include: docker_ubuntu20.04.yml
+  tags: [ docker, packages, debian ]
+  when:
+    - ansible_os_family == "Debian"
+    - ansible_distribution_version | float == 20.04
+
 - name: Include rbenv task
   include: rbenv.yml
-  tags: rbenv
   when: ansible_os_family in ("RedHat","Debian")
+  tags: rbenv
 
 - name: Include dotfiles task
   include: dotfiles.yml
