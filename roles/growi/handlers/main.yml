@@ -1,2 +1,10 @@
 ---
 # handlers file for roles/growi
+- name: Copy override yml for https-portal
+  command: cp examples/https-portal/docker-compose.override.yml .
+
+- name: docker compose up
+  docker_compose:
+    project_src: growi
+    state: present
+  become: yes

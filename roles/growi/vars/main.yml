@@ -1,3 +1,4 @@
 ---
 # vars file for roles/growi
+version: HEAD
 mydomain: growi.ymmmtym.com
