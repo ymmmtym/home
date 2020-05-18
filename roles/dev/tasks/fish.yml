@@ -4,10 +4,11 @@
     dest: '~/.config/fish/'
 
 - name: register fish path
-  shell: 'which fish'
+  command: 'which fish'
   register: fish_path
+  changed_when: False
   check_mode: no
-  
+
 - name: apply fish to user shell
   user:
     name: '{{ ansible_user }}'

@@ -1,12 +1,12 @@
-- name: Yum update
-  become: yes
-  yum:
-    name: '*'
-    state: latest
+# - name: Yum update
+#   become: yes
+#   yum:
+#     name: '*'
+#     state: latest
 
 - name: Install common packages
   become: yes
-  yum: 
+  yum:
     name: '{{ item }}'
     state: present
   loop: '{{ packages }}'

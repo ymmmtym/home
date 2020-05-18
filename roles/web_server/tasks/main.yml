@@ -18,13 +18,13 @@
 - name: Include Debian Docker task
   include: docker_debian.yml
   tags: [ docker, packages, debian ]
-  when: 
+  when:
     - ansible_os_family == "Debian"
     - ansible_distribution_version | float < 20.04
 
 - name: Include Debian Docker task
   include: docker_ubuntu20.04.yml
   tags: [ docker, packages, debian ]
-  when: 
+  when:
     - ansible_os_family == "Debian"
     - ansible_distribution_version | float == 20.04

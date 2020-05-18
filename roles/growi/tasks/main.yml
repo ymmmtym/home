@@ -13,14 +13,16 @@
     regexp: '127.0.0.1:3000:3000'
     replace: '3000:3000'
 
-- name: Copy override yml for https-portal
-  shell: cp examples/https-portal/docker-compose.override.yml .
-
 - name: Modify environment of my domain
   replace:
-    path: docker-compose.override.yml
+    path: examples/https-portal/docker-compose.override.yml
     regexp: 'example.com'
     replace: '{{ mydomain }}'
+  register: modify
+
+- name: Copy override yml for https-portal
+  command: cp examples/https-portal/docker-compose.override.yml .
+  when: modify.changed
 
 - name: docker compose up
   docker_compose:

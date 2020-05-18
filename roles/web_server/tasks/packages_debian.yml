@@ -1,12 +1,12 @@
-- name: Apt update
-  become: yes
-  apt:
-    name: '*'
-    state: latest
+# - name: Apt update
+#   become: yes
+#   apt:
+#     name: '*'
+#     state: latest
 
 - name: Install common packages
   become: yes
-  apt: 
+  apt:
     name: '{{ item }}'
     state: present
   loop: '{{ packages }}'

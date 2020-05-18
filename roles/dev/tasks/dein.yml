@@ -17,7 +17,7 @@
     dest: '{{ dein.install_dir }}'
 
 - name: Install dein
-  shell: 'sh {{ dein.install_script }} dein'
+  command: 'sh {{ dein.install_script }} dein'
   args:
     creates: '{{ dein.install_dir }}/dein'
     chdir: '{{ dein.install_dir }}'
