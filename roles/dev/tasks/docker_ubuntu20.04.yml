@@ -31,3 +31,4 @@
     state: started
     enabled: yes
   become: yes
+  when: ansible_virtualization_type != "docker"
