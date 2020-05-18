@@ -54,7 +54,9 @@ jobs:
       image: ${{ matrix.container }}
       env:
         HOME: /root
-      options: -w /root --privileged
+      ports:
+        - 514:514
+      options: --workdir /root --privileged
     strategy:
       fail-fast: false
       max-parallel: 1
