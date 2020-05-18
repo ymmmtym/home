@@ -1,9 +1,3 @@
-# - name: Apt update
-#   become: yes
-#   apt:
-#     name: '*'
-#     state: latest
-
 - name: Install common packages
   become: yes
   apt:
