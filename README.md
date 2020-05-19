@@ -1,7 +1,6 @@
 # ansible-mgmt
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/63c0a38a6d20423f902974bcd9f7dc9c)](https://app.codacy.com/manual/ymmmtym/ansible-mgmt?utm_source=github.com&utm_medium=referral&utm_content=ymmmtym/ansible-mgmt&utm_campaign=Badge_Grade_Dashboard)
 ![Ansible](https://github.com/ymmmtym/ansible-mgmt/workflows/Ansible/badge.svg)
-[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/ymmmtym/ansible-mgmt)
 
 ## Requirements
 -  python >= 3
@@ -18,6 +17,7 @@ source ~/.bash_profile
 ```
 
 ## Usage
+
 activate ansible env
 
 ```shell
@@ -28,9 +28,8 @@ python3 -m venv --clear .venv
 pip install -r requirements.txt
 ```
 
-modify secret.yml for gitconfig
-
 ### Setup any hosts
+
 Setup all
 
 ```shell
