@@ -10,7 +10,6 @@ packages:
     - wget
     - tmux
     - fish
-    - deno
 
 docker_compose:
     version: 1.25.5
