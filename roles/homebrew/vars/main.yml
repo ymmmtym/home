@@ -33,3 +33,4 @@ brew_packages:
   - rbenv
   - ruby-build
   - rbenv-gemset
+  - deno
