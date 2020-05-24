@@ -9,9 +9,9 @@
   changed_when: False
   check_mode: no
 
-# - name: apply fish to user shell
-#   user:
-#     name: '{{ ansible_user }}'
-#     shell: '{{ fish_path.stdout }}'
-#   when: ansible_user_shell != fish_path.stdout
-#   become: yes
+- name: apply fish to user shell
+  user:
+    name: '{{ ansible_user }}'
+    shell: '{{ fish_path.stdout }}'
+  when: ansible_user_shell != fish_path.stdout
+  become: yes
