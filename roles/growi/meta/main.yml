@@ -21,5 +21,6 @@ galaxy_info:
       versions:
         - all
   galaxy_tags: []
-dependencies: []
+dependencies:
+  - role: web_server
 

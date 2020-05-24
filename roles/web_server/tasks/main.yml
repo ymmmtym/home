@@ -1,5 +1,15 @@
 ---
 # tasks file for roles/web_server
+- name: Include Redhat task
+  include_tasks: packages_redhat.yml
+  tags: [ packages, redhat ]
+  when: ansible_os_family == "RedHat"
+
+- name: Include Debian task
+  include_tasks: packages_debian.yml
+  tags: [ packages, debian ]
+  when: ansible_os_family == "Debian"
+
 - name: Include Redhat Docker task
   include_role:
     name: dev

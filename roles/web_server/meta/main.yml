@@ -21,5 +21,6 @@ galaxy_info:
       versions:
         - all
   galaxy_tags: []
-dependencies: ['dev']
+dependencies:
+  # - role: dev
 
