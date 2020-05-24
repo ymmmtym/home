@@ -45,7 +45,7 @@ jobs:
           pip install -r requirements.txt
 
       - name: Run ansible playbook to "dev" inventory hosts
-        run: ansible-playbook site.yml -l dev -vvv
+        run: ansible-playbook site.yml -l dev -vvv --flush-cache
 
   ansible-playbook-container:
     name: ansible playbook on ${{ matrix.container }} container
@@ -72,4 +72,4 @@ jobs:
           pip3 install -r requirements.txt
 
       - name: Run ansible playbook to "dev" inventory hosts
-        run: ansible-playbook site.yml -l dev --skip-tags docker -vvv
+        run: ansible-playbook site.yml -l dev --skip-tags docker -vvv --flush-cache
