@@ -1,21 +1,38 @@
-- name: remove lock files
-  become: yes
-  file:
-    path: '{{ item }}'
-    state: absent
-  loop:
-    - /var/lib/apt/lists/*
-    - /var/lib/dpkg/*
-
 - name: Add apt repository
   apt_repository:
     repo: "ppa:fish-shell/release-2"
+    update_cache: yes
+  register: apt_result
+  ignore_errors: yes
   become: yes
 
-- name: Install common packages
+# - name: apt update
+#   apt:
+#     update_cache: yes
+#   register: apt_result
+#   ignore_errors: yes
+#   become: yes
+
+- name: retry if needed using command apt update
   become: yes
+  when: apt_result.failed
+  block:
+    - name: Remove apt lock files
+      file:
+        path: /var/lib/apt/lists/lock
+        state: absent
+
+    - name: Apt clean and Apt update
+      shell: 'apt clean && apt update -y'
+
+# - name: Add apt repository
+#   apt_repository:
+#     repo: "ppa:fish-shell/release-2"
+#   become: yes
+
+- name: Install common packages
   apt:
     name: '{{ item }}'
     state: present
-    update_cache: yes
+  become: yes
   with_items: ['{{ packages }}']
