@@ -1,8 +1,3 @@
-- name: Run the equivalent of "yum update" as a separate step
-  yum:
-    update_cache: yes
-  become: yes
-
 - name: Install epel-release
   yum:
     name: epel-release
@@ -14,4 +9,5 @@
   yum:
     name: '{{ item }}'
     state: present
+    update_cache: yes
   with_items: ['{{ packages }}']

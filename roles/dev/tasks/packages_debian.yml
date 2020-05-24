@@ -4,13 +4,8 @@
     path: '{{ item }}'
     state: absent
   loop:
-    - /var/lib/apt/lists/lock
-    - /var/lib/dpkg/lock
-
-- name: Run the equivalent of "apt-get update" as a separate step
-  apt:
-    update_cache: yes
-  become: yes
+    - /var/lib/apt/lists/*
+    - /var/lib/dpkg/*
 
 - name: Add apt repository
   apt_repository:
@@ -22,4 +17,5 @@
   apt:
     name: '{{ item }}'
     state: present
+    update_cache: yes
   with_items: ['{{ packages }}']
