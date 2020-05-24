@@ -1,0 +1,11 @@
+---
+# tasks file for roles/keywoo
+- name: Clone keywoo repository
+  git:
+    repo: 'https://github.com/ymmmtym/keywoo.git'
+    dest: keywoo
+    clone: yes
+    update: yes
+    version: '{{ version }}'
+  notify:
+    - docker compose up
