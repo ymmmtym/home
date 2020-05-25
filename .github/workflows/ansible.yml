@@ -22,8 +22,8 @@ jobs:
       fail-fast: false
       max-parallel: 4
       matrix:
-        os: [macOS-latest, ubuntu-latest, ubuntu-18.04, ubuntu-16.04]
-        # os: [macOS-latest]
+        # os: [macOS-latest, ubuntu-latest, ubuntu-18.04, ubuntu-16.04]
+        os: [macOS-latest]
     env:
       PYTHON_VERSION: 3.7
     needs: ansible-lint
@@ -72,7 +72,7 @@ jobs:
         if: contains(matrix.container, 'centos')
 
       - name: Set up Python for Ubuntu
-        run: apt update -y && apt install -y gcc python3-dev
+        run: apt update -y && apt install -y libffi-dev python3-dev python3-pip
         if: contains(matrix.container, 'ubuntu')
 
       - name: Install requirements
