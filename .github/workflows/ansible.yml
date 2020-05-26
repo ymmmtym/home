@@ -22,8 +22,8 @@ jobs:
       fail-fast: false
       max-parallel: 4
       matrix:
-        # os: [macOS-latest, ubuntu-latest, ubuntu-18.04, ubuntu-16.04]
-        os: [macOS-latest]
+        os: [macOS-latest, ubuntu-latest, ubuntu-18.04, ubuntu-16.04]
+        # os: [macOS-latest]
     env:
       PYTHON_VERSION: 3.7
     needs: ansible-lint
@@ -61,7 +61,8 @@ jobs:
       fail-fast: false
       max-parallel: 5
       matrix:
-        container: ['centos:7','centos:8','ubuntu:16.04','ubuntu:18.04','ubuntu:20.04']
+        container: ['centos:7','centos:8']
+        # container: ['centos:7','centos:8','ubuntu:16.04','ubuntu:18.04','ubuntu:20.04']
     needs: ansible-lint
 
     steps:
