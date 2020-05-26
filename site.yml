@@ -20,3 +20,8 @@
   roles:
     - role: growi
       tags: growi
+
+- hosts: keywoo
+  roles:
+    - role: keywoo
+      tags: keywoo

@@ -1,12 +1,12 @@
 ---
 # tasks file for roles/web_server
 - name: Include Redhat task
-  include: packages_redhat.yml
+  include_tasks: packages_redhat.yml
   tags: [ packages, redhat ]
   when: ansible_os_family == "RedHat"
 
 - name: Include Debian task
-  include: packages_debian.yml
+  include_tasks: packages_debian.yml
   tags: [ packages, debian ]
   when: ansible_os_family == "Debian"
 
@@ -34,3 +34,12 @@
   when:
     - ansible_os_family == "Debian"
     - ansible_distribution_version | float == 20.04
+
+- name: Install docker in pip
+  pip:
+    name: '{{ item }}'
+    state: present
+  become: yes
+  loop:
+    - docker
+    - docker-compose

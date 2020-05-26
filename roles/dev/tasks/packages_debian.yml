@@ -4,8 +4,9 @@
   become: yes
 
 - name: Install common packages
-  become: yes
   apt:
     name: '{{ item }}'
     state: present
-  with_items: ['{{ packages }}']
+    update_cache: yes
+  become: yes
+  loop: '{{ packages }}'

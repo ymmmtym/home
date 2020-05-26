@@ -4,3 +4,11 @@
     name: '{{ item }}'
     state: present
   loop: '{{ packages }}'
+
+- name: Install python-pip
+  yum:
+    name: '{{ item }}'
+    state: present
+    enablerepo: epel
+  become: yes
+  loop: [ python-pip, python-devel, gcc ]

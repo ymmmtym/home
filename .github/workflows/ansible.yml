@@ -23,6 +23,7 @@ jobs:
       max-parallel: 4
       matrix:
         os: [macOS-latest, ubuntu-latest, ubuntu-18.04, ubuntu-16.04]
+        # os: [macOS-latest]
     env:
       PYTHON_VERSION: 3.7
     needs: ansible-lint
@@ -30,9 +31,13 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: spctl
+      - name: Exec spctl
         run: sudo /usr/sbin/spctl --master-disable
         if: runner.os == 'macOS'
+
+      - name: Apt update
+        run: sudo apt update -y
+        if: runner.os == 'Linux'
 
       - name: Set up Python
         uses: actions/setup-python@v2
@@ -54,17 +59,22 @@ jobs:
       image: ${{ matrix.container }}
     strategy:
       fail-fast: false
-      max-parallel: 2
+      max-parallel: 5
       matrix:
         container: ['centos:7','centos:8']
+        # container: ['centos:7','centos:8','ubuntu:16.04','ubuntu:18.04','ubuntu:20.04']
     needs: ansible-lint
 
     steps:
       - uses: actions/checkout@v2
 
-      - name: Set up Python
-        run: |
-          yum install -y python3-setuptools gcc python3-devel
+      - name: Set up Python for CentOS
+        run: yum update -y && yum install -y python3-setuptools gcc python3-devel
+        if: contains(matrix.container, 'centos')
+
+      - name: Set up Python for Ubuntu
+        run: apt update -y && apt install -y libffi-dev python3-dev python3-pip
+        if: contains(matrix.container, 'ubuntu')
 
       - name: Install requirements
         run: |

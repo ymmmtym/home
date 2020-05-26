@@ -9,4 +9,5 @@
   yum:
     name: '{{ item }}'
     state: present
-  with_items: ['{{ packages }}']
+    update_cache: yes
+  loop: '{{ packages }}'
