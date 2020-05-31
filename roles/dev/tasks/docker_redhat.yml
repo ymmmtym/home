@@ -9,7 +9,7 @@
     - container-selinux
     - docker-selinux
     - docker-engine
-  when: docker_version.stdout is version_compare(docker_.version, '<')
+  when: docker_version.stdout is version_compare(docker.version, '<')
 
 - name: Install packages
   yum:
