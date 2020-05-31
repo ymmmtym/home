@@ -1,14 +1,5 @@
 ---
 # tasks file for roles
-- name: Install fish for Centos8
-  get_url:
-    url: https://download.opensuse.org/repositories/shells:fish:release:3/CentOS_8/shells:fish:release:3.repo
-    dest: /etc/yum.repos.d/
-  become: yes
-  when:
-    - ansible_os_family == "RedHat"
-    - ansible_distribution_major_version | float == 8
-
 - name: Include Redhat packages task
   include: packages_redhat.yml
   tags: [ packages, redhat ]
