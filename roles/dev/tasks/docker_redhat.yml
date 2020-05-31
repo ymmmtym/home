@@ -55,3 +55,4 @@
     dest: /usr/local/bin/docker-compose
     mode: +x
   become: yes
+  when: docker_compose_version.stdout is version_compare(docker_compose.version, '<')
