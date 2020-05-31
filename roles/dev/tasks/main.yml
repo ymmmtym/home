@@ -1,33 +1,40 @@
 ---
 # tasks file for roles
-- name: Include Redhat packages task
-  include: packages_redhat.yml
-  tags: [ packages, redhat ]
-  when: ansible_os_family == "RedHat"
+- name: Install packages
+  block:
+    - name: Include Redhat packages task
+      include: packages_redhat.yml
+      tags: [ redhat ]
+      when: ansible_os_family == "RedHat"
+    - name: Include Debian packages task
+      include: packages_debian.yml
+      tags: [ debian ]
+      when: ansible_os_family == "Debian"
 
-- name: Include Debian packages task
-  include: packages_debian.yml
-  tags: [ packages, debian ]
-  when: ansible_os_family == "Debian"
+  tags: [ packages ]
 
-- name: Include Redhat Docker task
-  include: docker_redhat.yml
-  tags: [ docker, packages, redtat ]
-  when: ansible_os_family == "RedHat"
 
-- name: Include Debian Docker task
-  include: docker_debian.yml
-  tags: [ docker, packages, debian ]
-  when:
-    - ansible_os_family == "Debian"
-    - ansible_distribution_version | float < 20.04
+- name: Insatall Docker
+  block:
+    - name: Include Redhat Docker task
+      include: docker_redhat.yml
+      tags: [ docker, packages ]
+      when: ansible_os_family == "RedHat"
 
-- name: Include Debian Docker task only Ubuntu20.04
-  include: docker_ubuntu20.04.yml
-  tags: [ docker, packages, debian ]
-  when:
-    - ansible_os_family == "Debian"
-    - ansible_distribution_version | float == 20.04
+    - name: Include Debian Docker task
+      include: docker_debian.yml
+      tags: [ docker, packages ]
+      when:
+        - ansible_os_family == "Debian"
+        - ansible_distribution_version | float < 20.04
+
+    - name: Include Debian Docker task only Ubuntu20.04
+      include: docker_ubuntu20.04.yml
+      tags: [ docker, packages ]
+      when:
+        - ansible_os_family == "Debian"
+        - ansible_distribution_version | float == 20.04
+  tags: [ docker, packages ]
 
 - name: Include rbenv task
   include: rbenv.yml
