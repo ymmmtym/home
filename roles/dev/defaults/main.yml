@@ -1,2 +1,39 @@
 ---
 # defaults file for roles
+packages:
+  - git
+  - jq
+  - vim
+  - nmap
+  - openssl
+  - tree
+  - wget
+  - tmux
+  - fish
+
+docker_compose:
+  version: 1.25.5
+
+rbenv:
+  - { repo: 'https://github.com/sstephenson/rbenv.git', dest: '~/.rbenv', version: 'v1.1.2'}
+  - { repo: 'https://github.com/sstephenson/ruby-build.git', dest: '~/.rbenv/plugins/', version: 'v20200401'}
+  - { repo: 'https://github.com/jf/rbenv-gemset.git', dest: '~/.rbenv/plugins/', version: 'v0.5.9'}
+
+gitconfig:
+  - { name: "user.name", value: "ymmmtym"}
+  - { name: "user.email", value: "26668352+ymmmtym@users.noreply.github.com"}
+  - { name: "core.editor", value: 'vim -c "set fenc=utf-8"'}
+  - { name: "color.diff", value: auto}
+  - { name: "color.status", value: auto}
+  - { name: "color.branch", value: auto}
+  - { name: "alias.cm", value: "commit -m"}
+  - { name: "alias.pom", value: "push origin master"}
+  - { name: "alias.su", value: "submodule update"}
+  - { name: "alias.rh", value: "reset --hard HEAD^"}
+
+dein:
+  install_script: 'dein_installer.sh'
+  install_dir: '{{ ansible_user_dir }}/.vim/bundles'
+  rc_dir: '{{ ansible_user_dir }}/.vim/rc'
+  toml: 'dein.toml'
+  lazy_toml: 'dein_lazy.toml'
