@@ -9,6 +9,8 @@
     - docker.io
     - containerd
     - runc
+  when: docker_version.stdout is version_compare(docker_.version, '<')
+
 
 - name: Add docker GPG key
   apt_key:
