@@ -1,42 +1,54 @@
 ---
 # tasks file for roles
-- name: Install fish for Centos8
-  get_url:
-    url: https://download.opensuse.org/repositories/shells:fish:release:3/CentOS_8/shells:fish:release:3.repo
-    dest: /etc/yum.repos.d/
-  become: yes
-  when:
-    - ansible_os_family == "RedHat"
-    - ansible_distribution_major_version | float == 8
+- name: Install packages
+  block:
+    - name: Include Redhat packages task
+      include: packages_redhat.yml
+      tags: [ redhat ]
+      when: ansible_os_family == "RedHat"
+    - name: Include Debian packages task
+      include: packages_debian.yml
+      tags: [ debian ]
+      when: ansible_os_family == "Debian"
 
-- name: Include Redhat packages task
-  include: packages_redhat.yml
-  tags: [ packages, redhat ]
-  when: ansible_os_family == "RedHat"
+  tags: [ packages ]
 
-- name: Include Debian packages task
-  include: packages_debian.yml
-  tags: [ packages, debian ]
-  when: ansible_os_family == "Debian"
 
-- name: Include Redhat Docker task
-  include: docker_redhat.yml
-  tags: [ docker, packages, redtat ]
-  when: ansible_os_family == "RedHat"
+- name: Insatall Docker
+  block:
+    - name: check docker version
+      command: docker version -f \{\{.Server.Version\}\}
+      changed_when: false
+      ignore_errors: yes
+      register: docker_version
 
-- name: Include Debian Docker task
-  include: docker_debian.yml
-  tags: [ docker, packages, debian ]
-  when:
-    - ansible_os_family == "Debian"
-    - ansible_distribution_version | float < 20.04
+    - name: check docker compose version
+      command: docker-compose version --short
+      changed_when: false
+      ignore_errors: yes
+      register: docker_compose_version
 
-- name: Include Debian Docker task only Ubuntu20.04
-  include: docker_ubuntu20.04.yml
-  tags: [ docker, packages, debian ]
-  when:
-    - ansible_os_family == "Debian"
-    - ansible_distribution_version | float == 20.04
+    - name: Include Redhat Docker task
+      include: docker_redhat.yml
+      tags: [ redhat ]
+      when:
+        - ansible_os_family == "RedHat"
+
+    - name: Include Debian Docker task
+      include: docker_debian.yml
+      tags: [ debian ]
+      when:
+        - ansible_os_family == "Debian"
+        - ansible_distribution_version | float < 20.04
+
+    - name: Include Debian Docker task only Ubuntu20.04
+      include: docker_ubuntu20.04.yml
+      tags: [ debian ]
+      when:
+        - ansible_os_family == "Debian"
+        - ansible_distribution_version | float == 20.04
+
+  tags: [ docker, packages ]
 
 - name: Include rbenv task
   include: rbenv.yml

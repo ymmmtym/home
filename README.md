@@ -1,11 +1,14 @@
 # ansible-mgmt
+
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/63c0a38a6d20423f902974bcd9f7dc9c)](https://app.codacy.com/manual/ymmmtym/ansible-mgmt?utm_source=github.com&utm_medium=referral&utm_content=ymmmtym/ansible-mgmt&utm_campaign=Badge_Grade_Dashboard)
 ![Ansible](https://github.com/ymmmtym/ansible-mgmt/workflows/Ansible/badge.svg)
 
 ## Requirements
--  python >= 3
+
+- python >= 3.6
 
 ### Install python3 for Mac
+
 If your mac is not installed python3.X, execute follow procedure.
 
 ```shell

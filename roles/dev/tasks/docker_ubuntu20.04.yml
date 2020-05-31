@@ -9,6 +9,7 @@
     - docker.io
     - containerd
     - runc
+  when: docker_version.stdout is version_compare(docker.version, '<')
 
 - name: Install docker packages
   apt:
