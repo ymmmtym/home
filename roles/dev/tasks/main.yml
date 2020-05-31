@@ -28,32 +28,28 @@
       ignore_errors: yes
       register: docker_compose_version
 
-    - name: debug
-      debug:
-        msg: '{{ docker_version }} {{ docker_compose_version }}'
+    - name: Include Redhat Docker task
+      include: docker_redhat.yml
+      tags: [ redhat ]
+      when:
+        - ansible_os_family == "RedHat"
+        - docker_compose_version.stdout | float < docker_compose.version
 
-    # - name: Include Redhat Docker task
-    #   include: docker_redhat.yml
-    #   tags: [ redhat ]
-    #   when:
-    #     - ansible_os_family == "RedHat"
-    #     - (docker_version.stdout | float < docker.version) or (docker_compose_version.stdout | float < docker_compose.version)
+    - name: Include Debian Docker task
+      include: docker_debian.yml
+      tags: [ debian ]
+      when:
+        - ansible_os_family == "Debian"
+        - ansible_distribution_version | float < 20.04
+        - docker_compose_version.stdout | float < docker_compose.version
 
-    # - name: Include Debian Docker task
-    #   include: docker_debian.yml
-    #   tags: [ debian ]
-    #   when:
-    #     - ansible_os_family == "Debian"
-    #     - ansible_distribution_version | float < 20.04
-    #     - (docker_version.stdout | float < docker.version) or (docker_compose_version.stdout | float < docker_compose.version)
-
-    # - name: Include Debian Docker task only Ubuntu20.04
-    #   include: docker_ubuntu20.04.yml
-    #   tags: [ debian ]
-    #   when:
-    #     - ansible_os_family == "Debian"
-    #     - ansible_distribution_version | float == 20.04
-    #     - (docker_version.stdout | float < docker.version) or (docker_compose_version.stdout | float < docker_compose.version)
+    - name: Include Debian Docker task only Ubuntu20.04
+      include: docker_ubuntu20.04.yml
+      tags: [ debian ]
+      when:
+        - ansible_os_family == "Debian"
+        - ansible_distribution_version | float == 20.04
+        - docker_compose_version.stdout | float < docker_compose.version
 
   tags: [ docker, packages ]
 
