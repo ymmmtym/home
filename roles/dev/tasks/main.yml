@@ -16,10 +16,25 @@
 
 - name: Insatall Docker
   block:
+    - name: check docker version
+      command: docker version -f \{\{.Server.Version\}\}
+      changed_when: false
+      ignore_errors: yes
+      register: docker_version
+
+    - name: check docker compose version
+      command: docker-compose version --short
+      changed_when: false
+      ignore_errors: yes
+      register: docker_compose_version
+
     - name: Include Redhat Docker task
       include: docker_redhat.yml
       tags: [ docker, packages ]
-      when: ansible_os_family == "RedHat"
+      when:
+        - ansible_os_family == "RedHat"
+        - docker_version.stdout | version_compare(docker.version, '<')
+        - docker_compose_version.stdout | version_compare(docker_compose.version, '<')
 
     - name: Include Debian Docker task
       include: docker_debian.yml
@@ -27,6 +42,8 @@
       when:
         - ansible_os_family == "Debian"
         - ansible_distribution_version | float < 20.04
+        - docker_version.stdout | version_compare(docker.version, '<')
+        - docker_compose_version.stdout | version_compare(docker_compose.version, '<')
 
     - name: Include Debian Docker task only Ubuntu20.04
       include: docker_ubuntu20.04.yml
@@ -34,6 +51,9 @@
       when:
         - ansible_os_family == "Debian"
         - ansible_distribution_version | float == 20.04
+        - docker_version.stdout | version_compare(docker.version, '<')
+        - docker_compose_version.stdout | version_compare(docker_compose.version, '<')
+
   tags: [ docker, packages ]
 
 - name: Include rbenv task

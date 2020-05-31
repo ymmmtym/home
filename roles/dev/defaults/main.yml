@@ -11,6 +11,9 @@ packages:
   - tmux
   - fish
 
+docker:
+  version: 19.03.8
+
 docker_compose:
   version: 1.25.5
 
