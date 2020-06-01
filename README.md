@@ -5,9 +5,9 @@
 
 ## Requirements
 
-- python >= 3.6
+- python>=3.6
 
-### Install python3 for Mac
+### Install brew and python3 for Mac
 
 If your mac is not installed python3.X, execute follow procedure.
 
