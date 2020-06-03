@@ -1,6 +1,6 @@
 - name: Install fish for Centos8
   get_url:
-    url: https://download.opensuse.org/repositories/shells:fish:release:3/CentOS_8/shells:fish:release:3.repo
+    url: 'https://download.opensuse.org/repositories/shells:fish:release:3/CentOS_8/shells:fish:release:3.repo'
     dest: /etc/yum.repos.d/
   become: yes
   when:
