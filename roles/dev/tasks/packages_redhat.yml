@@ -7,14 +7,14 @@
     - ansible_distribution_major_version | float == 8
 
 - name: Install epel-release
-  yum:
+  dnf:
     name: epel-release
     state: present
   become: yes
 
 - name: Install common packages
   become: yes
-  yum:
+  dnf:
     name: '{{ item }}'
     state: present
     update_cache: yes
