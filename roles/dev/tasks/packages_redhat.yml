@@ -6,6 +6,26 @@
   when:
     - ansible_distribution_major_version | float == 8
 
+- name: Install dnf for Centos7
+  block:
+    - name: Change interpreter
+      set_fact:
+        ansible_python_interpreter: "/usr/bin/python"
+
+    - name: Install epel-release
+      yum:
+        name: epel-release
+        state: present
+      become: yes
+
+    - name: Install dnf
+      yum:
+        name: dnf
+        state: present
+      become: yes
+  when:
+    - ansible_distribution_major_version | float < 8
+
 - name: Install epel-release
   dnf:
     name: epel-release
