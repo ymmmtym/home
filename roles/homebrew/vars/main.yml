@@ -36,3 +36,4 @@ brew_packages:
   - ruby-build
   - rbenv-gemset
   - deno
+  - dnsmasq
