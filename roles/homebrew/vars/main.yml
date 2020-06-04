@@ -12,6 +12,8 @@ brew_cask_apps:
   - google-chrome
   - visual-studio-code
   - slack
+  - virtualbox
+  - vagrant
 
 brew_packages:
   - docker-compose
@@ -34,3 +36,4 @@ brew_packages:
   - ruby-build
   - rbenv-gemset
   - deno
+  - dnsmasq
