@@ -2,17 +2,17 @@
 # tasks file for roles/homebrew
 - name: Homebrew tap
   homebrew_tap:
-    name: "{{ item }}"
-    state: "present"
-  loop: "{{ brew_taps }}"
+    name: '{{ item }}'
+    state: 'present'
+  loop: '{{ brew_taps }}'
 
 - name: Install Homebrew Cask Packages
   homebrew_cask:
-    name: "{{ item }}"
-    state: "present"
-    install_options: "appdir=/Applications"
+    name: '{{ item }}'
+    state: present
+    install_options: 'appdir=/Applications'
     accept_external_apps: yes
-  loop: "{{ brew_cask_apps }}"
+  loop: '{{ brew_cask_apps }}'
 
 - name: Update Homebrew
   homebrew:
@@ -20,5 +20,6 @@
 
 - name: Install Homebrew Packages
   homebrew:
-    name: "{{ brew_packages }}"
-    state: "present"
+    name: '{{ item }}'
+    state: present
+  loop: '{{ brew_packages }}'
