@@ -37,3 +37,5 @@ brew_packages:
   - rbenv-gemset
   - deno
   - dnsmasq
+  - htop
+  - ctop
