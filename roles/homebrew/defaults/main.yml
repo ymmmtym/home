@@ -18,6 +18,7 @@ brew_cask_apps:
 brew_packages:
   - docker-compose
   - docker-machine
+  - minikube
   - git
   - git-lfs
   - github/gh/gh
