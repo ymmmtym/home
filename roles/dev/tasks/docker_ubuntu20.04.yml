@@ -9,7 +9,16 @@
     - docker.io
     - containerd
     - runc
-  when: docker_version.stdout is version_compare(docker.version, '<')
+  when: (docker_version.failed) or
+        (docker_version.stdout is version_compare(docker.version, '<'))
+
+- name: Remove installed docker compose
+  apt:
+    name: docker-compose
+    state: absent
+  become: yes
+  when: (docker_compose_version.failed) or
+        (docker_compose_version.stdout is version_compare(docker_compose.version, '<'))
 
 - name: Install docker packages
   apt:
@@ -22,7 +31,7 @@
 - name: Add user to docker group
   user:
     name: "{{ ansible_user_id }}"
-    groups: docker
+    group: docker
     append: yes
   become: yes
 

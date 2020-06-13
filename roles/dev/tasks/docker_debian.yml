@@ -9,7 +9,8 @@
     - docker.io
     - containerd
     - runc
-  when: docker_version.stdout is version_compare(docker.version, '<')
+  when: (docker_version.failed) or
+        (docker_version.stdout is version_compare(docker.version, '<'))
 
 - name: Add docker GPG key
   apt_key:
@@ -47,7 +48,7 @@
 - name: Add user to docker group
   user:
     name: "{{ ansible_user_id }}"
-    groups: docker
+    group: docker
     append: yes
   become: yes
 
@@ -64,4 +65,5 @@
     dest: /usr/local/bin/docker-compose
     mode: +x
   become: yes
-  when: docker_compose_version.stdout is version_compare(docker_compose.version, '<')
+  when: (docker_compose_version.failed) or
+        (docker_compose_version.stdout is version_compare(docker_compose.version, '<'))

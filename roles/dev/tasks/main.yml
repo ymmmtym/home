@@ -10,9 +10,7 @@
       include: packages_debian.yml
       tags: [ debian ]
       when: ansible_os_family == "Debian"
-
   tags: [ packages ]
-
 
 - name: Insatall Docker
   block:
@@ -31,8 +29,7 @@
     - name: Include Redhat Docker task
       include: docker_redhat.yml
       tags: [ redhat ]
-      when:
-        - ansible_os_family == "RedHat"
+      when: ansible_os_family == "RedHat"
 
     - name: Include Debian Docker task
       include: docker_debian.yml
@@ -47,7 +44,6 @@
       when:
         - ansible_os_family == "Debian"
         - ansible_distribution_version | float == 20.04
-
   tags: [ docker, packages ]
 
 - name: Include rbenv task
