@@ -1,7 +1,2 @@
 ---
 # handlers file for roles/keywoo
-- name: docker compose up
-  docker_compose:
-    project_src: keywoo
-    state: present
-  become: yes
