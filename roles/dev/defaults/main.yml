@@ -25,6 +25,7 @@ rbenv:
 gitconfig:
   - { name: "user.name", value: "ymmmtym"}
   - { name: "user.email", value: "26668352+ymmmtym@users.noreply.github.com"}
+  - { name: "pull.rebase", value: "false"}
   - { name: "core.editor", value: 'vim -c "set fenc=utf-8"'}
   - { name: "color.diff", value: auto}
   - { name: "color.status", value: auto}
