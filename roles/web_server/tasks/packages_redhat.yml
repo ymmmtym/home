@@ -1,14 +1,46 @@
+- name: Install dnf for Centos7
+  block:
+    - name: Change interpreter
+      set_fact:
+        ansible_python_interpreter: "/usr/bin/python"
+
+    - name: Install epel-release
+      yum:
+        name: epel-release
+        state: present
+      become: yes
+
+    - name: Install dnf
+      yum:
+        name: dnf
+        state: present
+      become: yes
+  when:
+    - ansible_distribution_major_version | float < 8
+
 - name: Install common packages
-  become: yes
-  yum:
+  dnf:
     name: '{{ item }}'
     state: present
+    update_cache: yes
+  become: yes
   loop: '{{ packages }}'
 
+- name: Install epel-release
+  dnf:
+    name: epel-release
+    state: present
+  become: yes
+  when: ansible_distribution_version | float < 8
+
 - name: Install python-pip
-  yum:
+  dnf:
     name: '{{ item }}'
     state: present
     enablerepo: epel
   become: yes
-  loop: [ python-pip, python-devel, gcc ]
+  loop:
+    - gcc
+    - python-devel
+    - python-pip
+  when: ansible_distribution_version | float < 8

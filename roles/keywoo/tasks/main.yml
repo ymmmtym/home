@@ -7,5 +7,9 @@
     clone: yes
     update: yes
     version: '{{ version }}'
-  notify:
-    - docker compose up
+
+- name: docker compose up
+  docker_compose:
+    project_src: keywoo
+    state: present
+  become: yes
