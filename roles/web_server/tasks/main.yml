@@ -53,6 +53,12 @@
         - ansible_distribution_version | float == 20.04
   tags: [ docker, packages ]
 
+- name: Upgrade pip
+  pip:
+    name: pip
+    state: latest # noqa 403
+  become: yes
+
 - name: Install docker in pip
   pip:
     name: '{{ item }}'
