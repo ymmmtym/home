@@ -42,3 +42,4 @@ brew_packages:
   - ctop
   - terraform
   - packer
+  - kompose
