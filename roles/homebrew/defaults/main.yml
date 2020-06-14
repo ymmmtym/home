@@ -14,8 +14,6 @@ brew_cask_apps:
   - slack
   - virtualbox
   - vagrant
-  - terraform
-  - packer
 
 brew_packages:
   - docker-compose
@@ -42,5 +40,5 @@ brew_packages:
   - dnsmasq
   - htop
   - ctop
-  - openconnect
-
+  - terraform
+  - packer
