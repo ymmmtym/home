@@ -50,6 +50,7 @@
       when:
         - ansible_os_family == "Debian"
         - ansible_distribution_version | float == 20.04
+  when: ansible_os_family in ("RedHat","Debian")
   tags: [ docker, packages ]
 
 - name: Include rbenv task
