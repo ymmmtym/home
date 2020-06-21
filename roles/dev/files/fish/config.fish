@@ -21,3 +21,8 @@ alias dc 'docker-compose'
 # rbenv
 set -x PATH $HOME/.rbenv/bin $PATH
 status --is-interactive; and source (rbenv init -|psub)
+
+# go
+set -x GOROOT "go env GOROOT" or "/usr/local/opt/go/libexec"
+set -x GOPATH $HOME/go
+set -x PATH $PATH $GOPATH/bin
