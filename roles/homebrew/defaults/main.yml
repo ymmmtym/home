@@ -9,7 +9,7 @@ brew_taps:
 
 brew_cask_apps:
   - docker
-  - google-chromec
+  - google-chrome
   - visual-studio-code
   - slack
   - virtualbox
