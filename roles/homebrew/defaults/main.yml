@@ -16,31 +16,31 @@ brew_cask_apps:
   - vagrant
 
 brew_packages:
-  - docker-compose
-  - docker-machine
-  - go
-  - minikube
   - git
   - git-lfs
   - github/gh/gh
   - hub
-  - jq
-  - vim
   - nmap
+  - htop
+  - ctop
   - openssl
   - ssh-copy-id
   - tree
   - wget
   - tmux
   - iproute2mac
+  - jq
+  - go
+  - deno
+  - vim
   - fish
   - rbenv
   - ruby-build
   - rbenv-gemset
-  - deno
   - dnsmasq
-  - htop
-  - ctop
+  - docker-compose
+  - docker-machine
+  - minikube
+  - kompose
   - terraform
   - packer
-  - kompose
