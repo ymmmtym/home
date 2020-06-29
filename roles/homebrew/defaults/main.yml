@@ -23,6 +23,9 @@ brew_packages:
   - nmap
   - htop
   - ctop
+  - ncdu
+  - tldr
+  - fd
   - openssl
   - ssh-copy-id
   - tree
