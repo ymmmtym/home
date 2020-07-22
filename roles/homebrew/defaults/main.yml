@@ -28,6 +28,7 @@ brew_packages:
   - ncdu
   - tldr
   - fd
+  - watch
   - openssl
   - ssh-copy-id
   - tree
