@@ -29,6 +29,7 @@ brew_packages:
   - tldr
   - fd
   - watch
+  - ack
   - openssl
   - ssh-copy-id
   - tree
