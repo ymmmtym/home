@@ -15,6 +15,7 @@
   copy:
     src: 'dein/{{ dein.install_script }}'
     dest: '{{ dein.install_dir }}'
+    mode: '0644'
 
 - name: Install dein
   command: 'sh {{ dein.install_script }} dein'
@@ -27,6 +28,7 @@
   copy:
     src: 'dein/{{ item }}'
     dest: '{{ dein.rc_dir }}/{{ item }}'
+    mode: '0644'
   loop:
     - '{{ dein.toml }}'
     - '{{ dein.lazy_toml }}'
