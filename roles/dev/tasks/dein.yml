@@ -2,11 +2,13 @@
   template:
     src: '.vimrc.j2'
     dest: '{{ ansible_user_dir }}/.vimrc'
+    mode: '0644'
 
 - name: Create dein directory
   file:
     path: '{{ item }}'
     state: directory
+    mode: '0755'
   loop:
     - '{{ dein.install_dir }}'
     - '{{ dein.rc_dir }}'
