@@ -1,7 +1,7 @@
 # ansible-mgmt
 
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/3fd9480b4f45452e9ffedfa32e980e5b)](https://www.codacy.com/gh/ymmmtym/ansible-mgmt/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=ymmmtym/ansible-mgmt&amp;utm_campaign=Badge_Grade)
-![Ansible](https://github.com/ymmmtym/ansible-mgmt/workflows/Ansible/badge.svg)
+![Ansible](https://github.com/ymmmtym/ansible-mgmt/workflows/Ansible/badge.svg?event=pull_request)
 
 ## Requirements
 
