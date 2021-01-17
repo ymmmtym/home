@@ -1,11 +1,9 @@
 name: Ansible
 on:
-  push:
-    branches-ignore:
-      - main
+  # push:
+  #   branches-ignore: [ main ]
   pull_request:
-    branches:
-      - main
+    branches: [ main ]
 
 jobs:
   ansible-lint:
