@@ -51,4 +51,4 @@ brew_packages:
   - kompose
   - terraform
   - packer
-  - nodebrew
+  - npm
