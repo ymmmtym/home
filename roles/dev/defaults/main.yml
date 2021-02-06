@@ -32,9 +32,10 @@ gitconfig:
   - { name: "color.status", value: auto}
   - { name: "color.branch", value: auto}
   - { name: "alias.cm", value: "commit -m"}
-  - { name: "alias.pom", value: "push origin master"}
   - { name: "alias.su", value: "submodule update"}
   - { name: "alias.rh", value: "reset --hard HEAD^"}
+  - { name: "alias.unstage", value: "reset HEAD --"}
+  - { name: "alias.last", value: "log -1 HEAD"}
 
 dein:
   install_script: 'dein_installer.sh'
