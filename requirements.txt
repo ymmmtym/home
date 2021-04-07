@@ -1,4 +1,4 @@
-ansible==2.9.9
+ansible==2.10.0
 ansible-lint==4.3.7
 asn1crypto==0.24.0
 cffi==1.12.3
