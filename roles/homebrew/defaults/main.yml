@@ -14,8 +14,8 @@ brew_cask_apps:
   - slack
   - virtualbox
   - vagrant
-  - dropbox
-  - evernote
+  # - dropbox
+  # - evernote
 
 brew_packages:
   - git
@@ -52,3 +52,5 @@ brew_packages:
   - terraform
   - packer
   - npm
+  - peco
+  - ghq

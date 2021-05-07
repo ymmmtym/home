@@ -12,6 +12,6 @@ eval "$(rbenv init -)"
 export PATH="$PATH:$HOME/.local/bin:$HOME/bin:$HOME/.rbenv/shims"
 
 # go
-export GOROOT="go env GOROOT" or "/usr/local/opt/go/libexec"
-export GOPATH=$HOME/dev/go
+export GOROOT="/usr/local/opt/go/libexec"
+export GOPATH=$HOME/go
 export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
