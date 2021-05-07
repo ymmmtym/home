@@ -1,6 +1,6 @@
 - name: Add apt repository
   apt_repository:
-    repo: "ppa:fish-shell/release-2"
+    repo: "ppa:fish-shell/release-3"
   become: yes
 
 - name: Install common packages
