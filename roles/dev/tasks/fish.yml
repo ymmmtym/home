@@ -16,3 +16,8 @@
     shell: '{{ fish_path.stdout }}'
   when: ansible_user_shell != fish_path.stdout
   become: yes
+
+- name: install oh-my-fish
+  shell: 'curl -L https://get.oh-my.fish | fish'
+  args:
+    creates: '~/.config/fish/conf.d/omf.fish'
