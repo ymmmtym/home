@@ -17,7 +17,17 @@
   when: ansible_user_shell != fish_path.stdout
   become: yes
 
-- name: install oh-my-fish
-  shell: 'curl -L https://get.oh-my.fish | fish'
+- name: Download oh-my-fish
+  get_url:
+    url: https://get.oh-my.fish
+    dest: /tmp/get.oh-my.fish
+
+- name: Execute oh-my-fish
+  command: '/tmp/get.oh-my.fish | fish'
   args:
     creates: '~/.config/fish/conf.d/omf.fish'
+
+- name: Remove oh-my-fish
+  file:
+    path: /tmp/get.oh-my.fish
+    state: absent
