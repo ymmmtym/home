@@ -17,18 +17,18 @@
   when: ansible_user_shell != fish_path.stdout
   become: yes
 
-- name: Download oh-my-fish
-  get_url:
-    url: https://get.oh-my.fish
-    dest: /tmp/get.oh-my.fish
-    mode: '0755'
+# - name: Download oh-my-fish
+#   get_url:
+#     url: https://get.oh-my.fish
+#     dest: /tmp/get.oh-my.fish
+#     mode: '0755'
 
-- name: Execute oh-my-fish
-  command: 'cat /tmp/get.oh-my.fish | fish'
-  args:
-    creates: '~/.config/fish/conf.d/omf.fish'
+# - name: Execute oh-my-fish
+#   command: 'fish /tmp/get.oh-my.fish'
+#   args:
+#     creates: '~/.config/fish/conf.d/omf.fish'
 
-- name: Remove oh-my-fish
-  file:
-    path: /tmp/get.oh-my.fish
-    state: absent
+# - name: Remove oh-my-fish
+#   file:
+#     path: /tmp/get.oh-my.fish
+#     state: absent
