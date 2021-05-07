@@ -24,7 +24,7 @@
     mode: '0755'
 
 - name: Execute oh-my-fish
-  command: '/tmp/get.oh-my.fish | fish'
+  command: 'cat /tmp/get.oh-my.fish | fish'
   args:
     creates: '~/.config/fish/conf.d/omf.fish'
 
