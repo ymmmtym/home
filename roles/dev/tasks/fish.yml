@@ -12,7 +12,7 @@
 
 - name: apply fish to user shell
   user:
-    name: '{{ ansible_user }}'
+    name: '{{ ansible_user_id }}'
     shell: '{{ fish_path.stdout }}'
   when: ansible_user_shell != fish_path.stdout
   become: yes
