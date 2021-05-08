@@ -24,13 +24,4 @@
 - name: Include Debian Docker task except Ubuntu20.04
   include: docker_debian.yml
   tags: [ debian ]
-  when:
-    - ansible_os_family == "Debian"
-    - ansible_distribution_version | float < 20.04
-
-- name: Include Debian Docker task only Ubuntu20.04
-  include: docker_ubuntu20.04.yml
-  tags: [ debian ]
-  when:
-    - ansible_os_family == "Debian"
-    - ansible_distribution_version | float == 20.04
+  when: ansible_os_family == "Debian"

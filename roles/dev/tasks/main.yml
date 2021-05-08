@@ -14,10 +14,6 @@
   when: ansible_os_family in ("RedHat","Debian")
   tags: rbenv
 
-- name: Include dotfiles task
-  include: dotfiles.yml
-  tags: dotfiles
-
 - name: Include git task
   include: git.yml
   tags: git
@@ -29,3 +25,7 @@
 - name: Include fish task
   include: fish.yml
   tags: fish
+
+- name: Include dotfiles task
+  include: dotfiles.yml
+  tags: dotfiles

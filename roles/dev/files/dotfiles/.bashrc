@@ -20,15 +20,11 @@ alias lla='ls -al'
 alias egrep='egrep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias grep='grep --color=auto'
-
-# tmux
 alias tnt="tmux new -t"
 alias tat="tmux a -t"
 alias tl="tmux ls"
 alias tkt="tmux kill-session -t"
 alias tkt-all="tmux kill-server"
-
-# docker
 alias d="docker"
 alias dc="docker-compose"
 
@@ -43,4 +39,3 @@ if [ $UID -eq 0 ]; then
 else
     PS1="\[\033[36m\]\u@\h\[\033[00m\]:\[\033[01m\]\w\[\033[00m\]\\$ "
 fi
-
