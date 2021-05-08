@@ -20,6 +20,8 @@ alias tl 'tmux ls'
 alias tnt 'tmux new -t'
 alias d 'docker'
 alias dc 'docker-compose'
+alias g 'cd (ghq list --full-path | peco)'
+alias hbg 'hub browse (ghq list | peco | cut -d "/" -f 2,3)'
 
 # rbenv
 set -x PATH $HOME/.rbenv/bin $PATH
