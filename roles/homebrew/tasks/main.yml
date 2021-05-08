@@ -15,6 +15,7 @@
     name: '{{ item }}'
     state: present
   loop: '{{ brew_cask_apps }}'
+  failed_when: false
 
 - name: Install Homebrew Packages
   homebrew:
