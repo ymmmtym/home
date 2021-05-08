@@ -36,6 +36,7 @@ gitconfig:
   - { name: "alias.rh", value: "reset --hard HEAD^"}
   - { name: "alias.unstage", value: "reset HEAD --"}
   - { name: "alias.last", value: "log -1 HEAD"}
+  - { name: "ghq.root", value: "~/.ghq"}
 
 dein:
   install_script: 'dein_installer.sh'
