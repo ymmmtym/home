@@ -22,7 +22,8 @@ alias d 'docker'
 alias dc 'docker-compose'
 alias g 'cd (ghq list --full-path | peco)'
 alias hbg 'hub browse (ghq list | peco | cut -d "/" -f 2,3)'
-alias gg 'ghq get -p (curl -s https://api.github.com/users/(git config user.name)/repos | jq -r ".[].full_name" | peco)'
+alias gg 'ghq get -p (curl -s "https://api.github.com/users/"(git config user.name)"/repos?per_page=100" | jq -r ".[].full_name" | peco)'
+
 
 # rbenv
 set -x PATH $HOME/.rbenv/bin $PATH
