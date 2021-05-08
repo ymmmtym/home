@@ -2,6 +2,7 @@
   apt_repository:
     repo: "ppa:fish-shell/release-3"
   become: yes
+  when: ansible_distribution_version | float < 20.04
 
 - name: Install common packages
   apt:
