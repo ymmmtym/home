@@ -9,11 +9,17 @@ brew_taps:
 
 brew_cask_apps:
   - docker
+  - firefox
   - google-chrome
+  - google-drive
   - visual-studio-code
+  - microsoft-remote-desktop
   - slack
+  - discord
+  - notion
   - virtualbox
   - vagrant
+  - postman
   # - dropbox
   # - evernote
 
