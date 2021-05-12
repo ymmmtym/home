@@ -36,6 +36,9 @@ gitconfig:
   - { name: "alias.rh", value: "reset --hard HEAD^"}
   - { name: "alias.unstage", value: "reset HEAD --"}
   - { name: "alias.last", value: "log -1 HEAD"}
+  - { name: merge.tool, value: vimdiff}
+  - { name: merge.conflictstyle, value: diff3}
+  - { name: mergetool.prompt, value: "false"}
   - { name: "ghq.root", value: "~/.ghq"}
 
 dein:

@@ -39,3 +39,9 @@ repo = 'suy/vim-ctrlp-commandline'
 
 [[plugins]]
 repo = 'scrooloose/nerdcommenter'
+
+[[plugins]]
+repo = "airblade/vim-gitgutter"
+
+[[plugins]]
+repo = "tpope/vim-fugitive"
