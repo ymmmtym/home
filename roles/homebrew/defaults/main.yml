@@ -10,6 +10,7 @@ brew_taps:
 brew_cask_apps:
   - docker
   - firefox
+  - pushplaylabs-sidekick
   - google-chrome
   - google-drive
   - visual-studio-code
