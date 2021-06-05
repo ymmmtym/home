@@ -1,0 +1,21 @@
+{
+  "esxi_host": "192.168.0.2",
+  "esxi_datastore": "datastore1",
+  "esxi_username": "root",
+  "esxi_password": "{{ env `ESXI_PASSWORD` }}",
+  "disk_type_id": "thin",
+  "default_network": "VM Network",
+  "default_memsize": "1024",
+  "ssh_username": "root",
+  "ssh_password": "password",
+  "vyos_iso_url": "http://mirror.tuxhelp.org/vyos/iso/release/1.1.8/vyos-1.1.8-amd64.iso",
+  "vyos_iso_checksum": "ff4c8e1822e653d8d85f4a90f30c6d2ac047514c",
+  "centos7_iso_url": "http://ftp.tsukuba.wide.ad.jp/Linux/centos/7.9.2009/isos/x86_64/CentOS-7-x86_64-Minimal-2009.iso",
+  "centos7_iso_checksum": "07b94e6b1a0b0260b94c83d6bb76b26bf7a310dc78d7a9c7432809fb9bc6194a",
+  "centos8_iso_url": "http://ty1.mirror.newmediaexpress.com/centos/8.3.2011/isos/x86_64/CentOS-8.3.2011-x86_64-minimal.iso",
+  "centos8_iso_checksum": "191daa949a021733bbc19ae42dd1280b30d4ded7e316733461a2efb4463fbfed",
+  "ubuntu1804_iso_url": "http://cdimage.ubuntu.com/releases/18.04/release/ubuntu-18.04.5-server-amd64.iso",
+  "ubuntu1804_iso_checksum": "8c5fc24894394035402f66f3824beb7234b757dd2b5531379cb310cedfdf0996",
+  "ubuntu2004_iso_url": "http://cdimage.ubuntu.com/ubuntu-legacy-server/releases/20.04/release/ubuntu-20.04.1-legacy-server-amd64.iso",
+  "ubuntu2004_iso_checksum": "f11bda2f2caed8f420802b59f382c25160b114ccc665dbac9c5046e7fceaced2"
+}
