@@ -1,0 +1,16 @@
+#cloud-config
+# vim:syntax=yaml
+user: kube
+password: kube
+network:
+  ethernets:
+    ens32:
+      dhcp4: true
+    ens33:
+      dhcp4: true
+version: 2
+chpasswd: { expire: False }
+ssh_pwauth: True
+runcmd:
+  - hostnamectl set-hostname ${HOSTNAME}
+  - ip r del default dev ens33

@@ -1,0 +1,12 @@
+{% for vlan in vlans %}
+set interface ethernet {{ vlan.eth }} vrrp vrrp-group {{ vlan.id }}
+set interface ethernet {{ vlan.eth }} vrrp vrrp-group {{ vlan.id }} advertise-interval 1
+set interface ethernet {{ vlan.eth }} vrrp vrrp-group {{ vlan.id }} preempt false
+{% if vlan.type == 'outbound' %}
+set interface ethernet {{ vlan.eth }} vrrp vrrp-group {{ vlan.id }} virtual-address {{ vrrp.outbound_addr }}
+{% else %}
+set interface ethernet {{ vlan.eth }} vrrp vrrp-group {{ vlan.id }} virtual-address {{ vlan.cidr | ipaddr('next_usable') }}
+{% endif %}
+set interface ethernet {{ vlan.eth }} vrrp vrrp-group {{ vlan.id }} sync-group syncgroup{{ vlan.id }}
+set interface ethernet {{ vlan.eth }} vrrp vrrp-group {{ vlan.id }} priority {{ vrrp.priority }}
+{% endfor %}
