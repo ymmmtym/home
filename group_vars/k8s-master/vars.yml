@@ -1,0 +1,3 @@
+---
+kubernetes_role: master
+kubernetes_apiserver_advertise_address: '{{ ansible_ens33.ipv4.address }}'

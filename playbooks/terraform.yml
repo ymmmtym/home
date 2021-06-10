@@ -1,0 +1,9 @@
+- hosts: localhost
+  connection: local
+  gather_facts: no
+  tasks:
+    - name: terraform
+      terraform:
+        project_path: '{{ terraform_project_path }}'
+        state: present
+      register: terraform

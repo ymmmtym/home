@@ -4,10 +4,6 @@ terraform {
       source = "josenk/esxi"
       version = "1.8.1"
     }
-    ignition = {
-      source = "community-terraform-providers/ignition"
-      version = "2.1.2"
-    }
   }
 }
 

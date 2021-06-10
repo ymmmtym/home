@@ -1,17 +1,36 @@
-data "template_file" "k8s_master1" {
+data "template_file" "k8s_master1_userdata" {
   template = file("user-data.yml")
   vars = {
     HOSTNAME = "k8s-master1"
   }
 }
-data "template_file" "k8s_worker1" {
+data "template_file" "k8s_worker1_userdata" {
   template = file("user-data.yml")
   vars = {
     HOSTNAME = "k8s-worker1"
   }
 }
-data "template_file" "k8s_worker2" {
+data "template_file" "k8s_worker2_userdata" {
   template = file("user-data.yml")
+  vars = {
+    HOSTNAME = "k8s-worker2"
+  }
+}
+
+data "template_file" "k8s_master1_metadata" {
+  template = file("meta-data.yml")
+  vars = {
+    HOSTNAME = "k8s-master1"
+  }
+}
+data "template_file" "k8s_worker1_metadata" {
+  template = file("meta-data.yml")
+  vars = {
+    HOSTNAME = "k8s-worker1"
+  }
+}
+data "template_file" "k8s_worker2_metadata" {
+  template = file("meta-data.yml")
   vars = {
     HOSTNAME = "k8s-worker2"
   }
@@ -23,7 +42,7 @@ resource "esxi_guest" "k8s-master1" {
   disk_store         = var.DISK_STORE
   clone_from_vm      = "template-ubuntu2004"
   memsize            = "4096"
-  numvcpus           = "1"
+  numvcpus           = "2"
   boot_disk_size     = "30"
   network_interfaces {
     virtual_network  = esxi_portgroup.portgroup100_1.name
@@ -34,8 +53,10 @@ resource "esxi_guest" "k8s-master1" {
     mac_address      = "00:50:56:00:65:04"
   }
   guestinfo = {
+    "metadata.encoding" = "gzip+base64"
+    "metadata"          = base64gzip(data.template_file.k8s_master1_metadata.rendered)
     "userdata.encoding" = "gzip+base64"
-    "userdata"          = base64gzip(data.template_file.k8s_master1.rendered)
+    "userdata"          = base64gzip(data.template_file.k8s_master1_userdata.rendered)
   }
 }
 resource "esxi_guest" "k8s-worker1" {
@@ -44,7 +65,7 @@ resource "esxi_guest" "k8s-worker1" {
   disk_store         = var.DISK_STORE
   clone_from_vm      = "template-ubuntu2004"
   memsize            = "4096"
-  numvcpus           = "1"
+  numvcpus           = "2"
   boot_disk_size     = "30"
   network_interfaces {
     virtual_network  = esxi_portgroup.portgroup100_1.name
@@ -55,8 +76,10 @@ resource "esxi_guest" "k8s-worker1" {
     mac_address      = "00:50:56:00:65:05"
   }
   guestinfo = {
+    "metadata.encoding" = "gzip+base64"
+    "metadata"          = base64gzip(data.template_file.k8s_worker1_metadata.rendered)
     "userdata.encoding" = "gzip+base64"
-    "userdata"          = base64gzip(data.template_file.k8s_worker1.rendered)
+    "userdata"          = base64gzip(data.template_file.k8s_worker1_userdata.rendered)
   }
 }
 resource "esxi_guest" "k8s-worker2" {
@@ -65,7 +88,7 @@ resource "esxi_guest" "k8s-worker2" {
   disk_store         = var.DISK_STORE
   clone_from_vm      = "template-ubuntu2004"
   memsize            = "4096"
-  numvcpus           = "1"
+  numvcpus           = "2"
   boot_disk_size     = "30"
   network_interfaces {
     virtual_network  = esxi_portgroup.portgroup100_1.name
@@ -76,7 +99,9 @@ resource "esxi_guest" "k8s-worker2" {
     mac_address      = "00:50:56:00:65:06"
   }
   guestinfo = {
+    "metadata.encoding" = "gzip+base64"
+    "metadata"          = base64gzip(data.template_file.k8s_worker2_metadata.rendered)
     "userdata.encoding" = "gzip+base64"
-    "userdata"          = base64gzip(data.template_file.k8s_worker2.rendered)
+    "userdata"          = base64gzip(data.template_file.k8s_worker2_userdata.rendered)
   }
 }

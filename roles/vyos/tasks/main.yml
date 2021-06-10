@@ -4,7 +4,7 @@
   vyos_config:
     src: '{{ item }}'
   loop:
-    - base.j2
-    - dhcp.j2
-    - nat.j2
-    - vrrp.j2
+    - "base.j2"
+    - "dhcp.j2"
+    - "nat.j2"
+    - "vrrp.j2"

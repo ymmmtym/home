@@ -1,27 +1,51 @@
 ---
-- hosts: all
+- hosts: localhost
+  connection: local
   roles:
     - role: homebrew
       when: ansible_os_family == "Darwin"
-      tags: homebrew
+  tags: homebrew
 
 - hosts: dev
   roles:
     - role: dev
       when: ansible_os_family != "Windows"
-      tags: dev
+  tags: dev
+
+- import_playbook: playbooks/terraform.yml
+  vars:
+    terraform_project_path: 'terraform/'
+  tags: terraform
+
+- hosts: vyos
+  gather_facts: no
+  roles:
+    - role: vyos
+  tags: vyos
+
+- import_playbook: playbooks/swapoff.yml
+
+- hosts: kubernetes
+  become: yes
+  roles:
+    - role: ansible-role-docker
+    - role: ansible-role-kubernetes
+  tags: kubernetes
 
 - hosts: web_server
   roles:
     - role: web_server
       tags: web_server
+  tags: web_server
 
 - hosts: growi
   roles:
     - role: growi
       tags: growi
+  tags: growi
 
 - hosts: keywoo
   roles:
     - role: keywoo
       tags: keywoo
+  tags: keywoo

@@ -1,3 +1,4 @@
+---
 vrrp: 
   status: backup
   priority: 100

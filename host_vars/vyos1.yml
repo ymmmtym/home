@@ -1,3 +1,4 @@
+---
 vrrp:
   status: main
   priority: 150
