@@ -10,6 +10,7 @@ crash.log
 
 # packer
 packer_cache/
+output-*/
 *.box
 
 # terraform

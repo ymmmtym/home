@@ -1,7 +1,7 @@
 #cloud-config
 # vim:syntax=yaml
-user: tail
-password: tail
+user: test
+password: test
 chpasswd: { expire: False }
 ssh_pwauth: True
 runcmd:

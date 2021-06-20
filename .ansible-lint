@@ -1,2 +1,4 @@
 exclude_paths:
-- .github/
+  - .github/
+  - roles/ansible-role-docker/
+  - roles/ansible-role-kubernetes/

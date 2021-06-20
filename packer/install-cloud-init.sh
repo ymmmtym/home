@@ -1,9 +1,7 @@
 #!/usr/bin/env bash
 
-source /etc/os-release
-
 install-pip() {
-  case "${1}" in
+  case "$1" in
     7)
       yum install -y epel-release
       yum install -y python-pip --enablerepo=epel
@@ -13,10 +11,10 @@ install-pip() {
 }
 
 install() {
-  case "${1}" in
+  case "$1" in
     centos)
       yum install -y open-vm-tools
-      install-pip ${2}
+      install-pip "$2"
       yum install -y cloud-init
       ;;
     ubuntu)
@@ -29,4 +27,12 @@ install() {
   cloud-init clean
 }
 
-install ${ID} ${VERSION_ID}
+
+if [[ -f /etc/os-release ]]; then
+  source /usr/lib/os-release
+else
+  echo "/etc/os-release is not exist."
+  exit 1
+fi
+
+install "$ID" "$VERSION_ID"

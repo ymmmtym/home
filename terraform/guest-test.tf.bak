@@ -1,0 +1,28 @@
+data "template_file" "test01_userdata" {
+  template = file("cloud-init/user-data-test.yml")
+  vars = {
+    HOSTNAME = "test01"
+  }
+}
+
+resource "esxi_guest" "test01" {
+  guest_name     = "test01"
+  power          = "on"
+  disk_store     = var.DISK_STORE
+  clone_from_vm  = "template-centos8"
+  memsize        = "4096"
+  numvcpus       = "2"
+  boot_disk_size = "15"
+  network_interfaces {
+    virtual_network = esxi_portgroup.portgroup100_1.name
+    mac_address     = "00:50:56:00:64:07"
+  }
+  network_interfaces {
+    virtual_network = esxi_portgroup.portgroup101_1.name
+    mac_address     = "00:50:56:00:65:07"
+  }
+  guestinfo = {
+    "userdata.encoding" = "gzip+base64"
+    "userdata"          = base64gzip(data.template_file.test01_userdata.rendered)
+  }
+}

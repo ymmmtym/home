@@ -2,14 +2,14 @@
   become: yes
   tasks:
     - name: get swap state
-      shell: swapon -v
+      command: swapon -v
       register: swap_state
       check_mode: false
       changed_when: false
 
     - name: swap off
-      shell: swapoff -a
-      when: swap_state.stdout != ''
+      command: swapoff -a
+      when: swap_state.stdout
 
     - name: swap check (/etc/fstab)
       shell: grep -v "\s*#" /etc/fstab | awk '{print $2}' | grep swap -c

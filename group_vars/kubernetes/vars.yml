@@ -1,3 +1,0 @@
----
-ansible_user: kube
-ansible_ssh_private_key_file: ~/.ssh/id_rsa.kube

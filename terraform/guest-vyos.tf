@@ -1,5 +1,5 @@
-resource "esxi_guest" "vyos1" {
-  guest_name     = "vyos1"
+resource "esxi_guest" "vyos01" {
+  guest_name     = "vyos01"
   power          = "on"
   disk_store     = var.DISK_STORE
   clone_from_vm  = "template-vyos"
@@ -20,8 +20,8 @@ resource "esxi_guest" "vyos1" {
   }
 }
 
-resource "esxi_guest" "vyos2" {
-  guest_name     = "vyos2"
+resource "esxi_guest" "vyos02" {
+  guest_name     = "vyos02"
   power          = "on"
   disk_store     = var.DISK_STORE
   clone_from_vm  = "template-vyos"
