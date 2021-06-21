@@ -57,8 +57,24 @@ ansible-vault encrypt ${YOUR_SECRET_FILE_PATH}
 
 #### Fix vars for your environment
 
+##### Ansible
+
 See `inventories` directory recursively.
-Then, fix `inventories/base.yml` and `group_vars`, `host_vars` by your environment.
+Then, fix `inventories/base.yml` and `group_vars`, `host_vars` for your environment.
+
+##### Terraform
+
+Create `terraform/terraform.tfvars` like following text.
+
+```terraform.tfvars
+ESXI_HOSTNAME = "<IP Address of your ESXi>"
+ESXI_USERNAME = "<Username for ESXi login>"
+ESXI_PASSWORD = "<Password for ESXi login>"
+```
+
+##### Packer
+
+Fix `packer/vairables.json` for your environment.
 
 ### Setup
 
