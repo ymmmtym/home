@@ -1,4 +1,29 @@
+# common
 .DS_Store
+.env
+*.swp
+crash.log
+
+# ansible
 .venv/
 .vault_password
-*.swp
+
+# packer
+packer_cache/
+output-*/
+*.box
+
+# terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+.terraformrc
+terraform.rc
+
+# vagrant
+.vagrant/

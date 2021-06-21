@@ -1,0 +1,21 @@
+- hosts: localhost
+  connection: local
+  gather_facts: no
+  tasks:
+    - name: terraform apply
+      terraform:
+        project_path: '{{ terraform_project_path }}'
+        state: present
+      register: terraform
+
+    - name: Refresh inventory
+      meta: refresh_inventory
+
+    - name: Waiting for upcoming ssh by 120 seconds
+      wait_for:
+        host: "{{ item }}"
+        port: 22
+        state: started
+        timeout: 120
+      loop: '{{ wait_for_hosts | flatten }}'
+      failed_when: false

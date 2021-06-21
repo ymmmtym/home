@@ -1,0 +1,19 @@
+galaxy_info:
+  author: ymmmtym
+  description: ymmmtym
+  company: ymmmtym
+  license:
+    - BSD-3-Clause
+    - MIT
+    - GPL-2.0-or-later
+    - GPL-3.0-only
+    - Apache-2.0
+    - CC-BY-4.0
+  min_ansible_version: 2.4
+  platforms:
+    - name: vyos
+      versions:
+        - all
+  galaxy_tags: []
+dependencies: []
+

@@ -1,27 +1,62 @@
 ---
-- hosts: all
+- hosts: dev
   roles:
     - role: homebrew
       when: ansible_os_family == "Darwin"
-      tags: homebrew
-
-- hosts: dev
-  roles:
     - role: dev
       when: ansible_os_family != "Windows"
-      tags: dev
+  tags: dev
+
+- hosts: dev
+  tasks:
+    - name: build template images by packer
+      command:
+        argv:
+          - packer
+          - build
+          - packer/templates.json
+          - -var-file=packer/variables.json
+        creates: './packer_cache'
+      failed_when: true
+  tags: packer
+
+- import_playbook: playbooks/terraform.yml
+  vars:
+    terraform_project_path: '../terraform/'
+    wait_for_hosts:
+      - '{{ groups["vyos"] }}'
+  tags: terraform
+
+- hosts: vyos
+  gather_facts: no
+  roles:
+    - role: vyos
+  tags: vyos
+
+- import_playbook: playbooks/swapoff.yml
+  tags: kubernetes
+
+- hosts: kubernetes
+  become: yes
+  roles:
+    - role: ansible-role-docker
+    - role: ansible-role-kubernetes
+  tags: kubernetes
 
 - hosts: web_server
   roles:
     - role: web_server
       tags: web_server
+  tags: web_server
 
 - hosts: growi
   roles:
     - role: growi
       tags: growi
+  tags: growi
 
 - hosts: keywoo
   roles:
     - role: keywoo
       tags: keywoo
+  tags: keywoo

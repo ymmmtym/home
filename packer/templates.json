@@ -1,0 +1,216 @@
+{
+  "builders": [
+    {
+      "name": "template-centos7",
+      "vm_name": "template-centos7",
+      "type": "vmware-iso",
+      "guest_os_type": "rhel7-64",
+      "ssh_username": "{{ user `ssh_username` }}",
+      "ssh_password": "{{ user `ssh_password` }}",
+      "ssh_timeout": "30m",
+      "iso_url": "{{ user `centos7_iso_url` }}",
+      "iso_checksum": "{{ user `centos7_iso_checksum` }}",
+      "shutdown_command": "shutdown -P now",
+      "boot_command": [
+        "<tab> text biosdevname=0 net.ifnames=0 ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/packer/centos7-ks.cfg<enter><wait>"
+      ],
+      "http_directory": "./",
+      "tools_upload_flavor": "linux",
+      "headless": false,
+      "keep_registered": true,
+      "remote_type": "esx5",
+      "remote_host": "{{ user `esxi_host` }}",
+      "remote_datastore": "{{ user `esxi_datastore` }}",
+      "remote_username": "{{ user `esxi_username` }}",
+      "remote_password": "{{ user `esxi_password` }}",
+      "disk_type_id": "thin",
+      "vmx_data": {
+        "ethernet0.networkName": "{{ user `default_network` }}",
+        "memsize": "{{ user `default_memsize` }}"
+      },
+      "vnc_over_websocket": "true",
+      "insecure_connection": "true"
+    },
+    {
+      "name": "template-centos8",
+      "vm_name": "template-centos8",
+      "type": "vmware-iso",
+      "guest_os_type": "rhel8-64",
+      "ssh_username": "{{ user `ssh_username` }}",
+      "ssh_password": "{{ user `ssh_password` }}",
+      "ssh_timeout": "15m",
+      "iso_url": "{{ user `centos8_iso_url` }}",
+      "iso_checksum": "{{ user `centos8_iso_checksum` }}",
+      "shutdown_command": "shutdown -P now",
+      "boot_command": [
+        "<tab> text biosdevname=0 net.ifnames=0 ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/packer/centos8-ks.cfg<enter><wait>"
+      ],
+      "http_directory": "./",
+      "tools_upload_flavor": "linux",
+      "headless": false,
+      "keep_registered": true,
+      "remote_type": "esx5",
+      "remote_host": "{{ user `esxi_host` }}",
+      "remote_datastore": "{{ user `esxi_datastore` }}",
+      "remote_username": "{{ user `esxi_username` }}",
+      "remote_password": "{{ user `esxi_password` }}",
+      "disk_type_id": "thin",
+      "vmx_data": {
+        "ethernet0.networkName": "{{ user `default_network` }}",
+        "memsize": "{{ user `default_memsize` }}"
+      },
+      "vnc_over_websocket": "true",
+      "insecure_connection": "true"
+    },
+    {
+      "name": "template-ubuntu1804",
+      "vm_name": "template-ubuntu1804",
+      "type": "vmware-iso",
+      "guest_os_type": "ubuntu-64",
+      "ssh_username": "{{ user `ssh_username` }}",
+      "ssh_password": "{{ user `ssh_password` }}",
+      "ssh_timeout": "15m",
+      "iso_url": "{{ user `ubuntu1804_iso_url` }}",
+      "iso_checksum": "{{ user `ubuntu1804_iso_checksum` }}",
+      "headless": false,
+      "floppy_files": [
+        "packer/ubuntu-preseed.cfg"
+      ],
+      "boot_command": [
+        "<esc><esc><enter><wait>",
+        "/install/vmlinuz noapic",
+        " initrd=/install/initrd.gz",
+        " grub-installer/bootdev=/dev/sda",
+        " hostname={{ .Name }}",
+        " auto-install/enable=true",
+        " debconf/priority=critical",
+        " preseed/file=/floppy/ubuntu-preseed.cfg",
+        " quiet --- <wait>",
+        "<enter><wait>"
+      ],
+      "shutdown_command": "shutdown -P now",
+      "tools_upload_flavor": "linux",
+      "keep_registered": true,
+      "remote_type": "esx5",
+      "remote_host": "{{ user `esxi_host` }}",
+      "remote_datastore": "{{ user `esxi_datastore` }}",
+      "remote_username": "{{ user `esxi_username` }}",
+      "remote_password": "{{ user `esxi_password` }}",
+      "disk_type_id": "thin",
+      "vmx_data": {
+        "ethernet0.networkName": "{{ user `default_network` }}",
+        "memsize": "{{ user `default_memsize` }}"
+      },
+      "vnc_over_websocket": "true",
+      "insecure_connection": "true"
+    },
+    {
+      "name": "template-ubuntu2004",
+      "vm_name": "template-ubuntu2004",
+      "type": "vmware-iso",
+      "guest_os_type": "ubuntu-64",
+      "ssh_username": "{{ user `ssh_username` }}",
+      "ssh_password": "{{ user `ssh_password` }}",
+      "ssh_timeout": "15m",
+      "iso_url": "{{ user `ubuntu2004_iso_url` }}",
+      "iso_checksum": "{{ user `ubuntu2004_iso_checksum` }}",
+      "headless": false,
+      "floppy_files": [
+        "packer/ubuntu-preseed.cfg"
+      ],
+      "boot_command": [
+        "<esc><esc><enter><wait>",
+        "/install/vmlinuz noapic",
+        " initrd=/install/initrd.gz",
+        " grub-installer/bootdev=/dev/sda",
+        " hostname={{ .Name }}",
+        " auto-install/enable=true",
+        " debconf/priority=critical",
+        " preseed/file=/floppy/ubuntu-preseed.cfg",
+        " quiet --- <wait>",
+        "<enter><wait>"
+      ],
+      "shutdown_command": "shutdown -P now",
+      "tools_upload_flavor": "linux",
+      "keep_registered": true,
+      "remote_type": "esx5",
+      "remote_host": "{{ user `esxi_host` }}",
+      "remote_datastore": "{{ user `esxi_datastore` }}",
+      "remote_username": "{{ user `esxi_username` }}",
+      "remote_password": "{{ user `esxi_password` }}",
+      "disk_type_id": "thin",
+      "vmx_data": {
+        "ethernet0.networkName": "{{ user `default_network` }}",
+        "memsize": "{{ user `default_memsize` }}"
+      },
+      "vnc_over_websocket": "true",
+      "insecure_connection": "true"
+    },
+    {
+      "name": "template-vyos",
+      "vm_name": "template-vyos",
+      "type": "vmware-iso",
+      "guest_os_type": "debian6-64",
+      "ssh_username": "vyos",
+      "ssh_password": "vyos",
+      "ssh_timeout": "15m",
+      "iso_url": "{{ user `vyos_iso_url` }}",
+      "iso_checksum": "{{ user `vyos_iso_checksum` }}",
+      "shutdown_command": "sudo poweroff",
+      "boot_command": [
+        "<enter><wait10><wait10>",
+        "vyos<enter><wait>",
+        "vyos<enter><wait>",
+        "install system<enter><wait>",
+        "<enter><wait>",
+        "<enter><wait>",
+        "<enter><wait>",
+        "Yes<enter><wait>",
+        "<enter><wait10><wait10><wait10><wait10><wait10>",
+        "<enter><wait>",
+        "vyos<enter><wait>",
+        "vyos<enter><wait>",
+        "<enter><wait5>",
+        "reboot<enter><wait>",
+        "Yes<enter><wait10><wait10><wait10>",
+        "vyos<enter><wait>",
+        "vyos<enter><wait>",
+        "configure<enter><wait>",
+        "delete interfaces ethernet eth0<enter><wait>",
+        "set service ssh port 22<enter><wait>",
+        "commit<enter><wait>",
+        "save<enter><wait>",
+        "set interfaces ethernet eth0 address dhcp<enter><wait>",
+        "commit<enter><wait>",
+        "save<enter><wait>",
+        "exit<enter><wait>"
+      ],
+      "tools_upload_flavor": "linux",
+      "headless": false,
+      "keep_registered": true,
+      "remote_type": "esx5",
+      "remote_host": "{{ user `esxi_host` }}",
+      "remote_datastore": "{{ user `esxi_datastore` }}",
+      "remote_username": "{{ user `esxi_username` }}",
+      "remote_password": "{{ user `esxi_password` }}",
+      "disk_type_id": "thin",
+      "vmx_data": {
+        "ethernet0.networkName": "{{ user `default_network` }}",
+        "memsize": "{{ user `default_memsize` }}"
+      },
+      "vnc_over_websocket": "true",
+      "insecure_connection": "true"
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "shell",
+      "except": [
+        "template-vyos"
+      ],
+      "scripts": [ 
+        "packer/install-cloud-init.sh"
+      ]
+    }
+  ]
+}

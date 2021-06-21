@@ -1,0 +1,8 @@
+#cloud-config
+# vim:syntax=yaml
+user: test
+password: test
+chpasswd: { expire: False }
+ssh_pwauth: True
+runcmd:
+  - hostnamectl set-hostname ${HOSTNAME}

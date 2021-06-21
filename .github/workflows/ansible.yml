@@ -53,8 +53,11 @@ jobs:
           pip install -U pip
           pip install -r requirements.txt
 
+      - name: create ansible vault password
+        run: echo ${{ secrets.ANSIBLE_VAULTPASSWORD }} > .vault_password
+
       - name: Run ansible playbook to "dev" inventory hosts
-        run: ansible-playbook site.yml -l dev -vvv
+        run: ansible-playbook site.yml -l dev --skip-tags packer,terraform -vvv
 
   ansible-playbook-container:
     name: ansible playbook on ${{ matrix.container }} container
@@ -85,5 +88,8 @@ jobs:
           pip3 install -U pip
           pip3 install -r requirements.txt
 
+      - name: create ansible vault password
+        run: echo ${{ secrets.ANSIBLE_VAULTPASSWORD }} > .vault_password
+
       - name: Run ansible playbook to "dev" inventory hosts
-        run: ansible-playbook site.yml -l dev --skip-tags docker -vvv
+        run: ansible-playbook site.yml -l dev --skip-tags docker,packer,terraform -vvv

@@ -1,0 +1,10 @@
+---
+vrrp:
+  status: main
+  priority: 150
+  outbound_addr: '192.168.0.4/24'
+  ip_forth_octet: 2
+  peer_ip_forth_octet: 3
+dhcp:
+  failover:
+    status: primary

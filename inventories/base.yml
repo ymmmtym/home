@@ -1,0 +1,30 @@
+all:
+  hosts:
+    esxi:
+      vars:
+        ansible_host: 192.168.0.2
+  children:
+    dev:
+      hosts: localhost
+      vars:
+        ansible_connection: local
+        # ansible_python_interpreter: "/usr/bin/env python"
+    vyos:
+      hosts:
+        vyos01:
+        vyos02:
+    kubernetes:
+      children:
+        k8s_master:
+          hosts:
+            k8s-master01:
+        k8s_worker:
+          hosts:
+            k8s-worker01:
+            k8s-worker02:
+    web_server:
+      children:
+        growi:
+          hosts: ubuntu01
+        keywoo:
+          hosts: centos01
