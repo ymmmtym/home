@@ -1,21 +1,23 @@
 #!/usr/bin/env python
+# -*- coding: utf_8 -*-
+
+"""Dynamic Inventory from terraform.tfstate for ESXi."""
 
 import json
 
 
-TERRAFORM_TFSTATE_PATH='./terraform/terraform.tfstate'
+TERRAFORM_TFSTATE_PATH = './terraform/terraform.tfstate'
+INVENTORY = {'all': {'hosts': []}, '_meta': {'hostvars': {}}}
+TFSTATE = json.load(open(TERRAFORM_TFSTATE_PATH, 'r'))
+RESOURCES = TFSTATE['resources']
 
-inventory = {'all': {'hosts': []}, '_meta': {'hostvars': {}}}
-tfstate = json.load(open(TERRAFORM_TFSTATE_PATH, 'r'))
-resources = tfstate['resources']
-
-for resource in resources:
+for resource in RESOURCES:
     if resource['type'] == 'esxi_guest':
         host = resource['name']
-        inventory['all']['hosts'].append(host)
-        inventory['_meta']['hostvars'][host] = resource['instances'][0]
-        inventory['_meta']['hostvars'][host]['ansible_host'] \
+        INVENTORY['all']['hosts'].append(host)
+        INVENTORY['_meta']['hostvars'][host] = resource['instances'][0]
+        INVENTORY['_meta']['hostvars'][host]['ansible_host'] \
             = resource['instances'][0]['attributes']['ip_address']
 
 
-print(json.dumps(inventory, indent=4))
+print(json.dumps(INVENTORY, indent=4))

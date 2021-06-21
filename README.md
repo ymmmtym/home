@@ -7,11 +7,13 @@ This is my home environment.
 
 ## Requirements
 
-- ESXi      >= 7.0
-- python    >= 3.6
-- packer    >= 1.7.2
-- terraform >= 0.15.4
-- ansible   >= 2.10.9
+| software  | version |
+| --------- | ------- |
+| ESXi      | 7.0     |
+| python    | 3.7     |
+| packer    | 1.7.2   |
+| terraform | 0.15.4  |
+| ansible   | 2.10.9  |
 
 ## Usage
 
