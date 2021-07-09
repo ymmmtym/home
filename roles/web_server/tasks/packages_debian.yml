@@ -1,6 +1,0 @@
-- name: Install common packages
-  become: yes
-  apt:
-    name: '{{ item }}'
-    state: present
-  loop: '{{ packages }}'
