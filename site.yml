@@ -1,9 +1,7 @@
 ---
 - hosts: dev
   roles:
-    - role: homebrew
-      when: ansible_os_family == "Darwin"
-    - role: dev
+    - role: ansible-role-dev
       when: ansible_os_family != "Windows"
   tags: dev
 
@@ -17,8 +15,8 @@
           - packer/templates.json
           - -var-file=packer/variables.json
         creates: './packer_cache'
-      failed_when: true
-  tags: packer
+      failed_when: false
+      tags: packer
 
 - import_playbook: playbooks/terraform.yml
   vars:
@@ -33,30 +31,21 @@
     - role: vyos
   tags: vyos
 
-- import_playbook: playbooks/swapoff.yml
-  tags: kubernetes
-
 - hosts: kubernetes
   become: yes
   roles:
     - role: ansible-role-docker
-    - role: ansible-role-kubernetes
+      # - role: ansible-role-kubernetes
   tags: kubernetes
 
-- hosts: web_server
-  roles:
-    - role: web_server
-      tags: web_server
-  tags: web_server
+- import_playbook: playbooks/swapoff.yml # To Do: usermod -aG docker {{ ansible_user }}
+  tags: kubernetes
 
-- hosts: growi
-  roles:
-    - role: growi
-      tags: growi
-  tags: growi
-
-- hosts: keywoo
-  roles:
-    - role: keywoo
-      tags: keywoo
-  tags: keywoo
+- hosts: dev
+  tasks:
+    - name: rke up
+      command: rke up
+      args:
+        chdir: './rke'
+        creates: './rke/kube_config_cluster.yml'
+  tags: kubernetes, rke
