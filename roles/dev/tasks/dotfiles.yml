@@ -1,6 +1,0 @@
-- name: copy dotfiles
-  copy:
-    src: '{{ item }}'
-    dest: '{{ ansible_user_dir }}'
-    mode: '0644'
-  with_fileglob: "dotfiles/.*"

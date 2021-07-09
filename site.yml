@@ -1,9 +1,7 @@
 ---
 - hosts: dev
   roles:
-    - role: homebrew
-      when: ansible_os_family == "Darwin"
-    - role: dev
+    - role: ansible-role-dev
       when: ansible_os_family != "Windows"
   tags: dev
 
@@ -17,8 +15,8 @@
           - packer/templates.json
           - -var-file=packer/variables.json
         creates: './packer_cache'
-      failed_when: true
-  tags: packer
+      failed_when: false
+      tags: packer
 
 - import_playbook: playbooks/terraform.yml
   vars:
@@ -48,5 +46,6 @@
     - name: rke up
       command: rke up
       args:
-        chdir: ./rke
-  tags: kubernetes,rke
+        chdir: './rke'
+        creates: './rke/kube_config_cluster.yml'
+  tags: kubernetes, rke

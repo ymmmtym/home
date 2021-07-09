@@ -1,8 +1,0 @@
-- name: Include Redhat packages task
-  include: packages_redhat.yml
-  tags: [ redhat ]
-  when: ansible_os_family == "RedHat"
-- name: Include Debian packages task
-  include: packages_debian.yml
-  tags: [ debian ]
-  when: ansible_os_family == "Debian"

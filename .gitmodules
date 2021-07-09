@@ -4,3 +4,6 @@
 [submodule "roles/ansible-role-kubernetes"]
 	path = roles/ansible-role-kubernetes
 	url = git@github.com:geerlingguy/ansible-role-kubernetes.git
+[submodule "roles/ansible-role-dev"]
+	path = roles/ansible-role-dev
+	url = git@github.com:ymmmtym/ansible-role-dev

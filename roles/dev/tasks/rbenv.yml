@@ -1,8 +1,0 @@
-- name: Install rbenv
-  git:
-    repo: '{{ item.repo }}'
-    dest: '{{ item.dest }}'
-    clone: yes
-    update: yes
-    version: '{{ item.version }}'
-  loop: '{{ rbenv }}'
