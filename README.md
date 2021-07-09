@@ -9,13 +9,14 @@ This is my home environment.
 
 ## Requirements
 
-| software  | version |
-| --------- | ------- |
-| ESXi      | >= 7.0  |
-| python    | >= 3.7  |
-| packer    | >= 1.7  |
-| terraform | >= 0.15 |
-| ansible   | >= 3.3  |
+| Software  | Version | Description |
+| --------- | ------- | ----------- |
+| ESXi      | >= 7.0  |             |
+| python    | >= 3.7  |             |
+| packer    | >= 1.7  |             |
+| terraform | >= 0.15 |             |
+| ansible   | >= 3.3  |             |
+| vagrant   | >= 2.2  | Optional    |
 
 ## Usage
 
@@ -88,7 +89,7 @@ packer build packer/templates.json -var-file=packer/variables.json
 
 If you want more template images, you need to add template config to `packer/templates.json`.
 
-#### Setup any hosts
+#### Exec ansible playbook
 
 Activate ansible environment.
 

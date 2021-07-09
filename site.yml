@@ -33,30 +33,20 @@
     - role: vyos
   tags: vyos
 
-- import_playbook: playbooks/swapoff.yml
-  tags: kubernetes
-
 - hosts: kubernetes
   become: yes
   roles:
     - role: ansible-role-docker
-    - role: ansible-role-kubernetes
+      # - role: ansible-role-kubernetes
   tags: kubernetes
 
-- hosts: web_server
-  roles:
-    - role: web_server
-      tags: web_server
-  tags: web_server
+- import_playbook: playbooks/swapoff.yml # To Do: usermod -aG docker {{ ansible_user }}
+  tags: kubernetes
 
-- hosts: growi
-  roles:
-    - role: growi
-      tags: growi
-  tags: growi
-
-- hosts: keywoo
-  roles:
-    - role: keywoo
-      tags: keywoo
-  tags: keywoo
+- hosts: dev
+  tasks:
+    - name: rke up
+      command: rke up
+      args:
+        chdir: ./rke
+  tags: kubernetes,rke
