@@ -1,9 +1,12 @@
 [submodule "roles/ansible-role-docker"]
 	path = roles/ansible-role-docker
 	url = git@github.com:geerlingguy/ansible-role-docker.git
+    branch = master
 [submodule "roles/ansible-role-kubernetes"]
 	path = roles/ansible-role-kubernetes
 	url = git@github.com:geerlingguy/ansible-role-kubernetes.git
+    branch = master
 [submodule "roles/ansible-role-dev"]
 	path = roles/ansible-role-dev
 	url = git@github.com:ymmmtym/ansible-role-dev
+	branch = main
