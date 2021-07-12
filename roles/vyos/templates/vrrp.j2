@@ -1,7 +1,7 @@
 {% for vlan in vlans %}
 set interface ethernet {{ vlan.eth }} vrrp vrrp-group {{ vlan.id }}
 set interface ethernet {{ vlan.eth }} vrrp vrrp-group {{ vlan.id }} advertise-interval 1
-set interface ethernet {{ vlan.eth }} vrrp vrrp-group {{ vlan.id }} preempt true
+set interface ethernet {{ vlan.eth }} vrrp vrrp-group {{ vlan.id }} preempt false
 {% if vlan.type == 'outbound' %}
 set interface ethernet {{ vlan.eth }} vrrp vrrp-group {{ vlan.id }} virtual-address {{ vrrp.outbound_addr }}
 {% else %}
