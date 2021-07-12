@@ -1,12 +1,4 @@
 ---
 # tasks file for roles/vyos
-- name: configuration
-  vyos_config:
-    src: '{{ item }}'
-    save: True
-  loop:
-    - "base.j2"
-    - "ntp.j2"
-    - "dhcp.j2"
-    - "nat.j2"
-    - "vrrp.j2"
+- name: import vyos_config
+  include_tasks: vyos_config.yml

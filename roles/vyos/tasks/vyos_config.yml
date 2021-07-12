@@ -1,0 +1,10 @@
+- name: vyos_config
+  vyos_config:
+    src: '{{ item }}'
+    save: True
+  loop:
+    - "base.j2"
+    - "ntp.j2"
+    - "dhcp.j2"
+    - "nat.j2"
+    - "vrrp.j2"
