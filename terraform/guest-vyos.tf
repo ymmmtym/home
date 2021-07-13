@@ -18,6 +18,10 @@ resource "esxi_guest" "vyos01" {
     virtual_network = esxi_portgroup.portgroup101_1.name
     mac_address     = "00:50:56:00:65:01"
   }
+  provisioner "local-exec" {
+    working_dir = ".."
+    command = "ansible-playbook site.yml -l ${self.guest_name} -e ansible_host=${self.ip_address}"
+  }
 }
 
 resource "esxi_guest" "vyos02" {
@@ -39,5 +43,9 @@ resource "esxi_guest" "vyos02" {
   network_interfaces {
     virtual_network = esxi_portgroup.portgroup101_1.name
     mac_address     = "00:50:56:00:65:02"
+  }
+  provisioner "local-exec" {
+    working_dir = ".."
+    command = "ansible-playbook site.yml -l ${self.guest_name} -e ansible_host=${self.ip_address}"
   }
 }

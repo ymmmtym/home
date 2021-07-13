@@ -1,19 +1,24 @@
+variable "MEMSIZE" { default = "4096" }
+
 data "template_file" "k8s-master01_userdata" {
   template = file("cloud-init/user-data-kube.yml")
   vars = {
     HOSTNAME = "k8s-master01"
+    SSH_AUTHORIZED_KEY = file("~/.ssh/id_rsa.kube.pub")
   }
 }
 data "template_file" "k8s-worker01_userdata" {
   template = file("cloud-init/user-data-kube.yml")
   vars = {
     HOSTNAME = "k8s-worker01"
+    SSH_AUTHORIZED_KEY = file("~/.ssh/id_rsa.kube.pub")
   }
 }
 data "template_file" "k8s-worker02_userdata" {
   template = file("cloud-init/user-data-kube.yml")
   vars = {
     HOSTNAME = "k8s-worker02"
+    SSH_AUTHORIZED_KEY = file("~/.ssh/id_rsa.kube.pub")
   }
 }
 
@@ -98,7 +103,7 @@ resource "esxi_guest" "k8s-worker01" {
   }
   network_interfaces {
     virtual_network = esxi_portgroup.portgroup101_1.name
-    mac_address     = "00:50:56:00:65:05"
+    mac_address     = "00:50:56:00:64:05"
   }
   virtual_disks {
     virtual_disk_id = esxi_virtual_disk.k8s-worker01_1.id
@@ -110,6 +115,9 @@ resource "esxi_guest" "k8s-worker01" {
     "userdata.encoding" = "gzip+base64"
     "userdata"          = base64gzip(data.template_file.k8s-worker01_userdata.rendered)
   }
+  depends_on = [
+    esxi_guest.k8s-master01,
+  ]
 }
 
 resource "esxi_guest" "k8s-worker02" {

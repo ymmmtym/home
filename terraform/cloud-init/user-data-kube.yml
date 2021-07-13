@@ -3,8 +3,10 @@
 user: kube
 password: $6$salt$gDz3ZCV1MfDS16NbFIUfJ6xo/kvzFqw7vcuh3Gy0KlNFW7IFT0fy880o09hio.Qlan3eb66I2kFrgFA5oXxPj.
 ssh_authorized_keys:
-  - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDeA8h/WmJi9VoKyw+JOPk5L1qHwH3zf4ByxkKnGGBASgezOJEE9/KiCRZS3i+hYPSS+t9wKk28gsGY6p5Z26lYC4SY+zHEwcLNXfR4yfpuNb6TlmelFdrfXl+xJT5bS7yvEPb+c77PG2QdJ8BSYHnAODPzHVKuCxSGI1nGdfMZraZbvks4CBvcLFuDYHf3iTtEVw2/CiG3kJ6CL/xo+gNRy6NQLq5+rL51mmBjYKzawIMqKZGEohvujjTQzZ4qicL3PSu7Bj4o4B66CfC+HtOtwV2wn/eCsgwdx4m2P0l5CAicmbdna5eo+W06H1z5Ibus+WP+AJkwEBBPeKs4oTxd0HmeoQtpYwNCwiO2URnJuKH4Qb+tuNmVE6v3GrzUX/Bsw+0p4vxNwyFnLmHA47xtVjPsYl4oBOFy8M5+K1OgvTxtNWNh+WvoJt/+OyZEQ4aj4/bSp5VLxxvZMq6kJtZHUlTKrcWgdTeYRxGLWM5I7zauZ6j9Gr8PdKRu0l6mwic=
+  - ${SSH_AUTHORIZED_KEY}
 chpasswd: { expire: False }
 ssh_pwauth: False
 runcmd:
   - hostnamectl set-hostname ${HOSTNAME}
+  - curl https://releases.rancher.com/install-docker/20.10.sh | sh
+  - sudo usermod -a -G docker kube

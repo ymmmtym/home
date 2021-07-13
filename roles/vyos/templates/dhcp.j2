@@ -1,7 +1,7 @@
 {% for vlan in vlans %}
 {% if vlan.type != 'outbound' %}
 set service dhcp-server shared-network-name VLAN{{ vlan.id }} subnet {{ vlan.cidr }}
-set service dhcp-server shared-network-name VLAN{{ vlan.id }} subnet {{ vlan.cidr }} start {{ vlan.cidr | ipaddr('next_usable') }} stop {{ vlan.cidr | next_nth_usable(dhcp_static_mapping | last)}}
+set service dhcp-server shared-network-name VLAN{{ vlan.id }} subnet {{ vlan.cidr }} start {{ vlan.cidr | ipaddr('next_usable') }} stop {{ vlan.cidr | next_nth_usable(dhcp_range | last)}}
 {% if vlan.type == 'public' %}
 set service dhcp-server shared-network-name VLAN{{ vlan.id }} subnet {{ vlan.cidr }} default-router {{ vlan.cidr | ipaddr('next_usable') }}
 {% endif %}

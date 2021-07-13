@@ -25,4 +25,7 @@ resource "esxi_guest" "test01" {
     "userdata.encoding" = "gzip+base64"
     "userdata"          = base64gzip(data.template_file.test01_userdata.rendered)
   }
+  provisioner "local-exec" {
+    command = "echo ${self.ip_address}"
+  }
 }
