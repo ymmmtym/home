@@ -5,6 +5,8 @@
 
 This is my home environment.
 
+## Network
+
 ![home](./img/home.dio.svg)
 
 ## Requirements
