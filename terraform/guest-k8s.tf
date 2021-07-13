@@ -103,7 +103,7 @@ resource "esxi_guest" "k8s-worker01" {
   }
   network_interfaces {
     virtual_network = esxi_portgroup.portgroup101_1.name
-    mac_address     = "00:50:56:00:64:05"
+    mac_address     = "00:50:56:00:65:05"
   }
   virtual_disks {
     virtual_disk_id = esxi_virtual_disk.k8s-worker01_1.id
