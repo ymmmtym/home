@@ -1,0 +1,5 @@
+resources:
+  - metallb.yaml
+  - namespace.yaml
+  - layer2-config.yaml
+
