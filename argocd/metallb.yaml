@@ -1,0 +1,19 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: metallb
+spec:
+  destination:
+    name: ''
+    namespace: metallb-system
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: metallb
+    repoURL: 'https://github.com/ymmmtym/manifests'
+    targetRevision: HEAD
+  project: default
+  syncPolicy:
+    automated:
+      prune: false
+      selfHeal: false
+
