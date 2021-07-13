@@ -20,7 +20,7 @@ resource "esxi_guest" "vyos01" {
   }
   provisioner "local-exec" {
     working_dir = ".."
-    command = "ansible-playbook site.yml -l ${self.guest_name} -e ansible_host=${self.ip_address}"
+    command     = "ansible-playbook site.yml -l ${self.guest_name} -e ansible_host=${self.ip_address}"
   }
 }
 
@@ -46,6 +46,6 @@ resource "esxi_guest" "vyos02" {
   }
   provisioner "local-exec" {
     working_dir = ".."
-    command = "ansible-playbook site.yml -l ${self.guest_name} -e ansible_host=${self.ip_address}"
+    command     = "ansible-playbook site.yml -l ${self.guest_name} -e ansible_host=${self.ip_address}"
   }
 }

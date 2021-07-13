@@ -3,21 +3,21 @@ variable "MEMSIZE" { default = "4096" }
 data "template_file" "k8s-master01_userdata" {
   template = file("cloud-init/user-data-kube.yml")
   vars = {
-    HOSTNAME = "k8s-master01"
+    HOSTNAME           = "k8s-master01"
     SSH_AUTHORIZED_KEY = file("~/.ssh/id_rsa.kube.pub")
   }
 }
 data "template_file" "k8s-worker01_userdata" {
   template = file("cloud-init/user-data-kube.yml")
   vars = {
-    HOSTNAME = "k8s-worker01"
+    HOSTNAME           = "k8s-worker01"
     SSH_AUTHORIZED_KEY = file("~/.ssh/id_rsa.kube.pub")
   }
 }
 data "template_file" "k8s-worker02_userdata" {
   template = file("cloud-init/user-data-kube.yml")
   vars = {
-    HOSTNAME = "k8s-worker02"
+    HOSTNAME           = "k8s-worker02"
     SSH_AUTHORIZED_KEY = file("~/.ssh/id_rsa.kube.pub")
   }
 }
