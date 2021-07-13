@@ -4,6 +4,10 @@ terraform {
       source  = "josenk/esxi"
       version = "1.8.1"
     }
+    rke = {
+      source  = "rancher/rke"
+      version = "1.2.3"
+    }
   }
 }
 

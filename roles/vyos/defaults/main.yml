@@ -1,6 +1,7 @@
 ---
 # defaults file for roles/vyos
-dhcp_static_mapping: '{{ range(4,255) }}'
+dhcp_range: '{{ range(4,129) }}'
+dhcp_static_mapping: '{{ range(4,17) }}'
 vlans:
   - id: 1
     type: 'outbound'

@@ -16,6 +16,7 @@ This is my home environment.
 | packer    | >= 1.7  |             |
 | terraform | >= 0.15 |             |
 | ansible   | >= 3.3  |             |
+| rke       | >= 1.2  |             |
 | vagrant   | >= 2.2  | Optional    |
 
 ## Usage

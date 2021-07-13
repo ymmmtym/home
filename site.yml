@@ -40,12 +40,3 @@
 
 - import_playbook: playbooks/swapoff.yml # To Do: usermod -aG docker {{ ansible_user }}
   tags: kubernetes
-
-- hosts: dev
-  tasks:
-    - name: rke up
-      command: rke up
-      args:
-        chdir: './rke'
-        creates: './rke/kube_config_cluster.yml'
-  tags: kubernetes, rke
