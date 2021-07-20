@@ -8,6 +8,9 @@ jobs:
   packer:
     runs-on: ubuntu-latest
     name: packer
+    defaults:
+      run:
+        working-directory: ./packer
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
@@ -17,6 +20,7 @@ jobs:
         uses: hashicorp/packer-github-actions@master
         with:
           command: fix
+          target: packer/templates.json
 
       # validate templates
       - name: Validate Template
@@ -24,14 +28,14 @@ jobs:
         with:
           command: validate
           arguments: -syntax-only
-          target: packer.pkr.hcl
+          target: packer/templates.json
 
       # build artifact
-      - name: Build Artifact
-        uses: hashicorp/packer-github-actions@master
-        with:
-          command: build
-          arguments: "-color=false -on-error=abort"
-          target: packer.pkr.hcl
-        env:
-          PACKER_LOG: 1
+      # - name: Build Artifact
+      #   uses: hashicorp/packer-github-actions@master
+      #   with:
+      #     command: build
+      #     arguments: "-color=false -on-error=abort"
+      #     target: packer/templates.json
+      #   env:
+      #     PACKER_LOG: 1
