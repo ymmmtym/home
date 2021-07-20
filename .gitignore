@@ -26,6 +26,7 @@ override.tf.json
 terraform.rc
 
 # rke
+cluster.yml
 cluster.rkestate
 kube_config_cluster.yml
 terraform-provider-rke-tmp-*/
