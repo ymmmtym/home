@@ -1,6 +1,5 @@
 {% for vlan in vlans %}
 {% if vlan.type == 'public' %}
-set nat source rule {{ vlan.id }}
 set nat source rule {{ vlan.id }} outbound-interface {{ vlans | selectattr('type', 'equalto', 'outbound') | map(attribute='eth') | first }}
 set nat source rule {{ vlan.id }} source address {{ vlan.cidr }}
 set nat source rule {{ vlan.id }} translation address masquerade
