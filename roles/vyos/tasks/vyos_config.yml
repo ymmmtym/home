@@ -1,4 +1,4 @@
-- name: vyos_config from {{ item.split("/") | last}}
+- name: vyos_config from {{ item.split("/") | last }}
   vyos_config:
     src: '{{ item }}'
     save: True

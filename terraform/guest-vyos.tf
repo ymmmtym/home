@@ -2,7 +2,7 @@ resource "esxi_guest" "vyos01" {
   guest_name     = "vyos01"
   power          = "on"
   disk_store     = var.DISK_STORE
-  clone_from_vm  = "template-vyos"
+  clone_from_vm  = "template-vyos-rolling"
   memsize        = "1024"
   numvcpus       = "1"
   boot_disk_size = "10"
@@ -20,7 +20,7 @@ resource "esxi_guest" "vyos01" {
   }
   provisioner "local-exec" {
     working_dir = ".."
-    command     = "ansible-playbook site.yml -l ${self.guest_name} -e ansible_host=${self.ip_address}"
+    command     = "ansible-playbook site.yml -l ${self.guest_name} -e ansible_host=${self.ip_address} -v"
   }
 }
 
@@ -28,7 +28,7 @@ resource "esxi_guest" "vyos02" {
   guest_name     = "vyos02"
   power          = "on"
   disk_store     = var.DISK_STORE
-  clone_from_vm  = "template-vyos"
+  clone_from_vm  = "template-vyos-rolling"
   memsize        = "1024"
   numvcpus       = "1"
   boot_disk_size = "10"
@@ -46,6 +46,6 @@ resource "esxi_guest" "vyos02" {
   }
   provisioner "local-exec" {
     working_dir = ".."
-    command     = "ansible-playbook site.yml -l ${self.guest_name} -e ansible_host=${self.ip_address}"
+    command     = "ansible-playbook site.yml -l ${self.guest_name} -e ansible_host=${self.ip_address} -v"
   }
 }
