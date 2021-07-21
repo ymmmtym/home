@@ -1,14 +1,16 @@
 ---
 name: VyOS Rolling Update Notify
 on:
+  push:
+    branches: [ main ]
   schedule:
     - cron: '0 9 1,8,15,22 * *'
   workflow_dispatch:
 
 jobs:
-  packer:
+  rolling-update-notify:
     runs-on: ubuntu-latest
-    name: packer
+    name: VyOS Rolling Update Notify
     defaults:
       run:
         working-directory: ./packer
@@ -24,11 +26,12 @@ jobs:
       - name: Set sha256 of vyos-rolling-latest from server
         id: latest_version
         run: |
-          echo '::set-output name=sha256::$(curl -s ${ISO_URL}.sha256 | cut -f 1 -d " ")'
-          echo '::set-output name=iso_name::$(curl -s ${ISO_URL}.sha256 | cut -f 2 -3 " ")'
+          echo "::set-output name=sha256::$(curl -s ${ISO_URL}.sha256 | cut -f 1 -d ' ')"
+          echo "::set-output name=iso_name::$(curl -s ${ISO_URL}.sha256 | cut -f 3 -d ' ')"
       - name: Override template.json
         run: |
-          cat $JSON | jq ".${HASH_KEY}|=${{ steps.latest_version.outputs.sha256 }}" > /var/tmp/$JSON
+          sha256=${{ steps.latest_version.outputs.sha256 }}
+          jq '."'$HASH_KEY'"|="'$sha256'"' $JSON > /var/tmp/$JSON
           cp /var/tmp/$JSON $JSON
       - name: Create pull request
         uses: peter-evans/create-pull-request@v3
