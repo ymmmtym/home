@@ -37,6 +37,7 @@ jobs:
         uses: peter-evans/create-pull-request@v3
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          title: Create PR from rolling-update ${{ steps.latest_version.outputs.iso_name }}
+          title: "[VyOS Rolling Update Notify] ${{ steps.latest_version.outputs.iso_name }}"
+          commit-message: Rolling Update Image to ${{ steps.latest_version.outputs.iso_name }}
           branch: rolling-update/${{ steps.latest_version.outputs.iso_name }}
           delete-branch: true

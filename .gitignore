@@ -3,6 +3,7 @@
 .env
 *.swp
 crash.log
+.vscode/
 
 # packer
 packer_cache/
