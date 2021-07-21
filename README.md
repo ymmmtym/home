@@ -2,6 +2,8 @@
 
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/3fd9480b4f45452e9ffedfa32e980e5b)](https://www.codacy.com/gh/ymmmtym/home/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=ymmmtym/home&amp;utm_campaign=Badge_Grade)
 [![Ansible Lint](https://github.com/ymmmtym/home/actions/workflows/ansible.yml/badge.svg)](https://github.com/ymmmtym/home/actions/workflows/ansible.yml)
+[![Packer](https://github.com/ymmmtym/home/actions/workflows/packer.yml/badge.svg)](https://github.com/ymmmtym/home/actions/workflows/packer.yml)
+[![VyOS Rolling Update Notify](https://github.com/ymmmtym/home/actions/workflows/vyos-rolling-update-notify.yml/badge.svg)](https://github.com/ymmmtym/home/actions/workflows/vyos-rolling-update-notify.yml)
 
 This is my home environment.
 
