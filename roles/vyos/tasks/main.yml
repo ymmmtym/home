@@ -1,4 +1,16 @@
 ---
 # tasks file for roles/vyos
+- name: gather_facts for vyos
+  vyos_facts:
+    gather_subset: all
+    gather_network_resources: all
+  register: vyos_facts
+
 - name: import vyos_config
   include_tasks: vyos_config.yml
+  loop:
+    - base.j2
+    - dhcp.j2
+    - vrrp.j2
+    - nat.j2
+    - ntp.j2

@@ -1,7 +1,5 @@
 ---
 # defaults file for roles/vyos
-dhcp_range: '{{ range(4,128) }}'
-dhcp_static_mapping: '{{ range(4,16) }}'
 vlans:
   - id: 1
     type: 'outbound'
@@ -15,3 +13,9 @@ vlans:
     type: 'private'
     eth: 'eth2'
     cidr: '192.168.101.0/24'
+dhcp:
+  range: '{{ range(4,128) }}'
+  static_mapping: '{{ range(4,16) }}'
+ntp:
+  servers:
+    - ntp.nict.jp

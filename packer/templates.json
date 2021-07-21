@@ -200,13 +200,70 @@
       },
       "vnc_over_websocket": "true",
       "insecure_connection": "true"
+    },
+    {
+      "name": "template-vyos-rolling",
+      "vm_name": "template-vyos-rolling",
+      "type": "vmware-iso",
+      "guest_os_type": "debian6-64",
+      "ssh_username": "vyos",
+      "ssh_password": "vyos",
+      "ssh_timeout": "15m",
+      "iso_url": "{{ user `vyos_rolling_iso_url` }}",
+      "iso_checksum": "{{ user `vyos_rolling_iso_checksum` }}",
+      "shutdown_command": "sudo poweroff",
+      "boot_command": [
+        "<enter><wait10><wait10>",
+        "vyos<enter><wait>",
+        "vyos<enter><wait>",
+        "install image<enter><wait>",
+        "<enter><wait>",
+        "<enter><wait>",
+        "<enter><wait>",
+        "Yes<enter><wait10><wait10>",
+        "<enter><wait>",
+        "<enter><wait>",
+        "<enter><wait10><wait10><wait10>",
+        "vyos<enter><wait>",
+        "vyos<enter><wait>",
+        "<enter><wait5>",
+        "reboot<enter><wait>",
+        "Yes<enter><wait10><wait10><wait10><wait10>",
+        "vyos<enter><wait>",
+        "vyos<enter><wait>",
+        "configure<enter><wait>",
+        "delete interfaces ethernet eth0<enter><wait>",
+        "set service ssh port 22<enter><wait>",
+        "commit<enter><wait>",
+        "save<enter><wait>",
+        "set interfaces ethernet eth0 address dhcp<enter><wait>",
+        "commit<enter><wait>",
+        "save<enter><wait>",
+        "exit<enter><wait>"
+      ],
+      "tools_upload_flavor": "linux",
+      "headless": false,
+      "keep_registered": true,
+      "remote_type": "esx5",
+      "remote_host": "{{ user `esxi_host` }}",
+      "remote_datastore": "{{ user `esxi_datastore` }}",
+      "remote_username": "{{ user `esxi_username` }}",
+      "remote_password": "{{ user `esxi_password` }}",
+      "disk_type_id": "thin",
+      "vmx_data": {
+        "ethernet0.networkName": "{{ user `default_network` }}",
+        "memsize": "{{ user `default_memsize` }}"
+      },
+      "vnc_over_websocket": "true",
+      "insecure_connection": "true"
     }
   ],
   "provisioners": [
     {
       "type": "shell",
       "except": [
-        "template-vyos"
+        "template-vyos",
+        "template-vyos-rolling"
       ],
       "scripts": [ 
         "packer/install-cloud-init.sh"

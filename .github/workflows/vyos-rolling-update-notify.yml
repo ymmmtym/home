@@ -1,0 +1,39 @@
+---
+name: VyOS Rolling Update Notify
+on:
+  schedule:
+    - cron: '0 9 1,8,15,22 * *'
+  workflow_dispatch:
+
+jobs:
+  packer:
+    runs-on: ubuntu-latest
+    name: packer
+    defaults:
+      run:
+        working-directory: ./packer
+    env:
+      JSON: variables.json
+      HASH_KEY: vyos_rolling_iso_checksum
+      ISO_URL: https://downloads.vyos.io/rolling/current/amd64/vyos-rolling-latest.iso
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+      - name: Install requirements
+        run: sudo apt install -y jq
+      - name: Set sha256 of vyos-rolling-latest from server
+        id: latest_version
+        run: |
+          echo '::set-output name=sha256::$(curl -s ${ISO_URL}.sha256 | cut -f 1 -d " ")'
+          echo '::set-output name=iso_name::$(curl -s ${ISO_URL}.sha256 | cut -f 2 -3 " ")'
+      - name: Override template.json
+        run: |
+          cat $JSON | jq ".${HASH_KEY}|=${{ steps.latest_version.outputs.sha256 }}" > /var/tmp/$JSON
+          cp /var/tmp/$JSON $JSON
+      - name: Create pull request
+        uses: peter-evans/create-pull-request@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          title: Create PR from rolling-update ${{ steps.latest_version.outputs.iso_name }}
+          branch: rolling-update/${{ steps.latest_version.outputs.iso_name }}
+          delete-branch: true

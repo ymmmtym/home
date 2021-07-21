@@ -1,4 +1,26 @@
 ---
+vlans:
+  - id: 1
+    type: 'outbound'
+    eth: 'eth0'
+    cidr: '192.168.0.0/24'
+    vip: '192.168.0.4/24'
+    ipaddr: '192.168.0.34/24'
+    peer: '192.168.0.33/24'
+  - id: 100
+    type: 'public'
+    eth: 'eth1'
+    cidr: '192.168.100.0/24'
+    vip: '192.168.100.1/24'
+    ipaddr: '192.168.100.3/24'
+    peer: '192.168.100.2/24'
+  - id: 101
+    type: 'private'
+    eth: 'eth2'
+    cidr: '192.168.101.0/24'
+    vip: '192.168.101.1/24'
+    ipaddr: '192.168.101.3/24'
+    peer: '192.168.101.2/24'
 vrrp:
   status: backup
   priority: 100
@@ -8,3 +30,5 @@ vrrp:
 dhcp:
   failover:
     status: secondary
+  range: '{{ range(4,128) }}'
+  static_mapping: '{{ range(4,16) }}'
