@@ -1,6 +1,5 @@
 {% for vlan in vlans %}
 {% if vlan.type != 'outbound' %}
-set service dhcp-server shared-network-name VLAN{{ vlan.id }}
 set service dhcp-server shared-network-name VLAN{{ vlan.id }} subnet {{ vlan.cidr }} range 0 start {{ vlan.cidr | ipaddr('next_usable') }}
 set service dhcp-server shared-network-name VLAN{{ vlan.id }} subnet {{ vlan.cidr }} range 0 stop {{ vlan.cidr | next_nth_usable(dhcp.range | last)}}
 
