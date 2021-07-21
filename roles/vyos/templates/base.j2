@@ -2,6 +2,6 @@ set system host-name {{ inventory_hostname }}
 
 {% for vlan in vlans %}
 {% if vlan.type != 'outbound' %}
-set interfaces ethernet {{ vlan.eth }} address {{ vlan.cidr | next_nth_usable(vrrp.ip_forth_octet) }}/{{ vlan.cidr | ipaddr('prefix') }}
+set interfaces ethernet {{ vlan.eth }} address {{ vlan.ipaddr }}
 {% endif %}
 {% endfor %}
