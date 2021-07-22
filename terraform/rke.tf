@@ -29,3 +29,14 @@ resource "local_file" "kube_cluster_yaml" {
   filename = "kube_config_cluster.yml"
   content  = rke_cluster.cluster.kube_config_yaml
 }
+
+resource "local_file" "rke_cluster_yaml" {
+  filename = "cluster.yml"
+  content  = rke_cluster.cluster.rke_cluster_yaml
+}
+
+resource "local_file" "rke_state" {
+  filename = "cluster.rkestate"
+  content  = rke_cluster.cluster.rke_state
+}
+
