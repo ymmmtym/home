@@ -4,7 +4,7 @@ on:
   push:
     branches: [ main ]
   schedule:
-    - cron: '0 9 1,8,15,22 * *'
+    - cron: '0 9 * * *'
   workflow_dispatch:
 
 jobs:
@@ -16,8 +16,8 @@ jobs:
         working-directory: ./packer
     env:
       JSON: variables.json
-      HASH_KEY: vyos_rolling_iso_checksum
-      ISO_URL: https://downloads.vyos.io/rolling/current/amd64/vyos-rolling-latest.iso
+      ISO_URL_KEY: vyos_rolling_iso_url
+      ISO_CHECKSUM_KEY: vyos_rolling_iso_checksum
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
@@ -26,18 +26,19 @@ jobs:
       - name: Set sha256 of vyos-rolling-latest from server
         id: latest_version
         run: |
-          echo "::set-output name=sha256::$(curl -s ${ISO_URL}.sha256 | cut -f 1 -d ' ')"
-          echo "::set-output name=iso_name::$(curl -s ${ISO_URL}.sha256 | cut -f 3 -d ' ')"
+          ISO_URL=$(jq '."'$ISO_URL_KEY'"' $JSON)
+          echo "::set-output name=checksum::$(curl -s ${ISO_URL}.sha256 | awk '{print $1}')"
+          echo "::set-output name=iso_file_name::$(curl -s ${ISO_URL}.sha256 | awk '{print $2}')"
       - name: Override template.json
         run: |
-          sha256=${{ steps.latest_version.outputs.sha256 }}
-          jq '."'$HASH_KEY'"|="'$sha256'"' $JSON > /var/tmp/$JSON
+          CHECKSUM=${{ steps.latest_version.outputs.checksum }}
+          jq '."'$ISO_CHECKSUM_KEY'"|="'$CHECKSUM'"' $JSON > /var/tmp/$JSON
           cp /var/tmp/$JSON $JSON
       - name: Create pull request
         uses: peter-evans/create-pull-request@v3
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          title: "[VyOS Rolling Update Notify] ${{ steps.latest_version.outputs.iso_name }}"
-          commit-message: Rolling Update Image to ${{ steps.latest_version.outputs.iso_name }}
-          branch: rolling-update/${{ steps.latest_version.outputs.iso_name }}
+          title: "[VyOS Rolling Update Notify] ${{ steps.latest_version.outputs.iso_file_name }}"
+          commit-message: Rolling Update Image to ${{ steps.latest_version.outputs.iso_file_name }}
+          branch: rolling-update/${{ steps.latest_version.outputs.iso_file_name }}
           delete-branch: true
