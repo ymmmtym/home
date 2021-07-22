@@ -13,6 +13,10 @@ vlans:
     type: 'private'
     eth: 'eth2'
     cidr: '192.168.101.0/24'
+dns:
+  servers:
+    - 8.8.8.8
+    - 8.8.4.4
 dhcp:
   range: '{{ range(4,128) }}'
   static_mapping: '{{ range(4,16) }}'

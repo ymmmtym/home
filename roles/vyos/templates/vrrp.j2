@@ -3,7 +3,6 @@ set high-availability vrrp group VLAN{{ vlan.id }} vrid '{{ vlan.id }}'
 set high-availability vrrp group VLAN{{ vlan.id }} hello-source-address '{{ vlan.ipaddr | ipaddr('address') }}'
 set high-availability vrrp group VLAN{{ vlan.id }} interface '{{ vlan.eth }}'
 set high-availability vrrp group VLAN{{ vlan.id }} peer-address '{{ vlan.peer | ipaddr('address') }}'
-set high-availability vrrp group VLAN{{ vlan.id }} no-preempt
 set high-availability vrrp group VLAN{{ vlan.id }} priority '{{ vrrp.priority }}'
 set high-availability vrrp group VLAN{{ vlan.id }} virtual-address '{{ vlan.vip }}'
 {% endfor %}

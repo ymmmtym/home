@@ -7,7 +7,7 @@ set service dhcp-server shared-network-name VLAN{{ vlan.id }} subnet {{ vlan.cid
 set service dhcp-server shared-network-name VLAN{{ vlan.id }} subnet {{ vlan.cidr }} default-router {{ vlan.cidr | ipaddr('next_usable') }}
 {% endif %}
 
-set service dhcp-server shared-network-name VLAN{{ vlan.id }} subnet {{ vlan.cidr }} dns-server 8.8.8.8
+set service dhcp-server shared-network-name VLAN{{ vlan.id }} subnet {{ vlan.cidr }} dns-server {{ vlan.cidr | ipaddr('next_usable') }}
 set service dhcp-server shared-network-name VLAN{{ vlan.id }} subnet {{ vlan.cidr }} failover local-address {{ vlan.ipaddr | ipaddr('address') }}
 set service dhcp-server shared-network-name VLAN{{ vlan.id }} subnet {{ vlan.cidr }} failover peer-address {{ vlan.peer | ipaddr('address') }}
 set service dhcp-server shared-network-name VLAN{{ vlan.id }} subnet {{ vlan.cidr }} failover name failover-VLAN{{ vlan.id }}
