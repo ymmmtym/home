@@ -26,7 +26,7 @@ jobs:
       - name: Set sha256 of vyos-rolling-latest from server
         id: latest_version
         run: |
-          ISO_URL=$(jq '."'$ISO_URL_KEY'"' $JSON)
+          ISO_URL=$(jq -r '."'$ISO_URL_KEY'"' $JSON)
           echo "::set-output name=checksum::$(curl -s ${ISO_URL}.sha256 | awk '{print $1}')"
           echo "::set-output name=iso_file_name::$(curl -s ${ISO_URL}.sha256 | awk '{print $2}')"
       - name: Override template.json
