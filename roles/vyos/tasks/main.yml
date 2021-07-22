@@ -13,4 +13,3 @@
     - dhcp.j2
     - vrrp.j2
     - nat.j2
-    - ntp.j2

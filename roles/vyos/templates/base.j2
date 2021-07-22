@@ -1,7 +1,19 @@
+{# system #}
 set system host-name {{ inventory_hostname }}
 
+{% for server in dns.servers %}
+set system name-server {{ server }}
+{% endfor %}
+
+{% for server in ntp.servers %}
+set system ntp server {{ server }}
+{% endfor %}
+
+{# services, interfaces #}
 {% for vlan in vlans %}
 {% if vlan.type != 'outbound' %}
 set interfaces ethernet {{ vlan.eth }} address {{ vlan.ipaddr }}
+set service dns forwarding allow-from '{{ vlan.cidr }}'
+set service dns forwarding listen-address '{{ vlan.vip | ipaddr('address')}}'
 {% endif %}
 {% endfor %}
