@@ -23,6 +23,8 @@ resource "rke_cluster" "cluster" {
   network {
     plugin = "flannel"
   }
+
+  delay_on_creation = 10
 }
 
 resource "local_file" "kube_cluster_yaml" {
@@ -39,4 +41,3 @@ resource "local_file" "rke_state" {
   filename = "cluster.rkestate"
   content  = rke_cluster.cluster.rke_state
 }
-
