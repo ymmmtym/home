@@ -115,9 +115,6 @@ resource "esxi_guest" "k8s-worker01" {
     "userdata.encoding" = "gzip+base64"
     "userdata"          = base64gzip(data.template_file.k8s-worker01_userdata.rendered)
   }
-  depends_on = [
-    esxi_guest.k8s-master01,
-  ]
 }
 
 resource "esxi_guest" "k8s-worker02" {
