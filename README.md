@@ -7,27 +7,35 @@
 
 This is my home environment.
 
-## Network
+## Diagram
+
+### Network
 
 ![home](./img/home.dio.svg)
 
 ## Requirements
 
-| Software  | Version | Description |
-| --------- | ------- | ----------- |
-| ESXi      | >= 7.0  |             |
-| python    | >= 3.7  |             |
-| packer    | >= 1.7  |             |
-| terraform | >= 0.15 |             |
-| ansible   | >= 3.3  |             |
-| rke       | >= 1.2  |             |
-| vagrant   | >= 2.2  | Optional    |
+| Software        | Version | Description |
+| --------------- | ------- | ----------- |
+| ESXi            | >= 7.0  |             |
+| VMware Ovf Tool | >= 4.3  |             |
+| python          | >= 3.7  |             |
+| packer          | >= 1.7  |             |
+| terraform       | >= 0.15 |             |
+| ansible         | >= 3.3  |             |
+| rke             | >= 1.2  |             |
+| vagrant         | >= 2.2  | Optional    |
 
 ## Usage
 
 ### Preparation
 
-Preparation before create VMs.
+#### ESXi
+
+- Enable Access to the ESXi Shell via SSH.
+  - [How to Enable SSH in the VMware ESXi Embedded Host Client](https://blog.macstadium.com/blog/how-to-enable-ssh-in-the-vmware-esxi-embedded-host-client)
+- Enable GuestIPHack.
+  - `esxcli system settings advanced set -o /Net/GuestIPHack -i 1`
 
 #### Clone this repository
 
@@ -38,13 +46,12 @@ cd home
 
 #### Set environment vars like `.sample.env`
 
+create `.env` for your environment.
+and source `.env`
+
 ```bash
 cp .sample.env .env
-
-# fix .env for your environment
 vi .env
-
-# after fix .env
 . .env
 ```
 
@@ -94,7 +101,7 @@ packer build packer/templates.json -var-file=packer/variables.json
 
 If you want more template images, you need to add template config to `packer/templates.json`.
 
-#### Exec ansible playbook
+#### Exec terraform apply
 
 Activate ansible environment.
 
@@ -106,8 +113,9 @@ python3 -m venv --clear .venv
 pip install -r requirements.txt
 ```
 
-Setup all hosts.
+Exec terraform apply.
 
-```shell
-ansible-playbook site.yml
+```bash
+cd terraform
+terraform apply
 ```
