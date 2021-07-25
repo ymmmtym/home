@@ -1,5 +1,5 @@
 ---
-name: VyOS Rolling Update Notify
+name: VyOS Rolling Release Notify
 on:
   push:
     branches: [ main ]
@@ -8,9 +8,9 @@ on:
   workflow_dispatch:
 
 jobs:
-  rolling-update-notify:
+  rolling-release-notify:
     runs-on: ubuntu-latest
-    name: VyOS Rolling Update Notify
+    name: VyOS Rolling Release Notify
     defaults:
       run:
         working-directory: ./packer
@@ -38,7 +38,7 @@ jobs:
         uses: peter-evans/create-pull-request@v3
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          title: "[VyOS Rolling Update Notify] ${{ steps.latest_version.outputs.iso_file_name }}"
-          commit-message: Rolling Update Image to ${{ steps.latest_version.outputs.iso_file_name }}
-          branch: rolling-update/${{ steps.latest_version.outputs.iso_file_name }}
+          title: "[VyOS Rolling Release Notify] ${{ steps.latest_version.outputs.iso_file_name }}"
+          commit-message: Upgrade VyOS Image Version to ${{ steps.latest_version.outputs.iso_file_name }}
+          branch: rolling-release/${{ steps.latest_version.outputs.iso_file_name }}
           delete-branch: true
