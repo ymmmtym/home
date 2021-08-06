@@ -24,7 +24,7 @@ resource "rke_cluster" "cluster" {
     plugin = "flannel"
   }
 
-  delay_on_creation = 10
+  delay_on_creation = 30
 }
 
 resource "local_file" "kube_cluster_yaml" {
