@@ -11,7 +11,7 @@
   "vyos_iso_url": "http://mirror.tuxhelp.org/vyos/iso/release/1.1.8/vyos-1.1.8-amd64.iso",
   "vyos_iso_checksum": "ff4c8e1822e653d8d85f4a90f30c6d2ac047514c",
   "vyos_rolling_iso_url": "https://downloads.vyos.io/rolling/current/amd64/vyos-rolling-latest.iso",
-  "vyos_rolling_iso_checksum": "ad35b86130bbdd5de66003a57a16f8e47a6c3bd782194203aa8b71ed4d16b439",
+  "vyos_rolling_iso_checksum": "4d0acb032d986b75786b98ff14b9bd6700cf6d7b091373070f7c890e00846ecb",
   "centos7_iso_url": "http://ftp.tsukuba.wide.ad.jp/Linux/centos/7.9.2009/isos/x86_64/CentOS-7-x86_64-Minimal-2009.iso",
   "centos7_iso_checksum": "07b94e6b1a0b0260b94c83d6bb76b26bf7a310dc78d7a9c7432809fb9bc6194a",
   "centos8_iso_url": "http://ty1.mirror.newmediaexpress.com/centos/8.3.2011/isos/x86_64/CentOS-8.3.2011-x86_64-minimal.iso",
