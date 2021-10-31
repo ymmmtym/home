@@ -1,4 +1,4 @@
-ansible==3.3.0
+ansible==4.2.0
 ansible-base==2.10.9
 ansible-lint==5.0.8
 bcrypt==3.2.0
