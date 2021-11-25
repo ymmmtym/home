@@ -38,7 +38,7 @@ jobs:
         uses: peter-evans/create-pull-request@v3
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          title: "[VyOS Rolling Release Notify] ${{ steps.latest_version.outputs.iso_file_name }}"
+          title: "[Notify] VyOS Rolling Release"
           commit-message: Upgrade VyOS Image Version to ${{ steps.latest_version.outputs.iso_file_name }}
-          branch: rolling-release/${{ steps.latest_version.outputs.iso_file_name }}
+          branch: ci/vyos-rolling-release
           delete-branch: true
