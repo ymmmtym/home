@@ -113,6 +113,12 @@ python3 -m venv --clear .venv
 pip install -r requirements.txt
 ```
 
+Add route to public network.
+
+```bash
+ip r add 192.168.100.0/24 via 192.168.0.4
+```
+
 Exec terraform apply.
 
 ```bash
