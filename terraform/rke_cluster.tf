@@ -21,7 +21,11 @@ resource "rke_cluster" "cluster" {
     role             = ["worker"]
   }
   network {
-    plugin = "flannel"
+    plugin = "calico"
+  }
+  ingress {
+    default_backend = false
+    provider = "none"
   }
 
   delay_on_creation = 30
