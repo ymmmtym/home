@@ -8,5 +8,6 @@ chpasswd: { expire: False }
 ssh_pwauth: False
 runcmd:
   - hostnamectl set-hostname ${HOSTNAME}
+  - sudo swapoff -a
   - curl https://releases.rancher.com/install-docker/20.10.sh | sh
   - sudo usermod -a -G docker kube
