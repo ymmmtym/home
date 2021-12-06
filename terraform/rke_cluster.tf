@@ -1,23 +1,39 @@
 resource "rke_cluster" "cluster" {
+  cluster_name = "cluster"
+
   nodes {
     address          = esxi_guest.k8s-master01.ip_address
-    internal_address = "192.168.101.4"
+    internal_address = replace(esxi_guest.k8s-master01.ip_address, "100", "101")
     user             = "kube"
-    ssh_key          = file("~/.ssh/id_rsa.kube")
-    role             = ["controlplane", "worker", "etcd"]
+    ssh_key          = file("~/.ssh/kube.id_rsa")
+    role             = ["controlplane", "etcd"]
+  }
+  nodes {
+    address          = esxi_guest.k8s-master02.ip_address
+    internal_address = replace(esxi_guest.k8s-master02.ip_address, "100", "101")
+    user             = "kube"
+    ssh_key          = file("~/.ssh/kube.id_rsa")
+    role             = ["controlplane", "etcd"]
   }
   nodes {
     address          = esxi_guest.k8s-worker01.ip_address
-    internal_address = "192.168.101.5"
+    internal_address = replace(esxi_guest.k8s-worker01.ip_address, "100", "101")
     user             = "kube"
-    ssh_key          = file("~/.ssh/id_rsa.kube")
+    ssh_key          = file("~/.ssh/kube.id_rsa")
     role             = ["worker"]
   }
   nodes {
     address          = esxi_guest.k8s-worker02.ip_address
-    internal_address = "192.168.101.6"
+    internal_address = replace(esxi_guest.k8s-worker02.ip_address, "100", "101")
     user             = "kube"
-    ssh_key          = file("~/.ssh/id_rsa.kube")
+    ssh_key          = file("~/.ssh/kube.id_rsa")
+    role             = ["worker"]
+  }
+  nodes {
+    address          = esxi_guest.k8s-worker03.ip_address
+    internal_address = replace(esxi_guest.k8s-worker03.ip_address, "100", "101")
+    user             = "kube"
+    ssh_key          = file("~/.ssh/kube.id_rsa")
     role             = ["worker"]
   }
   network {
@@ -25,7 +41,7 @@ resource "rke_cluster" "cluster" {
   }
   ingress {
     default_backend = false
-    provider = "none"
+    provider        = "none"
   }
 
   delay_on_creation = 30
