@@ -1,10 +1,10 @@
 ---
 name: VyOS Rolling Release Notify
 on:
-  push:
-    branches: [ main ]
-  schedule:
-    - cron: '0 9 * * *'
+  # push:
+  #   branches: [ main ]
+  # schedule:
+  #   - cron: '0 9 * * *'
   workflow_dispatch:
 
 jobs:
