@@ -13,4 +13,10 @@ terraform {
       version = "2.6.1"
     }
   }
+  backend "remote" {
+    organization = "yumenomatayume"
+    workspaces {
+      name = "home"
+    }
+  }
 }
