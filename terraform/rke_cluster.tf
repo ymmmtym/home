@@ -2,36 +2,36 @@ resource "rke_cluster" "cluster" {
   cluster_name = "cluster"
 
   nodes {
-    address          = esxi_guest.k8s-master01.ip_address
-    internal_address = replace(esxi_guest.k8s-master01.ip_address, "100", "101")
+    address          = esxi_guest.k8s-master.0.ip_address
+    internal_address = replace(esxi_guest.k8s-master.0.ip_address, "100", "101")
     user             = "kube"
     ssh_key          = file("~/.ssh/kube.id_rsa")
     role             = ["controlplane", "etcd"]
   }
   nodes {
-    address          = esxi_guest.k8s-master02.ip_address
-    internal_address = replace(esxi_guest.k8s-master02.ip_address, "100", "101")
+    address          = esxi_guest.k8s-master.1.ip_address
+    internal_address = replace(esxi_guest.k8s-master.1.ip_address, "100", "101")
     user             = "kube"
     ssh_key          = file("~/.ssh/kube.id_rsa")
     role             = ["controlplane", "etcd"]
   }
   nodes {
-    address          = esxi_guest.k8s-worker01.ip_address
-    internal_address = replace(esxi_guest.k8s-worker01.ip_address, "100", "101")
+    address          = esxi_guest.k8s-worker.0.ip_address
+    internal_address = replace(esxi_guest.k8s-worker.0.ip_address, "100", "101")
     user             = "kube"
     ssh_key          = file("~/.ssh/kube.id_rsa")
     role             = ["worker"]
   }
   nodes {
-    address          = esxi_guest.k8s-worker02.ip_address
-    internal_address = replace(esxi_guest.k8s-worker02.ip_address, "100", "101")
+    address          = esxi_guest.k8s-worker.1.ip_address
+    internal_address = replace(esxi_guest.k8s-worker.1.ip_address, "100", "101")
     user             = "kube"
     ssh_key          = file("~/.ssh/kube.id_rsa")
     role             = ["worker"]
   }
   nodes {
-    address          = esxi_guest.k8s-worker03.ip_address
-    internal_address = replace(esxi_guest.k8s-worker03.ip_address, "100", "101")
+    address          = esxi_guest.k8s-worker.2.ip_address
+    internal_address = replace(esxi_guest.k8s-worker.2.ip_address, "100", "101")
     user             = "kube"
     ssh_key          = file("~/.ssh/kube.id_rsa")
     role             = ["worker"]
