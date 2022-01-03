@@ -8,17 +8,18 @@ all:
       hosts: localhost
       vars:
         ansible_connection: local
-        # ansible_python_interpreter: "/usr/bin/env python"
     vyos:
       hosts:
         vyos01:
         vyos02:
     kubernetes:
       children:
-        k8s_master:
+        k8s-master:
           hosts:
             k8s-master01:
-        k8s_worker:
+            k8s-master02:
+        k8s-worker:
           hosts:
             k8s-worker01:
             k8s-worker02:
+            k8s-worker03:
