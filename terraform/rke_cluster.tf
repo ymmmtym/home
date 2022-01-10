@@ -48,16 +48,19 @@ resource "rke_cluster" "cluster" {
 }
 
 resource "local_file" "kube_cluster_yaml" {
-  filename = "kube_config_cluster.yml"
   content  = rke_cluster.cluster.kube_config_yaml
+  filename = "kube_config_cluster.yml"
+  file_permission = "0600"
 }
 
 resource "local_file" "rke_cluster_yaml" {
-  filename = "cluster.yml"
   content  = rke_cluster.cluster.rke_cluster_yaml
+  filename = "cluster.yml"
+  file_permission = "0644"
 }
 
 resource "local_file" "rke_state" {
-  filename = "cluster.rkestate"
   content  = rke_cluster.cluster.rke_state
+  filename = "cluster.rkestate"
+  file_permission = "0644"
 }
