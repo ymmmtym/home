@@ -18,3 +18,4 @@ jobs:
       uses: ansible/ansible-lint-action@master
       with:
         targets: "site.yml"
+        override-deps: ansible==2.10.4
