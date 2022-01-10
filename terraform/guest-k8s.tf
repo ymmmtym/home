@@ -70,11 +70,11 @@ resource "esxi_guest" "k8s-master" {
   boot_disk_size     = "15"
   network_interfaces {
     virtual_network = esxi_portgroup.portgroup100_1.name
-    mac_address     = "00:50:56:00:64:${format("%02d", count.index + 4)}"
+    mac_address     = "00:50:56:00:64:${format("%02X", count.index + 4)}"
   }
   network_interfaces {
     virtual_network = esxi_portgroup.portgroup101_1.name
-    mac_address     = "00:50:56:00:65:${format("%02d", count.index + 4)}"
+    mac_address     = "00:50:56:00:65:${format("%02X", count.index + 4)}"
   }
   virtual_disks {
     virtual_disk_id = esxi_virtual_disk.k8s-master_1[count.index].id
@@ -100,11 +100,11 @@ resource "esxi_guest" "k8s-worker" {
   boot_disk_size     = "15"
   network_interfaces {
     virtual_network = esxi_portgroup.portgroup100_1.name
-    mac_address     = "00:50:56:00:64:${format("%02d", local.nodes.master + count.index + 4)}"
+    mac_address     = "00:50:56:00:64:${format("%02X", local.nodes.master + count.index + 4)}"
   }
   network_interfaces {
     virtual_network = esxi_portgroup.portgroup101_1.name
-    mac_address     = "00:50:56:00:65:${format("%02d", local.nodes.master + count.index + 4)}"
+    mac_address     = "00:50:56:00:65:${format("%02X", local.nodes.master + count.index + 4)}"
   }
   virtual_disks {
     virtual_disk_id = esxi_virtual_disk.k8s-worker_1[count.index].id
