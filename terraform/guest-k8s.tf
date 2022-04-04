@@ -1,5 +1,7 @@
 locals {
+  numvcpus = 2
   memsize = 4096
+  disk_size = 30
   nodes = {
     master = 2
     worker = 3
@@ -36,7 +38,7 @@ resource "esxi_resource_pool" "kubernetes" {
   cpu_shares         = "normal"
   mem_min            = local.memsize * 2
   mem_min_expandable = "false"
-  mem_max            = local.memsize * 5
+  mem_max            = local.memsize * 7
   mem_shares         = "normal"
 }
 
@@ -45,7 +47,7 @@ resource "esxi_virtual_disk" "k8s-master_1" {
   virtual_disk_disk_store = var.DISK_STORE
   virtual_disk_dir        = "k8s-master${format("%02d", count.index + 1)}"
   virtual_disk_name       = "k8s-master${format("%02d", count.index + 1)}_1.vmdk"
-  virtual_disk_size       = 30
+  virtual_disk_size       = local.disk_size
   virtual_disk_type       = "zeroedthick"
 }
 
@@ -54,7 +56,7 @@ resource "esxi_virtual_disk" "k8s-worker_1" {
   virtual_disk_disk_store = var.DISK_STORE
   virtual_disk_dir        = "k8s-worker${format("%02d", count.index + 1)}"
   virtual_disk_name       = "k8s-worker${format("%02d", count.index + 1)}_1.vmdk"
-  virtual_disk_size       = 30
+  virtual_disk_size       = local.disk_size
   virtual_disk_type       = "zeroedthick"
 }
 
@@ -64,8 +66,8 @@ resource "esxi_guest" "k8s-master" {
   power              = "on"
   disk_store         = var.DISK_STORE
   clone_from_vm      = "template-ubuntu2004"
-  memsize            = local.memsize
-  numvcpus           = "2"
+  memsize            = local.memsize * 2
+  numvcpus           = local.numvcpus
   resource_pool_name = esxi_resource_pool.kubernetes.resource_pool_name
   boot_disk_size     = "15"
   network_interfaces {
@@ -95,7 +97,7 @@ resource "esxi_guest" "k8s-worker" {
   disk_store         = var.DISK_STORE
   clone_from_vm      = "template-ubuntu2004"
   memsize            = local.memsize
-  numvcpus           = "2"
+  numvcpus           = local.numvcpus
   resource_pool_name = esxi_resource_pool.kubernetes.resource_pool_name
   boot_disk_size     = "15"
   network_interfaces {

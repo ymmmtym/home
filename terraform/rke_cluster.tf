@@ -6,14 +6,14 @@ resource "rke_cluster" "cluster" {
     internal_address = replace(esxi_guest.k8s-master.0.ip_address, "100", "101")
     user             = "kube"
     ssh_key          = file("~/.ssh/kube.id_rsa")
-    role             = ["controlplane", "etcd"]
+    role             = ["controlplane", "etcd", "worker"]
   }
   nodes {
     address          = esxi_guest.k8s-master.1.ip_address
     internal_address = replace(esxi_guest.k8s-master.1.ip_address, "100", "101")
     user             = "kube"
     ssh_key          = file("~/.ssh/kube.id_rsa")
-    role             = ["controlplane", "etcd"]
+    role             = ["controlplane", "etcd", "worker"]
   }
   nodes {
     address          = esxi_guest.k8s-worker.0.ip_address
