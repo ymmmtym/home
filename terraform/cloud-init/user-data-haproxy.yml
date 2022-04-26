@@ -1,0 +1,10 @@
+#cloud-config
+# vim:syntax=yaml
+user: kube
+password: $6$salt$gDz3ZCV1MfDS16NbFIUfJ6xo/kvzFqw7vcuh3Gy0KlNFW7IFT0fy880o09hio.Qlan3eb66I2kFrgFA5oXxPj.
+ssh_authorized_keys:
+  - ${SSH_AUTHORIZED_KEY}
+chpasswd: { expire: False }
+ssh_pwauth: False
+runcmd:
+  - hostnamectl set-hostname ${HOSTNAME}
