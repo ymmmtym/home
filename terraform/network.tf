@@ -1,6 +1,11 @@
+### vSwitch
+
 resource "esxi_vswitch" "vswitch1" {
   name = "vSwitch1"
 }
+
+
+### PortGroup
 
 resource "esxi_portgroup" "portgroup100_1" {
   name    = "vSwitch1 PortGroup100"

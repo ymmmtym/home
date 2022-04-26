@@ -1,3 +1,5 @@
+### Sample
+
 data "template_file" "test01_userdata" {
   template = file("cloud-init/user-data-test.yml")
   vars = {
