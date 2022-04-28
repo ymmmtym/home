@@ -1,0 +1,7 @@
+%{ if FIRST_SERVER != "" }
+server: https://${FIRST_SERVER}:9345
+%{ else }%{ endif }
+token: ${TOKEN}
+%{ if INSTALL_RKE2_TYPE == "server" }
+tls-san: ${TLS_SAN}
+%{ else }%{ endif }

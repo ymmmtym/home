@@ -6,5 +6,20 @@ ssh_authorized_keys:
   - ${SSH_AUTHORIZED_KEY}
 chpasswd: { expire: False }
 ssh_pwauth: False
+write_files:
+  - content: ${HAPROXY_CFG}
+    path: /tmp/haproxy.cfg
+    encoding: gz+b64
+  - content: ${KEEPALIVED_CONF}
+    path: /tmp/keepalived.conf
+    encoding: gz+b64
+bootcmd:
+  - /usr/sbin/sysctl -q -w net.ipv4.ip_forward=1
 runcmd:
   - hostnamectl set-hostname ${HOSTNAME}
+  - apt update -y
+  - apt -y install haproxy keepalived
+  - systemctl enable haproxy keepalived
+  - mv /tmp/haproxy.cfg /etc/haproxy/haproxy.cfg
+  - mv /tmp/keepalived.conf /etc/keepalived/keepalived.conf
+  - systemctl restart haproxy keepalived
