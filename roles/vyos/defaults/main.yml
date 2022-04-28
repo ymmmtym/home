@@ -14,9 +14,11 @@ vlans:
     eth: 'eth2'
     cidr: '192.168.101.0/24'
 dns:
+  domain: yumenomatayume.home
   servers:
-    - 8.8.8.8
-    - 8.8.4.4
+    - 192.168.0.3
+  search_domains:
+    - yumenomatayume.home
 dhcp:
   range: '{{ range(4,128) }}'
   static_mapping: '{{ range(4,16) }}'

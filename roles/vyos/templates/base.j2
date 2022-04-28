@@ -1,8 +1,13 @@
 {# system #}
 set system host-name {{ inventory_hostname }}
+set system domain-name {{ inventory_hostname }}.{{ dns.domain }}
 
 {% for server in dns.servers %}
 set system name-server {{ server }}
+{% endfor %}
+
+{% for search_domain in dns.search_domains %}
+set system domain-search domain {{ search_domain }}
 {% endfor %}
 
 {% for server in ntp.servers %}
