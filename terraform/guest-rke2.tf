@@ -117,6 +117,17 @@ data "template_file" "rke2-server_config" {
   }
 }
 
+data "http" "rke2-server_argocd_values" {
+  url = "https://raw.githubusercontent.com/ymmmtym/manifests/main/argo-cd/values.yaml"
+}
+
+data "template_file" "rke2-server_manifests" {
+  template = file("rke2/manifests.yaml.tftpl")
+  vars = {
+    ARGOCD_VALUES = indent(4, data.http.rke2-server_argocd_values.body)
+  }
+}
+
 data "template_file" "rke2-server_userdata" {
   count    = local.nodes.server
   template = file("cloud-init/user-data-rke2.yml")
@@ -126,6 +137,7 @@ data "template_file" "rke2-server_userdata" {
     SSH_AUTHORIZED_KEY = local.ssh_authorized_key
     INSTALL_RKE2_TYPE  = "server"
     RKE2_CONFIG        = base64gzip(data.template_file.rke2-server_config[count.index].rendered)
+    MANIFESTS          = base64gzip(data.template_file.rke2-server_manifests.rendered)
   }
 }
 
