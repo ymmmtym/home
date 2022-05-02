@@ -118,7 +118,7 @@ data "template_file" "rke2-server_config" {
 }
 
 data "http" "rke2-server_argocd_values" {
-  url = "https://raw.githubusercontent.com/ymmmtym/manifests/main/argo-cd/values.yaml"
+  url = "https://raw.githubusercontent.com/ymmmtym/manifests/main/argo-cd/overlays/dev/values.yaml"
 }
 
 data "template_file" "rke2-server_manifests" {

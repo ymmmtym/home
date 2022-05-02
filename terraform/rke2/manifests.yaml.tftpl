@@ -17,7 +17,7 @@ spec:
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: argo-cd
+  name: argocd
 
 ---
 apiVersion: helm.cattle.io/v1
@@ -27,7 +27,7 @@ metadata:
   namespace: kube-system
 spec:
   chart: argo-cd
-  targetNamespace: argo-cd
+  targetNamespace: argocd
   version: 4.5.7
   repo: https://argoproj.github.io/argo-helm
   valuesContent: |-
