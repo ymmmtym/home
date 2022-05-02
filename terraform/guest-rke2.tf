@@ -110,22 +110,15 @@ data "template_file" "rke2-server_config" {
   count    = local.nodes.server
   template = file("rke2/config.yaml.tftpl")
   vars = {
-    FIRST_SERVER       = count.index == 0 ? "" : "rke2-server01"
-    TOKEN              = random_password.rke2_token.result
-    INSTALL_RKE2_TYPE  = "server"
-    TLS_SAN            = "[rke2-server, rke2-server01, rke2-server02, rke-server03]"
+    FIRST_SERVER      = count.index == 0 ? "" : "rke2-server01"
+    TOKEN             = random_password.rke2_token.result
+    INSTALL_RKE2_TYPE = "server"
+    TLS_SAN           = "[rke2-server, rke2-server01, rke2-server02, rke-server03]"
   }
-}
-
-data "http" "rke2-server_argocd_values" {
-  url = "https://raw.githubusercontent.com/ymmmtym/manifests/main/argo-cd/overlays/dev/values.yaml"
 }
 
 data "template_file" "rke2-server_manifests" {
   template = file("rke2/manifests.yaml.tftpl")
-  vars = {
-    ARGOCD_VALUES = indent(4, data.http.rke2-server_argocd_values.body)
-  }
 }
 
 data "template_file" "rke2-server_userdata" {
@@ -208,9 +201,9 @@ resource "null_resource" "update_kubeconfig" {
 data "template_file" "rke2-agent_config" {
   template = file("rke2/config.yaml.tftpl")
   vars = {
-    FIRST_SERVER       = "rke2-server01"
-    TOKEN              = random_password.rke2_token.result
-    INSTALL_RKE2_TYPE  = "agent"
+    FIRST_SERVER      = "rke2-server01"
+    TOKEN             = random_password.rke2_token.result
+    INSTALL_RKE2_TYPE = "agent"
   }
 }
 
@@ -264,3 +257,30 @@ resource "esxi_guest" "rke2-agent" {
   }
 }
 
+### Helm
+
+provider "helm" {
+  kubernetes {
+    config_path    = "~/.kube/config"
+    config_context = "default"
+  }
+}
+
+data "http" "rke2-server_argocd_values" {
+  url = "https://raw.githubusercontent.com/ymmmtym/manifests/main/argo-cd/overlays/dev/values.yaml"
+}
+
+resource "helm_release" "argo-cd" {
+  name       = "argo-cd"
+  repository = "https://argoproj.github.io/argo-helm"
+  chart      = "argo-cd"
+  version    = "4.5.7"
+  namespace  = "argocd"
+
+  create_namespace = true
+
+  values = [data.http.rke2-server_argocd_values.body]
+
+  depends_on = [null_resource.update_kubeconfig]
+
+}
