@@ -257,7 +257,57 @@ resource "esxi_guest" "rke2-agent" {
   }
 }
 
-### Helm
+
+### Bootstrap
+
+# kubernetes
+
+provider "kubernetes" {
+  config_path    = "~/.kube/config"
+  config_context = "default"
+}
+
+resource "tls_private_key" "sealed-secret-key" {
+  algorithm = "RSA"
+  rsa_bits  = 4096
+}
+
+resource "tls_self_signed_cert" "sealed-secret-key" {
+  private_key_pem = tls_private_key.sealed-secret-key.private_key_pem
+
+  validity_period_hours = 26280 # 3y
+  early_renewal_hours   = 8760  # 365d
+
+  is_ca_certificate = true
+
+  allowed_uses = ["cert_signing"]
+
+  subject {
+    common_name  = "yumenomatayume.net"
+  }
+}
+
+resource "kubernetes_secret" "sealed-secret-key" {
+  metadata {
+    name      = "sealed-secret-key"
+    namespace = "kube-system"
+		labels    = {
+			"sealedsecrets.bitnami.com/sealed-secrets-key" = "active"
+		}
+  }
+
+  data = {
+    "tls.crt" = tls_self_signed_cert.sealed-secret-key.cert_pem
+    "tls.key" = tls_private_key.sealed-secret-key.private_key_pem
+  }
+
+  type = "kubernetes.io/tls"
+
+  depends_on = [null_resource.update_kubeconfig]
+}
+
+
+# Helm
 
 provider "helm" {
   kubernetes {
@@ -282,5 +332,4 @@ resource "helm_release" "argo-cd" {
   values = [data.http.rke2-server_argocd_values.body]
 
   depends_on = [null_resource.update_kubeconfig]
-
 }
