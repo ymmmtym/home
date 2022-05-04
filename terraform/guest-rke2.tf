@@ -260,12 +260,12 @@ resource "esxi_guest" "rke2-agent" {
 
 ### Bootstrap
 
-# kubernetes
-
 provider "kubernetes" {
   config_path    = "~/.kube/config"
   config_context = "default"
 }
+
+# SealedSecrets
 
 resource "tls_private_key" "sealed-secret-key" {
   algorithm = "RSA"
@@ -306,8 +306,47 @@ resource "kubernetes_secret" "sealed-secret-key" {
   depends_on = [null_resource.update_kubeconfig]
 }
 
+# cert-manager
 
-# Helm
+resource "tls_private_key" "cert-manager-selfsigned" {
+  algorithm = "RSA"
+  rsa_bits  = 4096
+}
+
+resource "tls_self_signed_cert" "cert-manager-selfsigned" {
+  private_key_pem = tls_private_key.cert-manager-selfsigned.private_key_pem
+
+  validity_period_hours = 26280 # 3y
+  early_renewal_hours   = 8760  # 365d
+
+  is_ca_certificate = true
+
+  allowed_uses = ["server_auth", "client_auth"]
+  dns_names    = ["*.yumenomatayume.home"]
+
+  subject {
+    common_name  = "yumenomatayume.home"
+  }
+}
+
+resource "kubernetes_secret" "cert-manager-selfsigned" {
+  metadata {
+    name      = "cert-manager-selfsigned"
+    namespace = "kube-system"
+  }
+
+  data = {
+    "tls.crt" = tls_self_signed_cert.cert-manager-selfsigned.cert_pem
+    "tls.key" = tls_private_key.cert-manager-selfsigned.private_key_pem
+  }
+
+  type = "kubernetes.io/tls"
+
+  depends_on = [null_resource.update_kubeconfig]
+}
+
+
+# ArgoCD
 
 provider "helm" {
   kubernetes {
