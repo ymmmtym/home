@@ -10,7 +10,7 @@ locals {
   nodes = {
     haproxy = 0
     server  = 3
-    agent   = 3
+    agent   = 4
   }
 }
 
