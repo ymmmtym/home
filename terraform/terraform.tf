@@ -2,7 +2,7 @@ terraform {
   required_providers {
     esxi = {
       source  = "josenk/esxi"
-      version = "1.8.1"
+      version = "1.10.2"
     }
     helm = {
       source  = "hashicorp/helm"
