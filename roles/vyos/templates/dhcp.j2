@@ -5,6 +5,10 @@ set service dhcp-server shared-network-name VLAN{{ vlan.id }} subnet {{ vlan.cid
 
 {% if vlan.type == 'public' %}
 set service dhcp-server shared-network-name VLAN{{ vlan.id }} subnet {{ vlan.cidr }} default-router {{ vlan.cidr | ipaddr('next_usable') }}
+set service dhcp-server shared-network-name VLAN{{ vlan.id }} domain-name {{ dns.domain }}
+{% for search_domain in dns.search_domains %}
+set service dhcp-server shared-network-name VLAN{{ vlan.id }} domain-search {{ search_domain }}
+{% endfor %}
 {% endif %}
 
 set service dhcp-server shared-network-name VLAN{{ vlan.id }} subnet {{ vlan.cidr }} dns-server {{ vlan.cidr | ipaddr('next_usable') }}

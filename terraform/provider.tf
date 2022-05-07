@@ -6,10 +6,3 @@ provider "esxi" {
   esxi_password = var.ESXI_PASSWORD
 }
 
-provider "rke" {
-  debug = false
-}
-
-provider "kubernetes" {
-  config_path = rke_cluster.cluster.kube_config_yaml
-}
