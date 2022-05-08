@@ -4,6 +4,7 @@ set system domain-name {{ inventory_hostname }}.{{ dns.domain }}
 
 {% for server in dns.servers %}
 set system name-server {{ server }}
+set service dns forwarding name-server {{ server }}
 {% endfor %}
 
 {% for search_domain in dns.search_domains %}

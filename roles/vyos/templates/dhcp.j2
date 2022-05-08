@@ -1,21 +1,21 @@
 {% for vlan in vlans %}
 {% if vlan.type != 'outbound' %}
+{% if vlan.type == 'public' %}
+set service dhcp-server failover name failover-VLAN{{ vlan.id }}
+set service dhcp-server failover remote {{ vlan.peer | ipaddr('address') }}
+set service dhcp-server failover source-address {{ vlan.ipaddr | ipaddr('address') }}
+set service dhcp-server failover status {{ dhcp.failover.status }}
+set service dhcp-server shared-network-name VLAN{{ vlan.id }} subnet {{ vlan.cidr }} default-router {{ vlan.cidr | ipaddr('next_usable') }}
+{% endif %}
+
 set service dhcp-server shared-network-name VLAN{{ vlan.id }} subnet {{ vlan.cidr }} range 0 start {{ vlan.cidr | ipaddr('next_usable') }}
 set service dhcp-server shared-network-name VLAN{{ vlan.id }} subnet {{ vlan.cidr }} range 0 stop {{ vlan.cidr | next_nth_usable(dhcp.range | last)}}
 
-{% if vlan.type == 'public' %}
-set service dhcp-server shared-network-name VLAN{{ vlan.id }} subnet {{ vlan.cidr }} default-router {{ vlan.cidr | ipaddr('next_usable') }}
+set service dhcp-server shared-network-name VLAN{{ vlan.id }} subnet {{ vlan.cidr }} name-server {{ vlan.cidr | ipaddr('next_usable') }}
 set service dhcp-server shared-network-name VLAN{{ vlan.id }} domain-name {{ dns.domain }}
 {% for search_domain in dns.search_domains %}
 set service dhcp-server shared-network-name VLAN{{ vlan.id }} domain-search {{ search_domain }}
 {% endfor %}
-{% endif %}
-
-set service dhcp-server shared-network-name VLAN{{ vlan.id }} subnet {{ vlan.cidr }} dns-server {{ vlan.cidr | ipaddr('next_usable') }}
-set service dhcp-server shared-network-name VLAN{{ vlan.id }} subnet {{ vlan.cidr }} failover local-address {{ vlan.ipaddr | ipaddr('address') }}
-set service dhcp-server shared-network-name VLAN{{ vlan.id }} subnet {{ vlan.cidr }} failover peer-address {{ vlan.peer | ipaddr('address') }}
-set service dhcp-server shared-network-name VLAN{{ vlan.id }} subnet {{ vlan.cidr }} failover name failover-VLAN{{ vlan.id }}
-set service dhcp-server shared-network-name VLAN{{ vlan.id }} subnet {{ vlan.cidr }} failover status {{ dhcp.failover.status }}
 
 {% for forth_octet in dhcp.static_mapping %}
 set service dhcp-server shared-network-name VLAN{{ vlan.id }} subnet {{ vlan.cidr }} static-mapping {{ forth_octet }} ip-address {{ vlan.cidr | next_nth_usable(forth_octet) }}
