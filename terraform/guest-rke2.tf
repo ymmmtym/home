@@ -6,6 +6,7 @@ locals {
   disk_size = 30
 
   ssh_authorized_key = file("~/.ssh/kube.id_rsa.pub")
+  ssh_private_key    = file("~/.ssh/kube.id_rsa")
 
   nodes = {
     haproxy = 0
@@ -195,6 +196,27 @@ resource "null_resource" "update_kubeconfig" {
   }
 }
 
+provider "remote" {
+  alias = "rke2-server"
+
+  max_sessions = 2
+
+  conn {
+    host        = esxi_guest.rke2-server.0.guest_name
+    user        = "kube"
+    private_key = local.ssh_private_key
+    sudo        = false
+  }
+}
+
+data "remote_file" "kubeconfig" {
+  provider = remote.rke2-server
+
+  path = ".kube/config"
+
+  depends_on = [null_resource.update_kubeconfig]
+}
+
 
 ### RKE2 Agent
 
@@ -261,7 +283,7 @@ resource "esxi_guest" "rke2-agent" {
 ### Bootstrap
 
 provider "kubernetes" {
-  config_path    = "~/.kube/config"
+  config_path    = "~/${data.remote_file.kubeconfig.path}"
   config_context = "default"
 }
 
@@ -283,7 +305,7 @@ resource "tls_self_signed_cert" "sealed-secret-key" {
   allowed_uses = ["cert_signing"]
 
   subject {
-    common_name  = "yumenomatayume.net"
+    common_name = "yumenomatayume.net"
   }
 }
 
@@ -291,9 +313,9 @@ resource "kubernetes_secret" "sealed-secret-key" {
   metadata {
     name      = "sealed-secret-key"
     namespace = "kube-system"
-		labels    = {
-			"sealedsecrets.bitnami.com/sealed-secrets-key" = "active"
-		}
+    labels = {
+      "sealedsecrets.bitnami.com/sealed-secrets-key" = "active"
+    }
   }
 
   data = {
@@ -303,7 +325,7 @@ resource "kubernetes_secret" "sealed-secret-key" {
 
   type = "kubernetes.io/tls"
 
-  depends_on = [null_resource.update_kubeconfig]
+  depends_on = [data.remote_file.kubeconfig]
 }
 
 # cert-manager
@@ -325,7 +347,7 @@ resource "tls_self_signed_cert" "cert-manager-selfsigned" {
   dns_names    = ["*.yumenomatayume.home"]
 
   subject {
-    common_name  = "yumenomatayume.home"
+    common_name = "yumenomatayume.home"
   }
 }
 
@@ -342,7 +364,7 @@ resource "kubernetes_secret" "cert-manager-selfsigned" {
 
   type = "kubernetes.io/tls"
 
-  depends_on = [null_resource.update_kubeconfig]
+  depends_on = [data.remote_file.kubeconfig]
 }
 
 
@@ -350,7 +372,7 @@ resource "kubernetes_secret" "cert-manager-selfsigned" {
 
 provider "helm" {
   kubernetes {
-    config_path    = "~/.kube/config"
+    config_path    = "~/${data.remote_file.kubeconfig.path}"
     config_context = "default"
   }
 }
@@ -370,5 +392,5 @@ resource "helm_release" "argo-cd" {
 
   values = [data.http.rke2-server_argocd_values.body]
 
-  depends_on = [null_resource.update_kubeconfig]
+  depends_on = [data.remote_file.kubeconfig]
 }

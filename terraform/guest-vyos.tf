@@ -29,6 +29,10 @@ resource "esxi_guest" "vyos" {
     mac_address     = "00:50:56:00:65:${format("%02X", count.index + 1)}"
   }
   provisioner "local-exec" {
+    working_dir = "."
+    command     = "/usr/local/bin/terraform state pull > terraform.tfstate"
+  }
+  provisioner "local-exec" {
     working_dir = ".."
     command     = "ansible-playbook site.yml -l ${self.guest_name} -e ansible_host=${self.ip_address} -v"
   }
