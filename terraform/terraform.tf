@@ -5,11 +5,11 @@ terraform {
       version = "1.10.2"
     }
     remote = {
-      source = "tenstad/remote"
+      source  = "tenstad/remote"
       version = "0.0.23"
     }
     kubernetes = {
-      source = "hashicorp/kubernetes"
+      source  = "hashicorp/kubernetes"
       version = "2.11.0"
     }
     helm = {
