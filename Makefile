@@ -11,7 +11,7 @@ remove-initial-resources:
 
 .PHONY: redeploy
 redeploy: remove-initial-resources
-	cd $(terraform_dir) && $(terraform_bin) apply -parallelism=10000 -auto-approve \
+	cd $(terraform_dir) && $(terraform_bin) apply -parallelism=10000 -refresh=true -auto-approve \
 		-replace="esxi_guest.rke2-server[0]" \
 		-replace="esxi_guest.rke2-server[1]" \
 		-replace="esxi_guest.rke2-server[2]" \
@@ -43,4 +43,8 @@ update-esxi-cert:
 	scp $(TMPDIR)/rui.* esxi:/etc/vmware/ssl/
 	ssh esxi "/etc/init.d/hostd restart && /etc/init.d/vpxa restart"
 	rm -fr $(TMPDIR)
+
+.PHONY: get-argocd-admin-password
+get-argocd-admin-password:
+	@kubectl -n argocd get secret argocd-initial-admin-secret -o json | jq -r ".data.password" | base64 -d
 
