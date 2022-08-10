@@ -1,6 +1,6 @@
 ansible==4.10.0
 ansible-base==2.10.17
-ansible-lint==5.0.12
+ansible-lint==5.4.0
 bcrypt==3.2.2
 bracex==2.1.1
 cffi==1.14.6
