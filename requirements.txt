@@ -2,7 +2,7 @@ ansible==4.10.0
 ansible-base==2.10.17
 ansible-lint==5.0.12
 bcrypt==3.2.2
-bracex==2.1.1
+bracex==2.3.post1
 cffi==1.14.6
 colorama==0.4.4
 commonmark==0.9.1
