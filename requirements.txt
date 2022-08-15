@@ -14,7 +14,7 @@ netaddr==0.8.0
 packaging==20.9
 paramiko==2.10.4
 pycparser==2.20
-Pygments==2.9.0
+Pygments==2.13.0
 PyNaCl==1.4.0
 pyparsing==2.4.7
 PyYAML==5.4.1
