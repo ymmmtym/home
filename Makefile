@@ -27,6 +27,11 @@ redeploy: remove-initial-resources
 		-replace="esxi_virtual_disk.rke2-agent_1[2]" \
 		-replace="esxi_virtual_disk.rke2-agent_1[3]"
 
+.PHONY: get-cert
+get-cert:
+	@kubectl -n kube-system get secret selfsigned -o json | jq -r '.data["tls.crt"]' | base64 -d > ~/Downloads/tls.crt
+	@kubectl -n kube-system get secret selfsigned -o json | jq -r '.data["tls.key"]' | base64 -d > ~/Downloads/tls.key
+
 .PHONY: update-cert
 update-cert:
 	echo $(TMPDIR)
