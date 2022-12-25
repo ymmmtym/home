@@ -11,10 +11,16 @@ spec:
     kubeProxyReplacement: strict
     k8sServiceHost: rke2-server
     k8sServicePort: 6443
+    bgp:
+      enabled: false
+      announce:
+        loadbalancerIP: true
+        podCIDR: true
+    ingressController:
+      enabled: true
     hubble:
       enabled: true
       relay:
         enabled: true
       ui:
         enabled: true
-
