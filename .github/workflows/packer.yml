@@ -30,6 +30,7 @@ jobs:
           arguments: -syntax-only
           target: packer/templates.json
 
+      # NOTE: needs builders
       # build artifact
       # - name: Build Artifact
       #   uses: hashicorp/packer-github-actions@master
@@ -39,3 +40,4 @@ jobs:
       #     target: packer/templates.json
       #   env:
       #     PACKER_LOG: 1
+      #     ESXI_PASSWORD: root
