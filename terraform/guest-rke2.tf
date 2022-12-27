@@ -3,7 +3,7 @@
 locals {
   numvcpus  = 2
   memsize   = 4096
-  disk_size = 30
+  disk_size = 50
 
   ssh_authorized_key = file("~/.ssh/kube.id_rsa.pub")
   ssh_private_key    = file("~/.ssh/kube.id_rsa")
@@ -333,46 +333,6 @@ resource "kubernetes_secret" "sealed-secret-key" {
 
   depends_on = [data.remote_file.kubeconfig]
 }
-
-# cert-manager
-
-resource "tls_private_key" "cert-manager-selfsigned" {
-  algorithm = "RSA"
-  rsa_bits  = 4096
-}
-
-resource "tls_self_signed_cert" "cert-manager-selfsigned" {
-  private_key_pem = tls_private_key.cert-manager-selfsigned.private_key_pem
-
-  validity_period_hours = 26280 # 3y
-  early_renewal_hours   = 8760  # 365d
-
-  is_ca_certificate = true
-
-  allowed_uses = ["server_auth", "client_auth"]
-  dns_names    = ["*.yumenomatayume.home"]
-
-  subject {
-    common_name = "yumenomatayume.home"
-  }
-}
-
-resource "kubernetes_secret" "cert-manager-selfsigned" {
-  metadata {
-    name      = "cert-manager-selfsigned"
-    namespace = "kube-system"
-  }
-
-  data = {
-    "tls.crt" = tls_self_signed_cert.cert-manager-selfsigned.cert_pem
-    "tls.key" = tls_private_key.cert-manager-selfsigned.private_key_pem
-  }
-
-  type = "kubernetes.io/tls"
-
-  depends_on = [data.remote_file.kubeconfig]
-}
-
 
 # ArgoCD
 
