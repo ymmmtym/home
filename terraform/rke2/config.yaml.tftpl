@@ -4,7 +4,7 @@ server: https://${FIRST_SERVER}:9345
 
 %{ if INSTALL_RKE2_TYPE == "server" ~}
 cluster-domain: cluster.yumenomatayume.home
-write-kubeconfig-mode: "0644"
+write-kubeconfig-mode: "0600"
 tls-san: ${TLS_SAN}
 cni: cilium
 disable: rke2-ingress-nginx
@@ -13,3 +13,4 @@ disable-kube-proxy: true
 %{ endif ~}
 
 token: ${TOKEN}
+kubelet-arg: '--feature-gates=DelegateFSGroupToCSIDriver=false'

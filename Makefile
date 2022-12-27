@@ -1,31 +1,32 @@
-terraform_bin = /usr/local/bin/terraform
+terraform_bin = terraform
 terraform_dir = "./terraform"
 TMPDIR := $(shell mktemp -d)
 
 
-.PHONY: remove-initial-resources
-remove-initial-resources:
-	-cd $(terraform_dir) && $(terraform_bin) state rm "helm_release.argo-cd"
-	-cd $(terraform_dir) && $(terraform_bin) state rm "kubernetes_secret.sealed-secret-key"
-	-cd $(terraform_dir) && $(terraform_bin) state rm "kubernetes_secret.cert-manager-selfsigned"
+.PHONY: remove-kustomization-resources-state
+remove-kustomization-resources-state:
+	-cd $(terraform_dir) && $(terraform_bin) state rm \
+		"kustomization_resource.argo-cd-dev-resource-p0" \
+		"kustomization_resource.argo-cd-dev-resource-p1" \
+		"kustomization_resource.argo-cd-dev-resource-p2" \
+		"kubernetes_secret.sealed-secret-key" \
+		"kubernetes_secret.cert-manager-selfsigned"
 
 .PHONY: redeploy
-redeploy: remove-initial-resources
-	cd $(terraform_dir) && $(terraform_bin) apply -parallelism=10000 -auto-approve \
+redeploy: remove-kustomization-resources-state
+	cd $(terraform_dir) && $(terraform_bin) apply -auto-approve \
 		-replace="esxi_guest.rke2-server[0]" \
 		-replace="esxi_guest.rke2-server[1]" \
 		-replace="esxi_guest.rke2-server[2]" \
 		-replace="esxi_guest.rke2-agent[0]" \
 		-replace="esxi_guest.rke2-agent[1]" \
 		-replace="esxi_guest.rke2-agent[2]" \
-		-replace="esxi_guest.rke2-agent[3]" \
-		-replace="esxi_virtual_disk.rke2-server_1[0]" \
-		-replace="esxi_virtual_disk.rke2-server_1[1]" \
-		-replace="esxi_virtual_disk.rke2-server_1[2]" \
-		-replace="esxi_virtual_disk.rke2-agent_1[0]" \
-		-replace="esxi_virtual_disk.rke2-agent_1[1]" \
-		-replace="esxi_virtual_disk.rke2-agent_1[2]" \
-		-replace="esxi_virtual_disk.rke2-agent_1[3]"
+		-replace="esxi_guest.rke2-agent[3]"
+
+.PHONY: get-cert
+get-cert:
+	@kubectl -n kube-system get secret selfsigned -o json | jq -r '.data["tls.crt"]' | base64 -d > ~/Downloads/tls.crt
+	@kubectl -n kube-system get secret selfsigned -o json | jq -r '.data["tls.key"]' | base64 -d > ~/Downloads/tls.key
 
 .PHONY: update-cert
 update-cert:
@@ -43,4 +44,8 @@ update-esxi-cert:
 	scp $(TMPDIR)/rui.* esxi:/etc/vmware/ssl/
 	ssh esxi "/etc/init.d/hostd restart && /etc/init.d/vpxa restart"
 	rm -fr $(TMPDIR)
+
+.PHONY: get-argocd-admin-password
+get-argocd-admin-password:
+	@kubectl -n argocd get secret argocd-initial-admin-secret -o json | jq -r ".data.password" | base64 -d
 

@@ -1,35 +1,65 @@
 #cloud-config
 # vim:syntax=yaml
+
 user: kube
 password: $6$salt$gDz3ZCV1MfDS16NbFIUfJ6xo/kvzFqw7vcuh3Gy0KlNFW7IFT0fy880o09hio.Qlan3eb66I2kFrgFA5oXxPj.
 ssh_authorized_keys:
   - ${SSH_AUTHORIZED_KEY}
 chpasswd: { expire: False }
 ssh_pwauth: False
+
+timezone: Asia/Tokyo
+locale: ja_JP.utf8
+
+disk_setup:
+  /dev/sdb:
+    table_type: 'gpt'
+    layout: true
+    overwrite: True
+
+fs_setup:
+  - label: disk01
+    filesystem: 'ext4'
+    device: '/dev/sdb1'
+
+mounts:
+   - [ /dev/sdb1, /mnt/disk01, auto, "defaults,noexec" ]
+
+package_update: true
+# package_upgrade: true
+packages:
+  - chrony
+  - nfs-common
+  - open-iscsi
+%{ if INSTALL_RKE2_TYPE == "server" ~}
+  - keepalived
+%{ endif ~}
+
 write_files:
   - content: ${RKE2_CONFIG}
     path: /tmp/config.yaml
     encoding: gz+b64
+  - content: |
+      mirrors:
+        docker.io:
+          endpoint:
+            - "https://mirror.gcr.io"
+    path: /tmp/registries.yaml
 %{ if INSTALL_RKE2_TYPE == "server" ~}
   - content: ${KEEPALIVED_CONF}
-    path: /tmp/keepalived.conf
+    path: /etc/keepalived/keepalived.conf
     encoding: gz+b64
   - content: ${MANIFESTS}
     path: /tmp/manifests.yaml
     encoding: gz+b64
 %{ endif }
+
 runcmd:
   - hostnamectl set-hostname ${HOSTNAME}
-%{ if INSTALL_RKE2_TYPE == "server" ~}
-  - apt update -y
-  - apt install -y keepalived
-  - mv /tmp/keepalived.conf /etc/keepalived/keepalived.conf
-  - systemctl enable keepalived
-  - systemctl start keepalived
-%{ endif ~}
   - curl -sfL https://get.rke2.io | INSTALL_RKE2_TYPE="${INSTALL_RKE2_TYPE}" sh -
   - mkdir -p /etc/rancher/rke2/
   - mv /tmp/config.yaml /etc/rancher/rke2/config.yaml
+  - mv /tmp/registries.yaml /etc/rancher/rke2/registries.yaml
 %{ if INSTALL_RKE2_TYPE == "server" ~}
   - mkdir -p /var/lib/rancher/rke2/server/manifests
   - mv /tmp/manifests.yaml /var/lib/rancher/rke2/server/manifests/manifests.yaml

@@ -172,6 +172,9 @@ resource "esxi_guest" "rke2-server" {
     "userdata.encoding" = "gzip+base64"
     "userdata"          = base64gzip(data.template_file.rke2-server_userdata[count.index].rendered)
   }
+  # lifecycle {
+  #   ignore_changes = [guestinfo]
+  # }
 }
 
 resource "null_resource" "update_kubeconfig" {
@@ -277,6 +280,9 @@ resource "esxi_guest" "rke2-agent" {
     "userdata.encoding" = "gzip+base64"
     "userdata"          = base64gzip(data.template_file.rke2-agent_userdata[count.index].rendered)
   }
+  # lifecycle {
+  #   ignore_changes = [guestinfo]
+  # }
 }
 
 
@@ -370,27 +376,64 @@ resource "kubernetes_secret" "cert-manager-selfsigned" {
 
 # ArgoCD
 
-provider "helm" {
-  kubernetes {
-    config_path    = "~/${data.remote_file.kubeconfig.path}"
-    config_context = "default"
+provider "kustomization" {
+  kubeconfig_path = "~/${data.remote_file.kubeconfig.path}"
+  context         = "default"
+}
+
+data "kustomization_overlay" "argo-cd-dev-build" {
+  resources = [ "https://github.com/ymmmtym/manifests//argo-cd/overlays/dev/" ]
+
+  kustomize_options {
+    load_restrictor = "none"
+    enable_helm     = true
+    helm_path = var.helm_path
   }
+
+  # Skip apply Applications for dependency
+  # patches {
+  #   target {
+  #     kind = "Application"
+  #   }
+  #   patch = <<-EOF
+  #     - op: remove
+  #       path: /spec/syncPolicy
+  #   EOF
+  # }
 }
 
-data "http" "rke2-server_argocd_values" {
-  url = "https://raw.githubusercontent.com/ymmmtym/manifests/main/argo-cd/overlays/dev/values.yaml"
-}
+resource "kustomization_resource" "argo-cd-dev-resource-p0" {
+  for_each = data.kustomization_overlay.argo-cd-dev-build.ids_prio[0]
 
-resource "helm_release" "argo-cd" {
-  name       = "argo-cd"
-  repository = "https://argoproj.github.io/argo-helm"
-  chart      = "argo-cd"
-  version    = "4.5.11"
-  namespace  = "argocd"
-
-  create_namespace = true
-
-  values = [data.http.rke2-server_argocd_values.body]
+  manifest = (
+    contains(["_/Secret"], regex("(?P<group_kind>.*/.*)/.*/.*", each.value)["group_kind"])
+    ? sensitive(data.kustomization_overlay.argo-cd-dev-build.manifests[each.value])
+    : data.kustomization_overlay.argo-cd-dev-build.manifests[each.value]
+  )
 
   depends_on = [data.remote_file.kubeconfig]
+}
+
+resource "kustomization_resource" "argo-cd-dev-resource-p1" {
+  for_each = data.kustomization_overlay.argo-cd-dev-build.ids_prio[1]
+
+  manifest = (
+    contains(["_/Secret"], regex("(?P<group_kind>.*/.*)/.*/.*", each.value)["group_kind"])
+    ? sensitive(data.kustomization_overlay.argo-cd-dev-build.manifests[each.value])
+    : data.kustomization_overlay.argo-cd-dev-build.manifests[each.value]
+  )
+
+  depends_on = [kustomization_resource.argo-cd-dev-resource-p0]
+}
+
+resource "kustomization_resource" "argo-cd-dev-resource-p2" {
+  for_each = data.kustomization_overlay.argo-cd-dev-build.ids_prio[2]
+
+  manifest = (
+    contains(["_/Secret"], regex("(?P<group_kind>.*/.*)/.*/.*", each.value)["group_kind"])
+    ? sensitive(data.kustomization_overlay.argo-cd-dev-build.manifests[each.value])
+    : data.kustomization_overlay.argo-cd-dev-build.manifests[each.value]
+  )
+
+  depends_on = [kustomization_resource.argo-cd-dev-resource-p1]
 }
