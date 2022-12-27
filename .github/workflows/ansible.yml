@@ -16,6 +16,3 @@ jobs:
 
     - name: Lint Ansible Playbook
       uses: ansible-community/ansible-lint-action@main
-      with:
-        targets: "site.yml"
-        override-deps: ansible==2.10.4
