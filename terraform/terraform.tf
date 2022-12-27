@@ -12,9 +12,9 @@ terraform {
       source  = "hashicorp/kubernetes"
       version = "2.11.0"
     }
-    helm = {
-      source  = "hashicorp/helm"
-      version = "2.5.1"
+    kustomization = {
+      source  = "kbst/kustomization"
+      version = "0.9.0"
     }
   }
   backend "remote" {
