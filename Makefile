@@ -9,8 +9,7 @@ remove-kustomization-resources-state:
 		"kustomization_resource.argo-cd-dev-resource-p0" \
 		"kustomization_resource.argo-cd-dev-resource-p1" \
 		"kustomization_resource.argo-cd-dev-resource-p2" \
-		"kubernetes_secret.sealed-secret-key" \
-		"kubernetes_secret.cert-manager-selfsigned"
+		"kubernetes_secret.sealed-secret-key"
 
 .PHONY: redeploy
 redeploy: remove-kustomization-resources-state
