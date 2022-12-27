@@ -1,9 +1,11 @@
 ---
-- hosts: dev
-  roles:
-    - role: ansible-role-dev
-      when: ansible_os_family != "Windows"
-  tags: dev
+# Depricated
+
+# - hosts: dev
+#   roles:
+#     - role: ansible-role-dev
+#       when: ansible_os_family != "Windows"
+#   tags: dev
 
 - hosts: dev
   tasks:
@@ -18,25 +20,8 @@
       failed_when: false
       tags: packer
 
-- import_playbook: playbooks/terraform.yml
-  vars:
-    terraform_project_path: '../terraform/'
-    wait_for_hosts:
-      - '{{ groups["vyos"] }}'
-  tags: terraform
-
 - hosts: vyos
   gather_facts: no
   roles:
     - role: vyos
   tags: vyos
-
-- hosts: kubernetes
-  become: yes
-  roles:
-    - role: ansible-role-docker
-      # - role: ansible-role-kubernetes
-  tags: kubernetes
-
-- import_playbook: playbooks/swapoff.yml # To Do: usermod -aG docker {{ ansible_user }}
-  tags: kubernetes
