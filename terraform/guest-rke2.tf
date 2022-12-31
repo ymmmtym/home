@@ -335,6 +335,23 @@ resource "kubernetes_secret" "sealed-secret-key" {
   depends_on = [data.remote_file.kubeconfig]
 }
 
+# Vault
+
+resource "kubernetes_secret" "vault" {
+  metadata {
+    name      = "vault"
+    namespace = "kube-system"
+  }
+
+  data = {
+    "VAULT_TOKEN" = var.vault_token
+  }
+
+  type = "Opaque"
+
+  depends_on = [data.remote_file.kubeconfig]
+}
+
 # ArgoCD
 
 provider "kustomization" {

@@ -6,3 +6,4 @@ variable "ESXI_PASSWORD" {}
 variable "DISK_STORE" { default = "datastore1" }
 variable "VIRTUAL_NETWORK" { default = "VM Network" }
 variable "helm_path" { default = "/usr/local/bin/helm" }
+variable "vault_token" {}
