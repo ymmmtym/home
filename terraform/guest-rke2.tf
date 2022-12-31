@@ -3,7 +3,8 @@
 locals {
   numvcpus  = 2
   memsize   = 4096
-  disk_size = 50
+  boot_disk_size = 15
+  disk_size = 80
 
   ssh_authorized_key = file("~/.ssh/kube.id_rsa.pub")
   ssh_private_key    = file("~/.ssh/kube.id_rsa")
@@ -77,7 +78,7 @@ resource "esxi_guest" "rke2-haproxy" {
   memsize            = local.memsize
   numvcpus           = local.numvcpus
   resource_pool_name = esxi_resource_pool.kubernetes.resource_pool_name
-  boot_disk_size     = "15"
+  boot_disk_size     = local.boot_disk_size
   network_interfaces {
     virtual_network = esxi_portgroup.portgroup100_1.name
     mac_address     = "00:50:56:00:64:${format("%02X", 5 + count.index)}"
@@ -153,7 +154,7 @@ resource "esxi_guest" "rke2-server" {
   memsize            = local.memsize * 2
   numvcpus           = local.numvcpus
   resource_pool_name = esxi_resource_pool.kubernetes.resource_pool_name
-  boot_disk_size     = "15"
+  boot_disk_size     = local.boot_disk_size
   network_interfaces {
     virtual_network = esxi_portgroup.portgroup100_1.name
     mac_address     = "00:50:56:00:64:${format("%02X", 5 + local.nodes.haproxy + count.index)}"
@@ -261,7 +262,7 @@ resource "esxi_guest" "rke2-agent" {
   memsize            = local.memsize
   numvcpus           = local.numvcpus
   resource_pool_name = esxi_resource_pool.kubernetes.resource_pool_name
-  boot_disk_size     = "15"
+  boot_disk_size     = local.boot_disk_size
   network_interfaces {
     virtual_network = esxi_portgroup.portgroup100_1.name
     mac_address     = "00:50:56:00:64:${format("%02X", 5 + local.nodes.haproxy + local.nodes.server + count.index)}"
