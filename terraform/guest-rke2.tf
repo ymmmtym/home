@@ -3,7 +3,8 @@
 locals {
   numvcpus  = 2
   memsize   = 4096
-  disk_size = 30
+  boot_disk_size = 15
+  disk_size = 80
 
   ssh_authorized_key = file("~/.ssh/kube.id_rsa.pub")
   ssh_private_key    = file("~/.ssh/kube.id_rsa")
@@ -77,7 +78,7 @@ resource "esxi_guest" "rke2-haproxy" {
   memsize            = local.memsize
   numvcpus           = local.numvcpus
   resource_pool_name = esxi_resource_pool.kubernetes.resource_pool_name
-  boot_disk_size     = "15"
+  boot_disk_size     = local.boot_disk_size
   network_interfaces {
     virtual_network = esxi_portgroup.portgroup100_1.name
     mac_address     = "00:50:56:00:64:${format("%02X", 5 + count.index)}"
@@ -153,7 +154,7 @@ resource "esxi_guest" "rke2-server" {
   memsize            = local.memsize * 2
   numvcpus           = local.numvcpus
   resource_pool_name = esxi_resource_pool.kubernetes.resource_pool_name
-  boot_disk_size     = "15"
+  boot_disk_size     = local.boot_disk_size
   network_interfaces {
     virtual_network = esxi_portgroup.portgroup100_1.name
     mac_address     = "00:50:56:00:64:${format("%02X", 5 + local.nodes.haproxy + count.index)}"
@@ -261,7 +262,7 @@ resource "esxi_guest" "rke2-agent" {
   memsize            = local.memsize
   numvcpus           = local.numvcpus
   resource_pool_name = esxi_resource_pool.kubernetes.resource_pool_name
-  boot_disk_size     = "15"
+  boot_disk_size     = local.boot_disk_size
   network_interfaces {
     virtual_network = esxi_portgroup.portgroup100_1.name
     mac_address     = "00:50:56:00:64:${format("%02X", 5 + local.nodes.haproxy + local.nodes.server + count.index)}"
@@ -334,45 +335,22 @@ resource "kubernetes_secret" "sealed-secret-key" {
   depends_on = [data.remote_file.kubeconfig]
 }
 
-# cert-manager
+# Vault
 
-resource "tls_private_key" "cert-manager-selfsigned" {
-  algorithm = "RSA"
-  rsa_bits  = 4096
-}
-
-resource "tls_self_signed_cert" "cert-manager-selfsigned" {
-  private_key_pem = tls_private_key.cert-manager-selfsigned.private_key_pem
-
-  validity_period_hours = 26280 # 3y
-  early_renewal_hours   = 8760  # 365d
-
-  is_ca_certificate = true
-
-  allowed_uses = ["server_auth", "client_auth"]
-  dns_names    = ["*.yumenomatayume.home"]
-
-  subject {
-    common_name = "yumenomatayume.home"
-  }
-}
-
-resource "kubernetes_secret" "cert-manager-selfsigned" {
+resource "kubernetes_secret" "vault" {
   metadata {
-    name      = "cert-manager-selfsigned"
+    name      = "vault"
     namespace = "kube-system"
   }
 
   data = {
-    "tls.crt" = tls_self_signed_cert.cert-manager-selfsigned.cert_pem
-    "tls.key" = tls_private_key.cert-manager-selfsigned.private_key_pem
+    "VAULT_TOKEN" = var.vault_token
   }
 
-  type = "kubernetes.io/tls"
+  type = "Opaque"
 
   depends_on = [data.remote_file.kubeconfig]
 }
-
 
 # ArgoCD
 

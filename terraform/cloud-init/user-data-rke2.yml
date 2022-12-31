@@ -25,10 +25,13 @@ fs_setup:
 mounts:
    - [ /dev/sdb1, /mnt/disk01, auto, "defaults,noexec" ]
 
+ntp:
+  enabled: true
+  ntp_client: chrony
+
 package_update: true
 # package_upgrade: true
 packages:
-  - chrony
   - nfs-common
   - open-iscsi
 %{ if INSTALL_RKE2_TYPE == "server" ~}

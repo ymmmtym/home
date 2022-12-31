@@ -9,8 +9,7 @@ remove-kustomization-resources-state:
 		"kustomization_resource.argo-cd-dev-resource-p0" \
 		"kustomization_resource.argo-cd-dev-resource-p1" \
 		"kustomization_resource.argo-cd-dev-resource-p2" \
-		"kubernetes_secret.sealed-secret-key" \
-		"kubernetes_secret.cert-manager-selfsigned"
+		"kubernetes_secret.sealed-secret-key"
 
 .PHONY: redeploy
 redeploy: remove-kustomization-resources-state
@@ -27,13 +26,15 @@ redeploy: remove-kustomization-resources-state
 get-cert:
 	@kubectl -n kube-system get secret selfsigned -o json | jq -r '.data["tls.crt"]' | base64 -d > ~/Downloads/tls.crt
 	@kubectl -n kube-system get secret selfsigned -o json | jq -r '.data["tls.key"]' | base64 -d > ~/Downloads/tls.key
+	@kubectl -n kube-system get secret selfsigned -o json | jq -r '.data["ca.crt"]' | base64 -d > ~/Downloads/ca.crt
 
 .PHONY: update-cert
 update-cert:
 	echo $(TMPDIR)
 	@kubectl -n kube-system get secret selfsigned -o json | jq -r '.data["tls.crt"]' | base64 -d > $(TMPDIR)/tls.crt
 	@kubectl -n kube-system get secret selfsigned -o json | jq -r '.data["tls.key"]' | base64 -d > $(TMPDIR)/tls.key
-	open $(TMPDIR)/tls.crt && sleep 30
+	@kubectl -n kube-system get secret selfsigned -o json | jq -r '.data["ca.crt"]' | base64 -d > ~/Downloads/ca.crt
+	open $(TMPDIR)/ca.crt && sleep 30
 	rm -fr $(TMPDIR)
 
 .PHONY: update-esxi-cert
