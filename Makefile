@@ -33,7 +33,7 @@ update-cert:
 	echo $(TMPDIR)
 	@kubectl -n kube-system get secret selfsigned -o json | jq -r '.data["tls.crt"]' | base64 -d > $(TMPDIR)/tls.crt
 	@kubectl -n kube-system get secret selfsigned -o json | jq -r '.data["tls.key"]' | base64 -d > $(TMPDIR)/tls.key
-	@kubectl -n kube-system get secret selfsigned -o json | jq -r '.data["ca.crt"]' | base64 -d > ~/Downloads/ca.crt
+	@kubectl -n kube-system get secret selfsigned -o json | jq -r '.data["ca.crt"]' | base64 -d > $(TMPDIR)/ca.crt
 	open $(TMPDIR)/ca.crt && sleep 30
 	rm -fr $(TMPDIR)
 
