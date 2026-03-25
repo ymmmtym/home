@@ -4,7 +4,7 @@ ansible-lint==5.0.12
 bcrypt==3.2.2
 bracex==2.1.1
 cffi==1.14.6
-colorama==0.4.4
+colorama==0.4.6
 commonmark==0.9.1
 cryptography==3.4.8
 enrich==1.2.7
