@@ -8,7 +8,7 @@ colorama==0.4.6
 commonmark==0.9.1
 cryptography==3.4.8
 enrich==1.2.7
-Jinja2==2.11.3
+Jinja2==3.1.6
 MarkupSafe==1.1.1
 netaddr==0.8.0
 packaging==20.9
